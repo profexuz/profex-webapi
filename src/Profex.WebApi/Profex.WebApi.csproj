@@ -11,4 +11,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middlewares\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="Accessers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Profex.Service\Profex.Service.csproj" />
+  </ItemGroup>
+
 </Project>
