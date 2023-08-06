@@ -1,6 +1,6 @@
 ﻿namespace Profex.Domain.Entities.posts;
 
-public class Posts : Auditable
+public class Post : Auditable
 {
     public  long  Category_id { get; set; }
 

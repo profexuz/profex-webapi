@@ -1,6 +1,6 @@
 ﻿namespace Profex.Domain.Entities.skills;
 
-public class Skills : Auditable
+public class Skill : Auditable
 {
     public  long Category_id { get; set; }
 
