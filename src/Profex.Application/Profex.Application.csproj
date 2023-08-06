@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.143" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Profex.Domain\Profex.Domain.csproj" />
   </ItemGroup>
 
