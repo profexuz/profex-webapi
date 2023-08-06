@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Repositories\Adminstrators\" />
+    <Folder Include="Repositories\Categories\" />
+    <Folder Include="Repositories\Master_skills\" />
+    <Folder Include="Repositories\Masters\" />
+    <Folder Include="Repositories\Skills\" />
+    <Folder Include="Repositories\Posts\" />
+    <Folder Include="Repositories\Post_skills\" />
+    <Folder Include="Repositories\Post_images\" />
+    <Folder Include="Repositories\Users\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Handlers\" />
   </ItemGroup>
 
