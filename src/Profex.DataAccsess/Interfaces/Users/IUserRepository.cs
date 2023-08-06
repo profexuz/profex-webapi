@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Profex.DataAccsess.Common;
+using Profex.Domain.Entities.users;
 
-namespace Profex.DataAccsess.Interfaces.Users
+namespace Profex.DataAccsess.Interfaces.Users;
+
+public interface IUserRepository : IRepository<User, User>, IGetAll<User>
 {
-    public interface IUserRepository : IRepo
-    {
-    }
+
 }

@@ -1,6 +1,6 @@
 ﻿namespace Profex.Domain.Entities.users;
 
-public class Users : Auditable
+public class User : Auditable
 {
     public string First_name { get; set; } = string.Empty;
 
