@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Repositories\Adminstrators\" />
-    <Folder Include="Repositories\Categories\" />
     <Folder Include="Repositories\Master_skills\" />
     <Folder Include="Repositories\Masters\" />
     <Folder Include="Repositories\Skills\" />
@@ -18,6 +17,10 @@
     <Folder Include="Repositories\Users\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
