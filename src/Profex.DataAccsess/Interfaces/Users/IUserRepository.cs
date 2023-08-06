@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Profex.DataAccsess.Interfaces.Users
 {
-    public interface IUserRepository : IRepository<>
+    public interface IUserRepository : IRepo
     {
     }
 }
