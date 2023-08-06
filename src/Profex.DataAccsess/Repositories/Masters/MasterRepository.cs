@@ -2,12 +2,6 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Masters;
 using Profex.Domain.Entities.masters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Profex.DataAccsess.Repositories.Masters
 {
@@ -82,24 +76,86 @@ namespace Profex.DataAccsess.Repositories.Masters
             { await _connection.CloseAsync(); }
         }
 
-        public Task<Master?> GetByIdAsync(long id)
+        public async Task<Master?> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string qeury = $"SELECT * FROM masters where id=@Id";
+                var res = await _connection.QuerySingleAsync<Master>(qeury, new { Id = id });
+                return res;
+
+            }
+            catch
+            {
+                return null;
+            }
+            finally { await _connection.CloseAsync(); }
         }
 
-        public Task<IList<Master>> SearchAsync(string search, PaginationParams @params)
+        public async Task<IList<Master>> SearchAsync(string search, PaginationParams @params)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' ORDER BY id DESC OFFSET {@params.SkipCount} LIMIT {@params.PageSize}";
+                var master = await _connection.QueryAsync<Master>(query);
+                return master.ToList();
+            }
+            catch
+            {
+                return new List<Master>();
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
 
-        public Task<int> SearchCountAsync(string search)
+        public async Task<int> SearchCountAsync(string search)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"SELECT COUNT(*) FROM public.masters WHERE name ILIKE '%{search}%'";
+                var count = await _connection.ExecuteScalarAsync<int>(query);
+                return count;
+            }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
 
-        public Task<int> UpdateAsync(long id, Master entity)
+        public async Task<int> UpdateAsync(long id, Master entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"UPDATE public.masters" +
+                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                    $"WHERE id = {id}";
+                var res = await _connection.ExecuteAsync(query, entity);
+                return res;
+
+
+            }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
     }
 }
