@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profex.Application", "src\Profex.Application\Profex.Application.csproj", "{982E7335-1716-4DAC-8A6C-EA73F476534A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profex.DataAccsess", "src\Profex.DataAccsess\Profex.DataAccsess.csproj", "{DC1E7122-3481-4979-BB1E-A1BC0A8FB6FE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A88C36F0-301B-4E6A-AE24-028244D6DF08} = {A88C36F0-301B-4E6A-AE24-028244D6DF08}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profex.Domain", "src\Profex.Domain\Profex.Domain.csproj", "{A88C36F0-301B-4E6A-AE24-028244D6DF08}"
 EndProject
