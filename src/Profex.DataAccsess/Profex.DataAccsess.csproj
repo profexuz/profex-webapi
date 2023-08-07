@@ -12,8 +12,6 @@
     <Folder Include="Repositories\Masters\" />
     <Folder Include="Repositories\Posts\" />
     <Folder Include="Repositories\Post_images\" />
-    <Folder Include="Repositories\Users\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Handlers\" />
   </ItemGroup>
 
