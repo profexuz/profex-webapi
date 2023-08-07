@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
+using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Users;
+using Profex.DataAccsess.ViewModels.Users;
 using Profex.Domain.Entities.users;
 
 namespace Profex.DataAccsess.Repositories.Users
@@ -65,14 +67,41 @@ namespace Profex.DataAccsess.Repositories.Users
             }
         }
 
-        public Task<IList<User>> GetAllAsync(PaginationParams @params)
-        {
-            throw new NotImplementedException();
+        public async Task<IList<UserViewModel>> GetAllAsync(PaginationParams @params)
+        {        
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"select * from users " +
+                $"order by id desc " +
+                $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
+                var res = (await _connection.QueryAsync<User>(query)).ToList();
+                return (IList<UserViewModel>)res;
+            }
+            catch { return new List<UserViewModel>(); }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
 
-        public Task<User?> GetByIdAsync(long id)
+        public async Task<User?> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"select * from users where id = {id}";
+                var res = await _connection.QuerySingleAsync<User>(query);
+                return res;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                await _connection.CloseAsync(); 
+            }
         }
 
         public async Task<User?> GetByPhoneAsync(string phone)
@@ -112,6 +141,11 @@ namespace Profex.DataAccsess.Repositories.Users
             {
                 await _connection.CloseAsync();
             }
+        }
+
+        Task<UserViewModel?> IRepository<User,UserViewModel>.GetByIdAsync(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
