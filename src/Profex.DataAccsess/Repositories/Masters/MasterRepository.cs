@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Masters;
+using Profex.DataAccsess.ViewModels.Masters;
 using Profex.Domain.Entities.masters;
 
 namespace Profex.DataAccsess.Repositories.Masters
@@ -59,31 +60,31 @@ namespace Profex.DataAccsess.Repositories.Masters
 
         }
 
-        public async Task<IList<Master>> GetAllAsync(PaginationParams @params)
+        public async Task<IList<MasterViewModel>> GetAllAsync(PaginationParams @params)
         {
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.SkipCount} limit {@params.PageSize}";
+                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} limit {@params.PageSize}";
                 var resMas = (await _connection.QueryAsync<Master>(query)).ToList();
-                return resMas;
+                return (IList<MasterViewModel>)resMas;
             }
             catch
             {
-                return new List<Master>();
+                return new List<MasterViewModel>();
             }
             finally
             { await _connection.CloseAsync(); }
         }
 
-        public async Task<Master?> GetByIdAsync(long id)
+        public async Task<MasterViewModel?> GetByIdAsync(long id)
         {
             //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
                 string qeury = $"SELECT * FROM masters where id=@Id";
-                var res = await _connection.QuerySingleAsync<Master>(qeury, new { Id = id });
+                var res = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
                 return res;
 
             }
@@ -94,19 +95,19 @@ namespace Profex.DataAccsess.Repositories.Masters
             finally { await _connection.CloseAsync(); }
         }
 
-        public async Task<IList<Master>> SearchAsync(string search, PaginationParams @params)
+        public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {
             //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' ORDER BY id DESC OFFSET {@params.SkipCount} LIMIT {@params.PageSize}";
-                var master = await _connection.QueryAsync<Master>(query);
+                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+                var master = await _connection.QueryAsync<MasterViewModel>(query);
                 return master.ToList();
             }
             catch
             {
-                return new List<Master>();
+                return new List<MasterViewModel>();
             }
             finally
             {
@@ -136,7 +137,6 @@ namespace Profex.DataAccsess.Repositories.Masters
 
         public async Task<int> UpdateAsync(long id, Master entity)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
@@ -157,5 +157,6 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.CloseAsync();
             }
         }
+
     }
 }
