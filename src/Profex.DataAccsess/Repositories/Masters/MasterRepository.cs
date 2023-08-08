@@ -36,8 +36,8 @@ namespace Profex.DataAccsess.Repositories.Masters
 
                 string query = "INSERT INTO public.masters(first_name, last_name, phone_number, " +
                     "phone_number_confirmed, image_path, password_hash, salt, is_free, created_at, updated_at)" +
-                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, " +
-                    "@PasswordHash, @Salt, @IsFree, @CreatedAt, @UpdatedAt);";
+                        "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, " +
+                            "@PasswordHash, @Salt, @IsFree, @CreatedAt, @UpdatedAt);";
 
                 var result = await _connection.ExecuteAsync(query, entity);
 
@@ -71,7 +71,6 @@ namespace Profex.DataAccsess.Repositories.Masters
             { 
                 await _connection.CloseAsync(); 
             }
-
         }
 
         public async Task<IList<MasterViewModel>> GetAllAsync(PaginationParams @params)
@@ -102,11 +101,10 @@ namespace Profex.DataAccsess.Repositories.Masters
             try
             {
                 await _connection.OpenAsync();
-
                 string qeury = $"SELECT * FROM masters where id=@Id";
-                var res = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
+                var result = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
 
-                return res;
+                return result;
             }
             catch
             {
@@ -169,9 +167,9 @@ namespace Profex.DataAccsess.Repositories.Masters
 
                 string query = $"UPDATE public.masters" +
                     $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                    $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
-                    $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                    $"WHERE id = {id}";
+                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
+                            $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                                $"WHERE id = {id}";
 
                 var res = await _connection.ExecuteAsync(query, entity);
 
@@ -186,6 +184,5 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.CloseAsync();
             }
         }
-
     }
 }

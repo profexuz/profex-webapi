@@ -119,12 +119,12 @@ public class SkillRepository : BaseRepository, ISkillRepository
             await _connection.OpenAsync();
 
             string query = $"UPDATE public.skills" +
-                $"SET category_id=@CategoryId, title=@Title, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                $"WHERE id = {id}";
+                $"SET category_id=@CategoryId, title=@Title, description=@Description, created_at=@CreatedAt, " +
+                    $"updated_at=@UpdatedAt WHERE id = {id}";
 
-            var res = await _connection.ExecuteAsync(query, entity);
+            var result = await _connection.ExecuteAsync(query, entity);
 
-            return res;
+            return result;
         }
         catch
         {
