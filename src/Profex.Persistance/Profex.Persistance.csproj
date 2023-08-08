@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Attributes\" />
     <Folder Include="Filters\" />
-    <Folder Include="Validations\Dtos\" />
   </ItemGroup>
 
   <ItemGroup>
