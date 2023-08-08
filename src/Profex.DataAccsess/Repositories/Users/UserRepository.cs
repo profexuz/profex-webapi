@@ -10,7 +10,7 @@ namespace Profex.DataAccsess.Repositories.Users
     public class UserRepository : BaseRepository, IUserRepository
     {
         public async Task<long> CountAsync()
-        {            
+        {
             try
             {
                 await _connection.OpenAsync();
@@ -24,7 +24,7 @@ namespace Profex.DataAccsess.Repositories.Users
             }
             finally
             {
-                await _connection.CloseAsync(); 
+                await _connection.CloseAsync();
             }
         }
 
@@ -33,10 +33,13 @@ namespace Profex.DataAccsess.Repositories.Users
             try
             {
                 await _connection.OpenAsync();
-                string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, image_path, password_hash, salt, created_at, updated_at)" +
-                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @Image_path, @PasswordHash, @Salt, @CreatedAt, @UpdatedAt);";
-                return await _connection.ExecuteAsync(query, entity);
 
+                string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, " +
+                    "image_path, password_hash, salt, created_at, updated_at)" +
+                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @Image_path, @PasswordHash, " +
+                    "@Salt, @CreatedAt, @UpdatedAt);";
+                
+                return await _connection.ExecuteAsync(query, entity);
             }
             catch
             {
@@ -55,7 +58,6 @@ namespace Profex.DataAccsess.Repositories.Users
                 await _connection.OpenAsync();
                 string query = $"delete from users where id = {id}";
                 return await _connection.ExecuteAsync(query);
-                
             }
             catch
             {
@@ -68,17 +70,22 @@ namespace Profex.DataAccsess.Repositories.Users
         }
 
         public async Task<IList<UserViewModel>> GetAllAsync(PaginationParams @params)
-        {        
+        {
             try
             {
                 await _connection.OpenAsync();
+
                 string query = $"select * from users " +
                 $"order by id desc " +
                 $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
+
                 var res = (await _connection.QueryAsync<User>(query)).ToList();
                 return (IList<UserViewModel>)res;
             }
-            catch { return new List<UserViewModel>(); }
+            catch 
+            { 
+                return new List<UserViewModel>(); 
+            }
             finally
             {
                 await _connection.CloseAsync();
@@ -100,7 +107,7 @@ namespace Profex.DataAccsess.Repositories.Users
             }
             finally
             {
-                await _connection.CloseAsync(); 
+                await _connection.CloseAsync();
             }
         }
 
@@ -127,10 +134,14 @@ namespace Profex.DataAccsess.Repositories.Users
             try
             {
                 await _connection.OpenAsync();
+
                 string query = $"UPDATE public.users" +
-                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, salt=@Salt, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
+                    $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
+                    $"salt=@Salt, created_at=@CreatedAt, updated_at=@UpdatedAt" +
                     $"WHERE id = {id};";
-                var res = await _connection.ExecuteAsync(query,entity);
+
+                var res = await _connection.ExecuteAsync(query, entity);
                 return res;
             }
             catch
@@ -143,7 +154,7 @@ namespace Profex.DataAccsess.Repositories.Users
             }
         }
 
-        Task<UserViewModel?> IRepository<User,UserViewModel>.GetByIdAsync(long id)
+        Task<UserViewModel?> IRepository<User, UserViewModel>.GetByIdAsync(long id)
         {
             throw new NotImplementedException();
         }

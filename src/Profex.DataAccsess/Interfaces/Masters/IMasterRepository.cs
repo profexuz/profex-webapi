@@ -7,8 +7,6 @@ namespace Profex.DataAccsess.Interfaces.Masters;
 
 public interface IMasterRepository : IRepository<Master, MasterViewModel>, IGetAll<MasterViewModel>, ISearchable<MasterViewModel>
 {
-
     public Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params);
     public Task<int> SearchCountAsync(string search);
-
 }

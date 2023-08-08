@@ -2,7 +2,6 @@
 
 public class VerificationDto
 {
-
     public int Code { get; set; }
 
     public int Attempt { get; set; }

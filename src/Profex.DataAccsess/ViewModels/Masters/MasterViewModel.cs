@@ -2,7 +2,7 @@
 
 namespace Profex.DataAccsess.ViewModels.Masters;
 
-public class MasterViewModel: Auditable
+public class MasterViewModel : Auditable
 {
     public string FirstName { get; set; } = string.Empty;
 
@@ -15,5 +15,4 @@ public class MasterViewModel: Auditable
     public string ImagePath { get; set; } = string.Empty;
 
     public bool IsFree { get; set; }
-
 }

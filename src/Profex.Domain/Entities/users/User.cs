@@ -15,7 +15,4 @@ public class User : Auditable
     public string Password_hash { get; set; } = string.Empty;
 
     public string Salt { get; set; } = string.Empty;
-
-
-
 }

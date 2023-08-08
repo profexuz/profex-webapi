@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Skills;
-using Profex.Domain.Entities.masters;
 using Profex.Domain.Entities.skills;
 
 namespace Profex.DataAccsess.Repositories.Skills;
@@ -32,13 +31,21 @@ public class SkillRepository : BaseRepository, ISkillRepository
         try
         {
             await _connection.OpenAsync();
+
             string query = "INSERT INTO public.skills(category_id, title, description, created_at, updated_at) " +
                 "VALUES (@CategoryId, @Title, @Description, @CreatedAt, @UpdatedAt);";
+
             var result = await _connection.ExecuteAsync(query, entity);
             return result;
         }
-        catch { return 0; }
-        finally { await _connection.CloseAsync(); }
+        catch 
+        { 
+            return 0; 
+        }
+        finally 
+        { 
+            await _connection.CloseAsync(); 
+        }
     }
 
     public async Task<int> DeleteAsync(long id)
@@ -55,7 +62,9 @@ public class SkillRepository : BaseRepository, ISkillRepository
             return 0;
         }
         finally
-        { await _connection.CloseAsync(); }
+        {
+            await _connection.CloseAsync(); 
+        }
     }
 
     public async Task<IList<Skill>> GetAllAsync(PaginationParams @params)
@@ -63,16 +72,21 @@ public class SkillRepository : BaseRepository, ISkillRepository
         try
         {
             await _connection.OpenAsync();
-            string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.SkipCount} limit {@params.PageSize}";
+
+            string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} " +
+                $"limit {@params.PageSize}";
+
             var resMas = (await _connection.QueryAsync<Skill>(query)).ToList();
             return resMas;
         }
-            catch
-            {
+        catch
+        {
             return new List<Skill>();
         }
-            finally
-            { await _connection.CloseAsync(); }
+        finally
+        { 
+            await _connection.CloseAsync(); 
+        }
     }
 
     public async Task<Skill?> GetByIdAsync(long id)
@@ -83,13 +97,14 @@ public class SkillRepository : BaseRepository, ISkillRepository
             string qeury = $"SELECT * FROM skills where id=@Id";
             var res = await _connection.QuerySingleAsync<Skill>(qeury, new { Id = id });
             return res;
-
         }
         catch
         {
             return null;
         }
-        finally { await _connection.CloseAsync(); }
+        finally {
+            await _connection.CloseAsync(); 
+        }
     }
 
     public async Task<int> UpdateAsync(long id, Skill entity)
@@ -97,13 +112,13 @@ public class SkillRepository : BaseRepository, ISkillRepository
         try
         {
             await _connection.OpenAsync();
+
             string query = $"UPDATE public.skills" +
                 $"SET category_id=@CategoryId, title=@Title, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt" +
                 $"WHERE id = {id}";
+
             var res = await _connection.ExecuteAsync(query, entity);
             return res;
-
-
         }
         catch
         {

@@ -29,17 +29,26 @@ namespace Profex.DataAccsess.Repositories.Masters
 
         public async Task<int> CreateAsync(Master entity)
         {
-            
             try
             {
                 await _connection.OpenAsync();
-                string query = "INSERT INTO public.masters(first_name, last_name, phone_number, phone_number_confirmed, image_path, password_hash, salt, is_free, created_at, updated_at)" +
-                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, @PasswordHash, @Salt, @IsFree, @CreatedAt, @UpdatedAt);";
+
+                string query = "INSERT INTO public.masters(first_name, last_name, phone_number, " +
+                    "phone_number_confirmed, image_path, password_hash, salt, is_free, created_at, updated_at)" +
+                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, " +
+                    "@PasswordHash, @Salt, @IsFree, @CreatedAt, @UpdatedAt);";
+
                 var result = await _connection.ExecuteAsync(query, entity);
                 return result;
             }
-            catch { return 0;  }
-            finally { await _connection.CloseAsync(); }
+            catch 
+            { 
+                return 0; 
+            }
+            finally 
+            { 
+                await _connection.CloseAsync(); 
+            }
         }
 
         public async Task<int> DeleteAsync(long id)
@@ -56,7 +65,9 @@ namespace Profex.DataAccsess.Repositories.Masters
                 return 0;
             }
             finally
-            { await _connection.CloseAsync(); }
+            { 
+                await _connection.CloseAsync(); 
+            }
 
         }
 
@@ -65,7 +76,10 @@ namespace Profex.DataAccsess.Repositories.Masters
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} limit {@params.PageSize}";
+
+                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} " +
+                    $"limit {@params.PageSize}";
+
                 var resMas = (await _connection.QueryAsync<Master>(query)).ToList();
                 return (IList<MasterViewModel>)resMas;
             }
@@ -74,34 +88,39 @@ namespace Profex.DataAccsess.Repositories.Masters
                 return new List<MasterViewModel>();
             }
             finally
-            { await _connection.CloseAsync(); }
+            { 
+                await _connection.CloseAsync(); 
+            }
         }
 
         public async Task<MasterViewModel?> GetByIdAsync(long id)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
                 string qeury = $"SELECT * FROM masters where id=@Id";
                 var res = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
                 return res;
-
             }
             catch
             {
                 return null;
             }
-            finally { await _connection.CloseAsync(); }
+            finally 
+            {
+                await _connection.CloseAsync(); 
+            }
         }
 
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+
+                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' " +
+                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+
                 var master = await _connection.QueryAsync<MasterViewModel>(query);
                 return master.ToList();
             }
@@ -117,7 +136,6 @@ namespace Profex.DataAccsess.Repositories.Masters
 
         public async Task<int> SearchCountAsync(string search)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
@@ -140,13 +158,15 @@ namespace Profex.DataAccsess.Repositories.Masters
             try
             {
                 await _connection.OpenAsync();
+
                 string query = $"UPDATE public.masters" +
-                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
+                    $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
+                    $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
                     $"WHERE id = {id}";
+
                 var res = await _connection.ExecuteAsync(query, entity);
                 return res;
-
-
             }
             catch
             {

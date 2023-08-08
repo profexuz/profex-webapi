@@ -7,7 +7,6 @@ namespace Profex.DataAccsess.Interfaces.Users;
 public interface IUserRepository : IRepository<User, UserViewModel>, IGetAll<UserViewModel>
 {
     public Task<User?> GetByPhoneAsync(string phone);
-
 }
 
 

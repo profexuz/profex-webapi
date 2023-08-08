@@ -17,5 +17,4 @@ public class Master : Auditable
     public string Salt { get; set; } = string.Empty;
 
     public bool Is_free { get; set; }
-
 }

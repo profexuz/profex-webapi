@@ -7,7 +7,7 @@ public class Adminstrator : Auditable
 
     public string Phone_number { get; set; } = string.Empty;
 
-    public  bool Phone_number_confirmed { get; set; }
+    public bool Phone_number_confirmed { get; set; }
 
     public string Image_path { get; set; } = string.Empty;
 

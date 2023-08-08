@@ -2,9 +2,9 @@
 
 public class Post : Auditable
 {
-    public  long  Category_id { get; set; }
+    public long Category_id { get; set; }
 
-    public  long  User_id { get; set; }
+    public long User_id { get; set; }
 
     public string Title { get; set; } = string.Empty;
 
@@ -21,5 +21,4 @@ public class Post : Auditable
     public string Longitude { get; set; } = string.Empty;
 
     public string Phone_number { get; set; } = string.Empty;
-
 }

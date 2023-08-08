@@ -10,7 +10,7 @@ namespace Profex.DataAccsess.ViewModels.Users
 
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public  bool PhoneNumberConfirmed { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
 
         public string ImagePath { get; set; } = string.Empty;
     }
