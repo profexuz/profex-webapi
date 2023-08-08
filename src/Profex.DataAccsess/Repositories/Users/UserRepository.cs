@@ -37,8 +37,8 @@ namespace Profex.DataAccsess.Repositories.Users
 
                 string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, " +
                     "image_path, password_hash, salt, created_at, updated_at)" +
-                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @Image_path, @PasswordHash, " +
-                    "@Salt, @CreatedAt, @UpdatedAt);";
+                        "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @Image_path, @PasswordHash, " +
+                            "@Salt, @CreatedAt, @UpdatedAt);";
                 
                 return await _connection.ExecuteAsync(query, entity);
             }
@@ -78,8 +78,8 @@ namespace Profex.DataAccsess.Repositories.Users
                 await _connection.OpenAsync();
 
                 string query = $"select * from users " +
-                $"order by id desc " +
-                $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
+                    $"order by id desc " +
+                        $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
 
                 var res = (await _connection.QueryAsync<User>(query)).ToList();
 

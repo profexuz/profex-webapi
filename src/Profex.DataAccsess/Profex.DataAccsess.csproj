@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\Adminstrators\" />
     <Folder Include="Repositories\Master_skills\" />
     <Folder Include="Repositories\Masters\" />
     <Folder Include="Repositories\Post_images\" />
