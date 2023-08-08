@@ -14,6 +14,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
             await _connection.OpenAsync();
             string query = $"select count(*) from skills";
             var result = await _connection.QuerySingleAsync<long>(query);
+
             return result;
         }
         catch
@@ -36,6 +37,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
                 "VALUES (@CategoryId, @Title, @Description, @CreatedAt, @UpdatedAt);";
 
             var result = await _connection.ExecuteAsync(query, entity);
+
             return result;
         }
         catch 
@@ -55,6 +57,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
             await _connection.OpenAsync();
             string query = "DELETE FROM skills WHERE id=@Id";
             var result = await _connection.ExecuteAsync(query, new { Id = id });
+
             return result;
         }
         catch
@@ -77,6 +80,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
                 $"limit {@params.PageSize}";
 
             var resMas = (await _connection.QueryAsync<Skill>(query)).ToList();
+
             return resMas;
         }
         catch
@@ -96,6 +100,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
             await _connection.OpenAsync();
             string qeury = $"SELECT * FROM skills where id=@Id";
             var res = await _connection.QuerySingleAsync<Skill>(qeury, new { Id = id });
+
             return res;
         }
         catch
@@ -118,6 +123,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
                 $"WHERE id = {id}";
 
             var res = await _connection.ExecuteAsync(query, entity);
+
             return res;
         }
         catch

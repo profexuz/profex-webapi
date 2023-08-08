@@ -15,6 +15,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.OpenAsync();
                 string query = $"select count(*) from masters";
                 var result = await _connection.QuerySingleAsync<long>(query);
+
                 return result;
             }
             catch
@@ -39,6 +40,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                     "@PasswordHash, @Salt, @IsFree, @CreatedAt, @UpdatedAt);";
 
                 var result = await _connection.ExecuteAsync(query, entity);
+
                 return result;
             }
             catch 
@@ -58,6 +60,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.OpenAsync();
                 string query = "DELETE FROM masters WHERE id=@Id";
                 var result = await _connection.ExecuteAsync(query, new { Id = id });
+
                 return result;
             }
             catch
@@ -81,6 +84,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                     $"limit {@params.PageSize}";
 
                 var resMas = (await _connection.QueryAsync<Master>(query)).ToList();
+
                 return (IList<MasterViewModel>)resMas;
             }
             catch
@@ -98,8 +102,10 @@ namespace Profex.DataAccsess.Repositories.Masters
             try
             {
                 await _connection.OpenAsync();
+
                 string qeury = $"SELECT * FROM masters where id=@Id";
                 var res = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
+
                 return res;
             }
             catch
@@ -122,6 +128,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                     $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
 
                 var master = await _connection.QueryAsync<MasterViewModel>(query);
+
                 return master.ToList();
             }
             catch
@@ -141,6 +148,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.OpenAsync();
                 string query = $"SELECT COUNT(*) FROM public.masters WHERE name ILIKE '%{search}%'";
                 var count = await _connection.ExecuteScalarAsync<int>(query);
+
                 return count;
             }
             catch
@@ -166,6 +174,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                     $"WHERE id = {id}";
 
                 var res = await _connection.ExecuteAsync(query, entity);
+
                 return res;
             }
             catch
