@@ -1,8 +1,8 @@
-﻿namespace Profex.Persistance.Validations;
+﻿namespace Profex.Persistance.Validations.Dtos;
 
-public class PhoneNumberValidator
+public class PasswordValidator
 {
-    public static string Symbols { get;} = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
+    public static string Symbols { get; } = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
 
     public static (bool IsValid, string Message) IsStrongPassword(string password)
     {
