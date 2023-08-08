@@ -75,6 +75,7 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         try
         {
             await _connection.OpenAsync();
+
             string query = $"SELECT * FROM categories order by id desc " +
                 $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
 
@@ -120,7 +121,7 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
 
             string query = $"UPDATE public.categories " +
                 $"SET name=@Name, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt " +
-                $"WHERE id={id};";
+                    $"WHERE id={id};";
 
             var result = await _connection.ExecuteAsync(query, entity);
 

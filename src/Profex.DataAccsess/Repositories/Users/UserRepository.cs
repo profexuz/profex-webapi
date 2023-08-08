@@ -95,15 +95,15 @@ namespace Profex.DataAccsess.Repositories.Users
             }
         }
 
-        public async Task<User?> GetByIdAsync(long id)
+        public async Task<UserViewModel?> GetByIdAsync(long id)
         {
             try
             {
                 await _connection.OpenAsync();
                 string query = $"select * from users where id = {id}";
-                var res = await _connection.QuerySingleAsync<User>(query);
+                var result = await _connection.QuerySingleAsync<UserViewModel>(query);
 
-                return res;
+                return result;
             }
             catch
             {
@@ -142,9 +142,9 @@ namespace Profex.DataAccsess.Repositories.Users
 
                 string query = $"UPDATE public.users" +
                     $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                    $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
-                    $"salt=@Salt, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                    $"WHERE id = {id};";
+                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
+                            $"password_hash=@PasswordHash, salt=@Salt, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                                $"WHERE id = {id};";
 
                 var res = await _connection.ExecuteAsync(query, entity);
 
@@ -158,11 +158,6 @@ namespace Profex.DataAccsess.Repositories.Users
             {
                 await _connection.CloseAsync();
             }
-        }
-
-        Task<UserViewModel?> IRepository<User, UserViewModel>.GetByIdAsync(long id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
