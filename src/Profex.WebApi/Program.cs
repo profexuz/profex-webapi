@@ -1,10 +1,13 @@
-using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Categories;
+using Profex.DataAccsess.Interfaces.Skills;
 using Profex.DataAccsess.Repositories.Categories;
+using Profex.DataAccsess.Repositories.Skills;
 using Profex.Persistance.Interfaces.Categories;
 using Profex.Persistance.Interfaces.Common;
+using Profex.Persistance.Interfaces.Skills;
 using Profex.Service.Services.Categories;
 using Profex.Service.Services.Categories.Layers;
+using Profex.Service.Services.Skills;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,8 @@ builder.Services.AddSwaggerGen();
     
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<ISkillService, SkillService>();
 //builder.Services.AddScoped<IPaginator, Paginator>();
 builder.Services.AddScoped <IPaginator, Paginator>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

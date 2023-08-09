@@ -76,7 +76,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
         {
             await _connection.OpenAsync();
 
-            string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} " +
+            string query = $"SELECT * FROM public.skills ORDER BY id desc offset {@params.GetSkipCount} " +
                 $"limit {@params.PageSize}";
 
             var resMas = (await _connection.QueryAsync<Skill>(query)).ToList();
