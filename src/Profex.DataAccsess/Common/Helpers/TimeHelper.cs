@@ -8,6 +8,7 @@ public class TimeHelper
     {
         var dtTime = DateTime.UtcNow;
         dtTime.AddHours(TimeConstants.UTC);
+
         return dtTime;
     }
 }

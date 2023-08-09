@@ -107,7 +107,8 @@ public class SkillRepository : BaseRepository, ISkillRepository
         {
             return null;
         }
-        finally {
+        finally 
+        {
             await _connection.CloseAsync(); 
         }
     }

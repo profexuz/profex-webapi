@@ -2,9 +2,7 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Adminstrators;
 using Profex.DataAccsess.ViewModels.Adminstrators;
-using Profex.DataAccsess.ViewModels.Users;
 using Profex.Domain.Entities.adminstrators;
-using Profex.Domain.Entities.users;
 
 namespace Profex.DataAccsess.Repositories.Adminstrators;
 

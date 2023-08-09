@@ -16,6 +16,7 @@ namespace Profex.WebApi.Controllers
         {
             this._service = Categoryservice;
         }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
@@ -54,6 +55,5 @@ namespace Profex.WebApi.Controllers
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long categoryId)
             => Ok(await _service.DeleteAsync(categoryId));
-
     }
 }
