@@ -39,7 +39,7 @@ namespace Profex.WebApi.Controllers
             //else return BadRequest(result.Errors);
         }
 
-        [HttpPut("{catrgoryId}")]
+        [HttpPut("(catrgoryId)")]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
         {
