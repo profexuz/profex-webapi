@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Repositories\Master_skills\" />
     <Folder Include="Repositories\Masters\" />
-    <Folder Include="Repositories\Post_images\" />
     <Folder Include="Handlers\" />
   </ItemGroup>
 
