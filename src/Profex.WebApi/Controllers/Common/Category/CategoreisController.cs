@@ -4,7 +4,7 @@ using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Categories;
 using Profex.Persistance.Interfaces.Categories;
 
-namespace Profex.WebApi.Controllers
+namespace Profex.WebApi.Controllers.Common.Category
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,7 +14,7 @@ namespace Profex.WebApi.Controllers
         private readonly int maxPageSize = 30;
         public CategoreisController(ICategoryService Categoryservice)
         {
-            this._service = Categoryservice;
+            _service = Categoryservice;
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace Profex.WebApi.Controllers
             //var result = validator.Validate(dto);
             //if (result.IsValid) return Ok(await _service.CreateAsync(dto));
             return Ok(await _service.CreateAsync(dto));
-            
+
             //await _service.CreateAsync(dto);
             //else return BadRequest(result.Errors);
         }
