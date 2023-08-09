@@ -32,10 +32,8 @@ public class SkillRepository : BaseRepository, ISkillRepository
         try
         {
             await _connection.OpenAsync();
-
             string query = "INSERT INTO public.skills(category_id, title, description, created_at, updated_at) " +
                 "VALUES (@CategoryId, @Title, @Description, @CreatedAt, @UpdatedAt);";
-
             var result = await _connection.ExecuteAsync(query, entity);
 
             return result;
@@ -75,10 +73,8 @@ public class SkillRepository : BaseRepository, ISkillRepository
         try
         {
             await _connection.OpenAsync();
-
-            string query = $"SELECT * FROM public.skills ORDER BY id desc offset {@params.GetSkipCount} " +
+            string query = $"SELECT * FROM public.skills ORDER BY id desc offset {@params.GetSkipCount()} " +
                 $"limit {@params.PageSize}";
-
             var resMas = (await _connection.QueryAsync<Skill>(query)).ToList();
 
             return resMas;
@@ -118,11 +114,9 @@ public class SkillRepository : BaseRepository, ISkillRepository
         try
         {
             await _connection.OpenAsync();
-
-            string query = $"UPDATE public.skills" +
+            string query = $"UPDATE public.skills " +
                 $"SET category_id=@CategoryId, title=@Title, description=@Description, created_at=@CreatedAt, " +
-                    $"updated_at=@UpdatedAt WHERE id = {id}";
-
+                    $"updated_at=@UpdatedAt WHERE id = {id};";
             var result = await _connection.ExecuteAsync(query, entity);
 
             return result;
