@@ -5,7 +5,7 @@ using Profex.Persistance.Dtos.Categories;
 using Profex.Persistance.Dtos.Skills;
 using Profex.Persistance.Interfaces.Skills;
 
-namespace Profex.WebApi.Controllers.Common
+namespace Profex.WebApi.Controllers.Common.Skill
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -13,19 +13,21 @@ namespace Profex.WebApi.Controllers.Common
     {
         private readonly ISkillService _service;
         private readonly int maxPageSize = 30;
+
         public SkillsController(ISkillService skillService)
         {
             _service = skillService;
         }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-        => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long id)
-        => Ok(await _service.GetByIdAsync(id));
+            => Ok(await _service.GetByIdAsync(id));
 
         [HttpPost]
         //[Authorize(Roles = "Admin")]
@@ -48,6 +50,7 @@ namespace Profex.WebApi.Controllers.Common
             //var validationResult = validator.Validate(dto);
             //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(companyId, dto));
             //else return BadRequest(validationResult.Errors);
+
             return Ok(await _service.UpdateAsync(id, dto));
         }
 
