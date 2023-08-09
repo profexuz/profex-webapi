@@ -33,8 +33,11 @@ namespace Profex.DataAccsess.Repositories.Posts
             {
                 await _connection.OpenAsync();
 
-                string query = "INSERT INTO public.posts(category_id, user_id, title, price, description, region, district, longitude, latitude, phone_number, created_at, updated_at)" +
-                    "VALUES (@CategoryId, @UserId, @Title, @Price, @Description, @Region, @District, @Longitude, @Latitude, @PhoneNumber, @CreatedAt, @UpdatedAt);";
+                string query = "INSERT INTO public.posts(category_id, user_id, title, price, description, region, " +
+                    "district, longitude, latitude, phone_number, created_at, updated_at)" +
+                        "VALUES (@CategoryId, @UserId, @Title, @Price, @Description, @Region, @District, @Longitude, " +
+                            "@Latitude, @PhoneNumber, @CreatedAt, @UpdatedAt);";
+
                 var result = await _connection.ExecuteAsync(query, entity);
 
                 return result;
@@ -161,9 +164,10 @@ namespace Profex.DataAccsess.Repositories.Posts
             {
                 await _connection.OpenAsync();
 
-                string query = $"UPDATE public.posts " +
-                    $"SET category_id=@CategoryId, user_id=@UserId, title=@Title, price=@Price, description=@Description, region=@Region, district=@District, longitude=@Longitude, latitude=@Latitude, phone_number=@PhoneNumber, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                    $"WHERE id = {id};";
+                string query = $"UPDATE public.posts SET category_id=@CategoryId, user_id=@UserId, title=@Title, " +
+                        $"price=@Price, description=@Description, region=@Region, district=@District, " +
+                            $"longitude=@Longitude, latitude=@Latitude, phone_number=@PhoneNumber, " +
+                                $"created_at=@CreatedAt, updated_at=@UpdatedAt WHERE id = {id};";
 
                 var res = await _connection.ExecuteAsync(query, entity);
 

@@ -5,7 +5,7 @@ using Profex.Persistance.Dtos.Categories;
 using Profex.Persistance.Dtos.Skills;
 using Profex.Persistance.Interfaces.Skills;
 
-namespace Profex.WebApi.Controllers
+namespace Profex.WebApi.Controllers.Common
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace Profex.WebApi.Controllers
         private readonly int maxPageSize = 30;
         public SkillsController(ISkillService skillService)
         {
-            this._service = skillService;
+            _service = skillService;
         }
         [HttpGet]
         [AllowAnonymous]

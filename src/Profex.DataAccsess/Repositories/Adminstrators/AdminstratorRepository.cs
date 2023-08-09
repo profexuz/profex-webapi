@@ -36,7 +36,7 @@ public class AdminstratorRepository : BaseRepository, IAdminstratorsRepository
 
             string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, " +
                 "image_path, password_hash, salt, created_at, updated_at)" +
-                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @Image_path, @PasswordHash, " +
+                    "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, @PasswordHash, " +
                         "@Salt, @CreatedAt, @UpdatedAt);";
 
             return await _connection.ExecuteAsync(query, entity);
