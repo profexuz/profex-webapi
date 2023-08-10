@@ -19,7 +19,8 @@ public class CategoryCreateValidatorTest
     [InlineData("ASD123!@#!@aadsfASDsdfsA   assdasdas")]
     [InlineData("       ASD123!@#!@aadsfASDA      asda12asdsdasd")]
     [InlineData("asd       Aasd0!@#!@aadsfASDA       asasdasd ")]
-    [InlineData("electronic products, we sell an electronic products to our clients, we sell an electronic products to our clients")]
+    [InlineData("electronic products, we sell an electronic products to our clients, we sell an electronic " +
+        "products to our clients")]
     public void ShouldReturnInValidValidation(string name)
     {
         CategoryCreateDto categoryCreateDto = new CategoryCreateDto()
@@ -27,6 +28,7 @@ public class CategoryCreateValidatorTest
             Name = name,
             Description = "we sell an electronic products to our clients",
         };
+
         var validator = new CategoryCreateValidator();
         var result = validator.Validate(categoryCreateDto);
         Assert.False(result.IsValid);

@@ -6,7 +6,7 @@ namespace Profex.DataAccsess.Interfaces.Users;
 
 public interface IUserRepository : IRepository<User, UserViewModel>, IGetAll<UserViewModel>, ISearchable<UserViewModel>
 {
-    public Task<UserViewModel?> GetByPhoneAsync(string phone);
+    public Task<User?> GetByPhoneAsync(string phone);  
 }
 
 
