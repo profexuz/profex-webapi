@@ -1,14 +1,18 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Memory;
 using Profex.Application.Exceptions;
+using Profex.Application.Exceptions.Auth;
 using Profex.Application.Exceptions.Users;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Users;
+using Profex.Domain.Entities.users;
 using Profex.Persistance.Dtos.Auth;
 using Profex.Persistance.Dtos.Notifications;
 using Profex.Persistance.Dtos.Security;
 using Profex.Persistance.Interfaces.Auth;
 using Profex.Persistance.Interfaces.Notifications;
 using Profex.Persistance.Validations.Dtos;
+using Profex.Service.Common.Security;
 using Profex.Service.Helpers;
 
 namespace Profex.Service.Services.Auth;
@@ -36,11 +40,11 @@ public class AuthService : IAuthService
         this._tokenService = tokenService;
     }
 
-    public AuthService(IMemoryCache memoryCache, IUserRepository userRepository)
+    /*public AuthService(IMemoryCache memoryCache, IUserRepository userRepository)
     {
         this._memoryCache = memoryCache;
         this._userRepository = userRepository;
-    }
+    }*/
     public Task<(bool Result, string Token)> LoginAsync(LoginDto loginDto)
     {
         throw new NotImplementedException();
@@ -95,8 +99,55 @@ public class AuthService : IAuthService
         else throw new UserCacheDataExpiredException();
     }
 
-    public Task<(bool Result, string Token)> VerifyRegisterAsync(string phone, int code)
+    public async Task<(bool Result, string Token)> VerifyRegisterAsync(string phone, int code)
     {
-        throw new NotImplementedException();
+        if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + phone, out RegisterDto registerDto))
+        {
+            if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + phone, out VerificationDto verificationDto))
+            {
+                if (verificationDto.Attempt >= VERIFICATION_MAXIMUM_ATTEMPTS)
+                    throw new VerificationTooManyRequestsException();
+                else if (verificationDto.Code == code)
+                {
+                    var dbResult = await RegisterToDatabaseAsync(registerDto);
+                    if (dbResult is true)
+                    {
+                        var user = await _userRepository.GetByPhoneAsync(phone);
+                        string token = _tokenService.GenerateToken(user);
+                        return (Result: true, Token: token);
+                    }
+                    else return (Result: false, Token: "");
+                }
+                else
+                {
+                    _memoryCache.Remove(VERIFY_REGISTER_CACHE_KEY + phone);
+                    verificationDto.Attempt++;
+                    _memoryCache.Set(VERIFY_REGISTER_CACHE_KEY + phone, verificationDto,
+                        TimeSpan.FromMinutes(CACHED_MINUTES_FOR_VERIFICATION));
+                    return (Result: false, Token: "");
+                }
+            }
+            else throw new VerificationCodeExpiredException();
+        }
+        else throw new UserCacheDataExpiredException();
+    }
+
+    private async Task<bool> RegisterToDatabaseAsync(RegisterDto registerDto)
+    {
+        var user = new User();
+        user.First_name = registerDto.FirstName;
+        user.Last_name = registerDto.LastName;
+        user.Phone_number = registerDto.PhoneNumber;
+        user.Phone_number_confirmed = true;
+
+        var hasherResult = PasswordHasher.Hash(registerDto.Password);
+        user.Password_hash = hasherResult.Hash;
+        user.Salt = hasherResult.Salt;
+
+        user.CreatedAt = user.UpdatedAt = TimeHelper.GetDateTime();
+        //user.IdentityRole = Domain.Enums.IdentityRole.User;
+
+        var dbResult = await _userRepository.CreateAsync(user);
+        return dbResult > 0;
     }
 }

@@ -26,6 +26,7 @@ namespace Profex.WebApi.Controllers
             if (result.IsValid)
             {
                 var serviceResult = await _authService.RegisterAsync(registerDto);
+
                 return Ok(new { serviceResult.Result, serviceResult.CachedMinutes });
             }
             else return BadRequest(result.Errors);
@@ -40,6 +41,25 @@ namespace Profex.WebApi.Controllers
 
             var serviceResult = await _authService.SendCodeForRegisterAsync(phone);
             return Ok(new { serviceResult.Result, serviceResult.CachedVerificationMinutes });
+        }
+
+        [HttpPost("register/verify")]
+        public async Task<IActionResult> VerifyRegisterAsync([FromBody] VerifyRegisterDto verifyRegisterDto)
+        {
+            var serviceResult = await _authService.VerifyRegisterAsync(verifyRegisterDto.PhoneNumber, verifyRegisterDto.Code);
+
+            return Ok(new { serviceResult.Result, serviceResult.Token });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
+        {
+            var validator = new LoginValidator();
+            var valResult = validator.Validate(loginDto);
+            if (valResult.IsValid == false) return BadRequest(valResult.Errors);
+            var serviceResult = await _authService.LoginAsync(loginDto);
+
+            return Ok(new { serviceResult.Result, serviceResult.Token });
         }
     }
 

@@ -46,8 +46,6 @@ public class PostCreateValidatorTest
         Assert.False(res.IsValid);
     }
 
-
-
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
     [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
@@ -86,7 +84,6 @@ public class PostCreateValidatorTest
         var res = validator.Validate(postCreateDto);
         Assert.False(res.IsValid);
     }
-
 
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
@@ -127,8 +124,6 @@ public class PostCreateValidatorTest
         Assert.False(res.IsValid);
     }
 
-
-
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
     [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
@@ -167,8 +162,6 @@ public class PostCreateValidatorTest
         var res = validator.Validate(postCreateDto);
         Assert.False(res.IsValid);
     }
-
-
 
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
@@ -209,9 +202,6 @@ public class PostCreateValidatorTest
         Assert.False(res.IsValid);
     }
 
-
-
-
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
     [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
@@ -251,9 +241,6 @@ public class PostCreateValidatorTest
         Assert.False(res.IsValid);
     }
 
-
-
-
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
     [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
@@ -292,8 +279,4 @@ public class PostCreateValidatorTest
         var res = validator.Validate(postCreateDto);
         Assert.False(res.IsValid);
     }
-
-
-
-
 }

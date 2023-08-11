@@ -7,11 +7,14 @@ using Profex.DataAccsess.Repositories.Users;
 using Profex.Persistance.Interfaces.Auth;
 using Profex.Persistance.Interfaces.Categories;
 using Profex.Persistance.Interfaces.Common;
+using Profex.Persistance.Interfaces.Notifications;
 using Profex.Persistance.Interfaces.Skills;
 using Profex.Service.Services.Auth;
 using Profex.Service.Services.Categories;
 using Profex.Service.Services.Categories.Layers;
+using Profex.Service.Services.Notifications;
 using Profex.Service.Services.Skills;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +30,12 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 
+builder.Services.AddSingleton<ISmsSender, SmsSender>();
 
 //builder.Services.AddScoped<IPaginator, Paginator>();
 builder.Services.AddScoped <IPaginator, Paginator>();
