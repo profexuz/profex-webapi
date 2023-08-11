@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
     <Folder Include="Configurations\" />
     <Folder Include="Accessers\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
