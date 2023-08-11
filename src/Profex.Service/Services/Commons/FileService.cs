@@ -21,7 +21,6 @@ public class FileService : IFileService
 
     public async Task<bool> DeleteImageAsync(string subpath)
     {
-        //throw new NotImplementedException();
         string path = Path.Combine(ROOTPATH, subpath);
         if (File.Exists(path))
         {
