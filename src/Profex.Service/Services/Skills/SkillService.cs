@@ -22,8 +22,11 @@ namespace Profex.Service.Services.Skills
         {
             Skill skill = new Skill()
             {
+                //CategoryId = dto.CategoryId,
                 CategoryId = dto.CategoryId,
+                //Description = dto.Description,
                 Description = dto.Description,
+                //Title = dto.Title,
                 Title = dto.Title,
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime()
@@ -62,8 +65,11 @@ namespace Profex.Service.Services.Skills
         {
             var skills = await _repository.GetByIdAsync(id);
             if (skills is null) throw new SkillNotFoundException();
+            //skills.CategoryId = dto.CategoryId;
             skills.CategoryId = dto.CategoryId;
-            skills.Title = dto.Title;
+            //skills.Title = dto.Title;
+            skills.Title =dto.Title;
+            //skills.Description = dto.Description;
             skills.Description = dto.Description;
             skills.UpdatedAt = TimeHelper.GetDateTime();
             var dbRes = await _repository.UpdateAsync(id, skills);
