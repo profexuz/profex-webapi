@@ -266,13 +266,13 @@ public class AuthService : IAuthService
     private async Task<bool> RegisterToDatabaseAsync(RegisterDto registerDto)
     {
         var user = new User();
-        user.First_name = registerDto.FirstName;
-        user.Last_name = registerDto.LastName;
-        user.Phone_number = registerDto.PhoneNumber;
-        user.Phone_number_confirmed = true;
-        user.Image_path = null;
+        user.FirstName = registerDto.FirstName;
+        user.LastName = registerDto.LastName;
+        user.PhoneNumber = registerDto.PhoneNumber;
+        user.PhoneNumberConfirmed = true;
+        user.ImagePath = null;
         var hasherResult = PasswordHasher.Hash(registerDto.Password);
-        user.Password_hash = hasherResult.Hash;
+        user.PasswordHash = hasherResult.Hash;
         user.Salt = hasherResult.Salt;
 
         user.CreatedAt = user.UpdatedAt = TimeHelper.GetDateTime();
@@ -286,7 +286,7 @@ public class AuthService : IAuthService
         var user = await _userRepository.GetByPhoneAsync(loginDto.PhoneNumber);
         if (user is null) throw new UserNotFoundException();
 
-        var hasherResult = PasswordHasher.Verify(loginDto.Password, user.Password_hash, user.Salt);
+        var hasherResult = PasswordHasher.Verify(loginDto.Password, user.PasswordHash, user.Salt);
         if (hasherResult == false) throw new PasswordNotMatchException();
 
         string token = _tokenService.GenerateToken(user);

@@ -21,11 +21,10 @@ public class TokenService : ITokenService
     {
         var identityClaims = new Claim[]
         {
-            new Claim("id", user.Id.ToString()),
-            //new Claim("FirstName", user.First_name),
-            new Claim("first_name", user.First_name.ToString()),
-            new Claim("last_name", user.Last_name),
-            new Claim(ClaimTypes.MobilePhone, user.Phone_number)
+            new Claim("Id", user.Id.ToString()),
+            new Claim("FirstName", user.FirstName),
+            new Claim("LastName", user.LastName),
+            new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
             //new Claim(ClaimTypes.Role, "User")
         };
 
