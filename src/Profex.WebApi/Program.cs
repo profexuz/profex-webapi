@@ -1,20 +1,7 @@
-using Profex.DataAccsess.Interfaces.Categories;
-using Profex.DataAccsess.Interfaces.Skills;
-using Profex.DataAccsess.Interfaces.Users;
-using Profex.DataAccsess.Repositories.Categories;
-using Profex.DataAccsess.Repositories.Skills;
-using Profex.DataAccsess.Repositories.Users;
-using Profex.Persistance.Interfaces.Auth;
-using Profex.Persistance.Interfaces.Categories;
 using Profex.Persistance.Interfaces.Common;
-using Profex.Persistance.Interfaces.Notifications;
-using Profex.Persistance.Interfaces.Skills;
-using Profex.Service.Services.Auth;
-using Profex.Service.Services.Categories;
 using Profex.Service.Services.Categories.Layers;
-using Profex.Service.Services.Notifications;
-using Profex.Service.Services.Skills;
-using System.Threading.RateLimiting;
+using Profex.WebApi.Configurations.Layers;
+using ProFex.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,19 +11,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
+builder.ConfigureServiceLayer();
+builder.ConfigureDataAccess();
+//builder.Services.AddHttpContextAccessor();
     
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ISkillRepository, SkillRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ISkillService, SkillService>();
-builder.Services.AddScoped<IAuthService,AuthService>();
-
-builder.Services.AddSingleton<ISmsSender, SmsSender>();
-
 //builder.Services.AddScoped<IPaginator, Paginator>();
 builder.Services.AddScoped <IPaginator, Paginator>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -55,7 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
