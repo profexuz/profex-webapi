@@ -21,11 +21,12 @@ public class TokenService : ITokenService
     {
         var identityClaims = new Claim[]
         {
-            new Claim("Id", user.Id.ToString()),
-            new Claim("FirstName", user.First_name),
-            new Claim("Lastname", user.First_name),
-            new Claim(ClaimTypes.MobilePhone, user.Phone_number),
-            new Claim(ClaimTypes.Role, "User")
+            new Claim("id", user.Id.ToString()),
+            //new Claim("FirstName", user.First_name),
+            new Claim("first_name", user.First_name.ToString()),
+            new Claim("last_name", user.Last_name),
+            new Claim(ClaimTypes.MobilePhone, user.Phone_number)
+            //new Claim(ClaimTypes.Role, "User")
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Profex.Application.Exceptions;
 
-namespace OnMed.WebApi.Middlewares
+namespace ProFex.WebApi.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {

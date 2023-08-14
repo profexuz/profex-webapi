@@ -8,8 +8,8 @@ public class BaseRepository
 
     public BaseRepository()
     {
-        Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+        //Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
-        this._connection = new NpgsqlConnection("Host=localhost; Port=5432; Database=Profex; User Id=postgres; Password=0693;");
+        this._connection = new NpgsqlConnection("Host=localhost; Port=5432; Database=PreFix; User Id=postgres; Password=9639;");
     }
 }

@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations\" />
     <Folder Include="Accessers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

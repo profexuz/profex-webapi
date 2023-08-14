@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
-using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Users;
 using Profex.DataAccsess.ViewModels.Users;
 using Profex.Domain.Entities.users;
@@ -37,7 +36,7 @@ namespace Profex.DataAccsess.Repositories.Users
 
                 string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, " +
                     "image_path, password_hash, salt, created_at, updated_at)" +
-                        "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, @PasswordHash, " +
+                        "VALUES (@First_name, @Last_name, @Phone_number, @Phone_number_confirmed, @Image_path, @Password_hash, " +
                             "@Salt, @CreatedAt, @UpdatedAt);";
                 
                 return await _connection.ExecuteAsync(query, entity);
@@ -120,8 +119,8 @@ namespace Profex.DataAccsess.Repositories.Users
             try
             {
                 await _connection.OpenAsync();
-                string query = "SELECT * FROM users phone_number= @PhoneNumber";
-                var data = await _connection.QuerySingleAsync<User>(query, new { PhoneNumber = phone });
+                string query = "SELECT * FROM users where phone_number= @Phone_number";
+                var data = await _connection.QuerySingleAsync<User>(query, new { Phone_number = phone });
 
                 return data;
             }
