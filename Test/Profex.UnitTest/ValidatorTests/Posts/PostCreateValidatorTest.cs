@@ -33,12 +33,12 @@ public class PostCreateValidatorTest
             Category_id = 1,
             User_id = 1,
             Title = title,
-            Price = "1200",
+            Price = 1200,
             Description = "Assalomu alekum hammga c# dasturlash tili zo'r til",
             Region = "Navoi",
             District = "Nimadir",
-            Lattidute = "Nimadir1",
-            Longitude = "NImadir2",
+            Latidute = 1123,
+            Longitude = 12123,
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();
@@ -72,12 +72,12 @@ public class PostCreateValidatorTest
             Category_id = 1,
             User_id = 1,
             Title = "C# program language",
-            Price = price,
+            Price = 312,
             Description = "Assalomu alekum hammga c# dasturlash tili zo'r til",
             Region = "Navoi",
             District = "Nimadir",
-            Lattidute = "Nimadir1",
-            Longitude = "NImadir2",
+            Latidute = 2332,
+            Longitude = 23324,
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();
@@ -111,12 +111,12 @@ public class PostCreateValidatorTest
             Category_id = 1,
             User_id = 1,
             Title = "C# program language",
-            Price = "12000",
+            Price = 12000,
             Description = description,
             Region = "Navoi",
             District = "Nimadir",
-            Lattidute = "Nimadir1",
-            Longitude = "NImadir2",
+            Latidute = 2323,
+            Longitude = 123,
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();
@@ -150,12 +150,12 @@ public class PostCreateValidatorTest
             Category_id = 1,
             User_id = 1,
             Title = "C# program language",
-            Price = "12000",
+            Price = 12000,
             Description = "C# program language is best",
             Region = Region,
             District = "Nimadir",
-            Lattidute = "Nimadir1",
-            Longitude = "NImadir2",
+            Latidute = 123123,
+            Longitude = 3121,
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();
@@ -189,12 +189,12 @@ public class PostCreateValidatorTest
             Category_id = 1,
             User_id = 1,
             Title = "C# program language",
-            Price = "12000",
+            Price = 12000,
             Description = "C# program language is best",
             Region = "Region",
             District = District,
-            Lattidute = "Nimadir1",
-            Longitude = "NImadir2",
+            Latidute = 234,
+            Longitude = 234,
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();
@@ -221,19 +221,19 @@ public class PostCreateValidatorTest
     [InlineData("asd       Aasd0!@#!@aadsfASDA       asasdasd ")]
     [InlineData("electronic products, we sell an electronic products to our clients, we sell an electronic " +
     "products to our clients")]
-    public void Should5ReturnInValidValidation(string Lattidute)
+    public void Should5ReturnInValidValidation(string Latidute)
     {
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             Category_id = 1,
             User_id = 1,
             Title = "C# program language",
-            Price = "12000",
+            Price = 234,
             Description = "C# program language is best",
             Region = "Region",
             District = "ADAFDDFDFDF",
-            Lattidute = Lattidute,
-            Longitude = "NImadir2",
+            Latidute = Convert.ToDouble(Latidute),
+            Longitude = 234,
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();
@@ -267,12 +267,12 @@ public class PostCreateValidatorTest
             Category_id = 1,
             User_id = 1,
             Title = "C# program language",
-            Price = "12000",
+            Price = 234,
             Description = "C# program language is best",
             Region = "asdsdfsdf",
-            District = "Nimadir",
-            Lattidute = "Nimadir1",
-            Longitude = Longitude,
+            District = "adfsdf",
+            Latidute = 12,
+            Longitude = Convert.ToDouble(Longitude),
             Phone_number = "+998900090909"
         };
         var validator = new PostCreateValidator();

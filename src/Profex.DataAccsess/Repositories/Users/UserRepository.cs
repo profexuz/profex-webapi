@@ -3,6 +3,7 @@ using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Users;
 using Profex.DataAccsess.ViewModels.Users;
 using Profex.Domain.Entities.users;
+using static Dapper.SqlMapper;
 
 namespace Profex.DataAccsess.Repositories.Users
 {
@@ -80,9 +81,9 @@ namespace Profex.DataAccsess.Repositories.Users
                     $"order by id desc " +
                         $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
 
-                var res = (await _connection.QueryAsync<User>(query)).ToList();
-
+                var res = (await _connection.QueryAsync<UserViewModel>(query)).ToList();
                 return (IList<UserViewModel>)res;
+                //return (IList<UserViewModel>)res;
             }
             catch 
             { 
@@ -146,6 +147,33 @@ namespace Profex.DataAccsess.Repositories.Users
                                 $"WHERE id = {id};";
 
                 var res = await _connection.ExecuteAsync(query, entity);
+
+                return res;
+            }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
+
+        public async Task<int> UpdateAsync(long id, UserViewModel userss)
+        {
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+
+                string query = $"UPDATE public.users" +
+                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
+                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
+                            $"password_hash=@PasswordHash, salt=@Salt, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                $"WHERE id = {id};";
+
+                var res = await _connection.ExecuteAsync(query, userss);
 
                 return res;
             }

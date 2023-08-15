@@ -23,12 +23,12 @@ public class UserCreateValidatorTest
         IFormFile imageFile = new FormFile(new MemoryStream(byteImage), 0, imageSizeInBytes, "data", "file.png");
         UserCreateDto userCreateDto = new UserCreateDto()
         {
-            First_name = "ozodbek",
-            Last_name = "Jumaqulov",
-            Phone_number = "+998901234567",
-            Phone_number_confirmed = true,
-            Image_path = imageFile,
-            Password_hash = "AAaa11@@",
+            FirstName = "ozodbek",
+            LastName = "Jumaqulov",
+            PhoneNumber = "+998901234567",
+            PhoneNumberConfirmed = true,
+            ImagePath = imageFile,
+            PasswordHash = "AAaa11@@",
             Salt = "AAaa@@11"
         };
         var validator = new UserCreateValidator();
@@ -61,12 +61,12 @@ public class UserCreateValidatorTest
         IFormFile imageFile = new FormFile(new MemoryStream(byteImage), 0, imageSizeInBytes, "data", "file.png");
         UserCreateDto userCreateDto = new UserCreateDto()
         {
-            First_name = name,
-            Last_name = "Example",
-            Phone_number = "+998770079639",
-            Phone_number_confirmed = true,
-            Image_path = imageFile,
-            Password_hash = "AAaa11##"
+            FirstName = name,
+            LastName = "Example",
+            PhoneNumber= "+998770079639",
+            PhoneNumberConfirmed = true,
+            ImagePath = imageFile,
+            PasswordHash = "AAaa11##"
         };
         var validator = new UserCreateValidator();
         var result = validator.Validate(userCreateDto);
@@ -101,12 +101,12 @@ public class UserCreateValidatorTest
         IFormFile imageFile = new FormFile(new MemoryStream(byteImage), 0, imageSizeInBytes, "data", "file.png");
         UserCreateDto userCreateDto = new UserCreateDto()
         {
-            First_name = "Example",
-            Last_name = lastname,
-            Phone_number = "+998770079639",
-            Phone_number_confirmed = true,
-            Image_path = imageFile,
-            Password_hash = "AAaa11##"
+            FirstName = "Example",
+            LastName = lastname,
+            PhoneNumber = "+998770079639",
+            PhoneNumberConfirmed = true,
+            ImagePath = imageFile,
+            PasswordHash = "AAaa11##"
         };
         var validator = new UserCreateValidator();
         var result = validator.Validate(userCreateDto);
