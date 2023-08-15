@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Categories;
-using Profex.Persistance.Interfaces.Categories;
+using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Common.Category
 {

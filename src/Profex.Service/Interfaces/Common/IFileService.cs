@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Profex.Persistance.Interfaces.Common
+namespace Profex.Service.Interfaces.Common
 {
     public interface IFileService
     {

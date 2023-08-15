@@ -1,6 +1,6 @@
 ﻿using Profex.Application.Utils;
 
-namespace Profex.Persistance.Interfaces.Common
+namespace Profex.Service.Interfaces.Common
 {
     public interface IPaginator
     {

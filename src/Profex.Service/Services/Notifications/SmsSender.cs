@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Profex.Persistance.Dtos.Notifications;
-using Profex.Persistance.Interfaces.Notifications;
+using Profex.Service.Interfaces.Notifactions;
 using System.Net;
-using System.Net.Http.Headers;
 
 namespace Profex.Service.Services.Notifications;
 

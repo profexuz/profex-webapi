@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.Domain.Entities.users;
-using Profex.Persistance.Interfaces.Auth;
+using Profex.Service.Interfaces.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -25,7 +25,6 @@ public class TokenService : ITokenService
             new Claim("FirstName", user.FirstName),
             new Claim("LastName", user.LastName),
             new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
-            //new Claim(ClaimTypes.Role, "User")
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));

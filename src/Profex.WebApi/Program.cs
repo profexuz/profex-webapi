@@ -1,4 +1,4 @@
-using Profex.Persistance.Interfaces.Common;
+using Profex.Service.Interfaces.Common;
 using Profex.Service.Services.Categories.Layers;
 using Profex.WebApi.Configurations.Layers;
 using ProFex.WebApi.Middlewares;
@@ -14,15 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 builder.ConfigureServiceLayer();
 builder.ConfigureDataAccess();
-//builder.Services.AddHttpContextAccessor();
-    
-//builder.Services.AddScoped<IPaginator, Paginator>();
-builder.Services.AddScoped <IPaginator, Paginator>();
+builder.Services.AddScoped<IPaginator, Paginator>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-//builder.Services.AddScoped<IPaginator, Paginator>();
-
-
-
 
 var app = builder.Build();
 
