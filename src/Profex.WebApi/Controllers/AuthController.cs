@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.Auth;
-using Profex.Persistance.Interfaces.Auth;
 using Profex.Persistance.Validations.Dtos;
 using Profex.Persistance.Validations.Dtos.Auth;
+using Profex.Service.Interfaces.Auth;
 
 namespace Profex.WebApi.Controllers
 {

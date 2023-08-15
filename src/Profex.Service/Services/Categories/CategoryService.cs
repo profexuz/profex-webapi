@@ -1,29 +1,21 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Profex.Application.Exceptions.Users;
+﻿using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
 using Profex.Persistance.Dtos.Categories;
-using Profex.Persistance.Interfaces.Categories;
-using Profex.Persistance.Interfaces.Common;
+using Profex.Service.Interfaces.Categories;
+using Profex.Service.Interfaces.Common;
 
 namespace Profex.Service.Services.Categories;
-
 public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _repository;
-    //private readonly IFileService _fileService;
-    //private readonly IMemoryCache _memoryCache;
     private readonly IPaginator _paginator;
     public CategoryService(ICategoryRepository categoryRepository,
-        //IFileService fileService,
-        //IMemoryCache memoryCache,
         IPaginator paginator)
     {
         this._repository = categoryRepository;
-        //this._fileService = fileService;
-        //this._memoryCache = memoryCache;
         this._paginator = paginator;
     }
 

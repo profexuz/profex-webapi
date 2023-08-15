@@ -1,8 +1,8 @@
-﻿using Profex.Persistance.Interfaces.Auth;
-using Profex.Persistance.Interfaces.Categories;
-using Profex.Persistance.Interfaces.Common;
-using Profex.Persistance.Interfaces.Notifications;
-using Profex.Persistance.Interfaces.Skills;
+﻿using Profex.Service.Interfaces.Auth;
+using Profex.Service.Interfaces.Categories;
+using Profex.Service.Interfaces.Common;
+using Profex.Service.Interfaces.Notifactions;
+using Profex.Service.Interfaces.Skills;
 using Profex.Service.Services.Auth;
 using Profex.Service.Services.Categories;
 using Profex.Service.Services.Common;

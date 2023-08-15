@@ -1,6 +1,6 @@
 ﻿using Profex.Domain.Entities.users;
 
-namespace Profex.Persistance.Interfaces.Auth
+namespace Profex.Service.Interfaces.Auth
 {
     public interface ITokenService
     {

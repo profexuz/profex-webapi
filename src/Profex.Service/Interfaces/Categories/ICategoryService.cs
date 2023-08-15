@@ -2,7 +2,7 @@
 using Profex.Domain.Entities.Categories;
 using Profex.Persistance.Dtos.Categories;
 
-namespace Profex.Persistance.Interfaces.Categories
+namespace Profex.Service.Interfaces.Categories
 {
     public interface ICategoryService
     {

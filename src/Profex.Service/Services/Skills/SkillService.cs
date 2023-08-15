@@ -4,8 +4,8 @@ using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Skills;
 using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Skills;
-using Profex.Persistance.Interfaces.Common;
-using Profex.Persistance.Interfaces.Skills;
+using Profex.Service.Interfaces.Common;
+using Profex.Service.Interfaces.Skills;
 
 namespace Profex.Service.Services.Skills
 {
@@ -22,11 +22,8 @@ namespace Profex.Service.Services.Skills
         {
             Skill skill = new Skill()
             {
-                //CategoryId = dto.CategoryId,
                 CategoryId = dto.CategoryId,
-                //Description = dto.Description,
                 Description = dto.Description,
-                //Title = dto.Title,
                 Title = dto.Title,
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime()
@@ -65,11 +62,8 @@ namespace Profex.Service.Services.Skills
         {
             var skills = await _repository.GetByIdAsync(id);
             if (skills is null) throw new SkillNotFoundException();
-            //skills.CategoryId = dto.CategoryId;
             skills.CategoryId = dto.CategoryId;
-            //skills.Title = dto.Title;
             skills.Title =dto.Title;
-            //skills.Description = dto.Description;
             skills.Description = dto.Description;
             skills.UpdatedAt = TimeHelper.GetDateTime();
             var dbRes = await _repository.UpdateAsync(id, skills);

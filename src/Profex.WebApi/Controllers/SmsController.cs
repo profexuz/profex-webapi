@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.Notifications;
-using Profex.Persistance.Interfaces.Auth;
-using Profex.Persistance.Interfaces.Notifications;
+//using Profex.Persistance.Interfaces.Auth;
+using Profex.Service.Interfaces.Notifactions;
+//using Profex.Persistance.Interfaces.Notifications
 
 namespace Profex.WebApi.Controllers;
 
@@ -11,12 +11,12 @@ namespace Profex.WebApi.Controllers;
 public class SmsController : ControllerBase
 {
     private readonly ISmsSender _smsSender;
-    private readonly IIdentityService _identity;
-
-    public SmsController(ISmsSender smsSender, IIdentityService identityService)
+    //private readonly IIdentityService _identity;
+    //IIdentityService identityService - service qoldirilib ketildi
+    public SmsController(ISmsSender smsSender)
     {
         this._smsSender = smsSender;
-        this._identity = identityService;
+        //this._identity = identityService;
     }
 
     [HttpPost]

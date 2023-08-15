@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Profex.Persistance.Interfaces.Common;
 using Profex.Service.Helpers;
+using Profex.Service.Interfaces.Common;
 
 namespace Profex.Service.Services.Common;
 

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.Categories;
 using Profex.Persistance.Dtos.Skills;
-using Profex.Persistance.Interfaces.Skills;
+using Profex.Service.Interfaces.Skills;
 
 namespace Profex.WebApi.Controllers.Common.Skill
 {

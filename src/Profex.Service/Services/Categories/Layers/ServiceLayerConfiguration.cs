@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Profex.Application.Utils;
-using Profex.Persistance.Interfaces.Common;
+using Profex.Service.Interfaces.Common;
 
 namespace Profex.Service.Services.Categories.Layers;
 
