@@ -27,12 +27,19 @@ public class PostCreateValidator : AbstractValidator<PostCreateDto>
 
         RuleFor(dto => dto.Latidute).NotEmpty().NotNull().WithMessage("Lattidute is required!");
 
-
         RuleFor(dto => dto.Longitude).NotEmpty().NotNull().WithMessage("Longitude is required!");
             
 
         RuleFor(dto => dto.Phone_number).Must(phone => PhoneNumberValidator.IsValid(phone))
             .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");
 
+        RuleFor(dto => dto.Price).Must(price => PriceValidator.IsValid(price))
+            .WithMessage("You entered the wrong price length or entered a negative number!");
+
+        RuleFor(dto => dto.Latidute).Must(latitude => LatiduteValidator.IsValid(latitude))
+            .WithMessage("you entered a negative number");
+
+        RuleFor(dto => dto.Longitude).Must(longitude => LatiduteValidator.IsValid(longitude))
+            .WithMessage("you entered a negative number");
     }
 }
