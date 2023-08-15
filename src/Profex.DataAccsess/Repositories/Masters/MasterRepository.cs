@@ -116,6 +116,11 @@ namespace Profex.DataAccsess.Repositories.Masters
             }
         }
 
+        public Task<Master?> GetByPhoneAsync(string phone)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {
             try
