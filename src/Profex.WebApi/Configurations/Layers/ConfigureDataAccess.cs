@@ -12,6 +12,7 @@ namespace Profex.WebApi.Configurations.Layers
         public static void ConfigureDataAccess(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();  
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ISkillRepository, SkillRepository>();
         }

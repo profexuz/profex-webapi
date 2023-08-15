@@ -1,7 +1,6 @@
 ﻿using Profex.Application.Utils;
 using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Posts;
-using Profex.Persistance.Dtos.Skills;
 
 namespace Profex.Service.Interfaces.Posts;
 

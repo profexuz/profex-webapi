@@ -1,21 +1,39 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Auth;
 using Profex.Persistance.Validations.Dtos;
 using Profex.Persistance.Validations.Dtos.Auth;
 using Profex.Service.Interfaces.Auth;
+using Profex.Service.Interfaces.Users;
 
-namespace Profex.WebApi.Controllers.Common
+namespace Profex.WebApi.Controllers.User
 {
-    [Route("api/auth")]
+    [Route("api/user")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class UserController : ControllerBase
     {
+        private readonly int maxPageSize = 30;
+        private readonly IUserService _service;
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+        public UserController(IUserService service, IAuthService authService)
         {
-            _authService = authService;
+            this._service = service;
+            this._authService = authService;
         }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
+            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+
+
+        [HttpGet("{userId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdAsync(long userId)
+        => Ok(await _service.GetByIdAsync(userId));
+
+
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromForm] RegisterDto registerDto)
@@ -60,6 +78,6 @@ namespace Profex.WebApi.Controllers.Common
 
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
-    }
 
+    }
 }
