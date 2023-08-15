@@ -40,16 +40,16 @@ namespace Profex.WebApi.Controllers.Common.Category
             //else return BadRequest(result.Errors);
         }
 
-        [HttpPut("(catrgoryId)")]
-        //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
-        {
-            //var validator = new CompanyUpdateValidator();
-            //var validationResult = validator.Validate(dto);
-            //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(companyId, dto));
-            //else return BadRequest(validationResult.Errors);
-            return Ok(await _service.UpdateAsync(categoryId, dto));
-        }
+            [HttpPut("(catrgoryId)")]
+            //[Authorize(Roles = "Admin")]
+            public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
+            {
+                //var validator = new CompanyUpdateValidator();
+                //var validationResult = validator.Validate(dto);
+                //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(companyId, dto));
+                //else return BadRequest(validationResult.Errors);
+                return Ok(await _service.UpdateAsync(categoryId, dto));
+            }
 
         [HttpDelete("{categoryId}")]
         //[Authorize(Roles = "Admin")]

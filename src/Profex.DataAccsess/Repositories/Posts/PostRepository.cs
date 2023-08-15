@@ -36,7 +36,7 @@ namespace Profex.DataAccsess.Repositories.Posts
                 string query = "INSERT INTO public.posts(category_id, user_id, title, price, description, region, " +
                     "district, longitude, latitude, phone_number, created_at, updated_at)" +
                         "VALUES (@CategoryId, @UserId, @Title, @Price, @Description, @Region, @District, @Longitude, " +
-                            "@Latitude, @PhoneNumber, @CreatedAt, @UpdatedAt);";
+                            "@Latidute, @PhoneNumber, @CreatedAt, @UpdatedAt);";
 
                 var result = await _connection.ExecuteAsync(query, entity);
 

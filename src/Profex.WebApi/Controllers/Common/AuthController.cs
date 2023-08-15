@@ -5,7 +5,7 @@ using Profex.Persistance.Validations.Dtos;
 using Profex.Persistance.Validations.Dtos.Auth;
 using Profex.Service.Interfaces.Auth;
 
-namespace Profex.WebApi.Controllers
+namespace Profex.WebApi.Controllers.Common
 {
     [Route("api/auth")]
     [ApiController]
@@ -14,7 +14,7 @@ namespace Profex.WebApi.Controllers
         private readonly IAuthService _authService;
         public AuthController(IAuthService authService)
         {
-            this._authService = authService;
+            _authService = authService;
         }
 
         [HttpPost("register")]

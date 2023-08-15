@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Folder Include="Accessers\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\storage\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,14 +3,14 @@ namespace Profex.Domain.Entities.posts;
 
 public class Post : Auditable
 {
-    public long Category_id { get; set; }
-    public long User_id { get; set; }
+    public long CategoryId { get; set; }
+    public long UserId { get; set; }
     public string Title { get; set; } = string.Empty;
-    public string Price { get; set; } = string.Empty;
+    public double Price { get; set; }
     public string Description { get; set; } = string.Empty;
     public string Region { get; set; } = string.Empty;
     public string District { get; set; } = string.Empty;
-    public string Lattidute { get; set; } = string.Empty;
-    public string Longitude { get; set; } = string.Empty;
-    public string Phone_number { get; set; } = string.Empty;
+    public double Latidute { get; set; }
+    public double Longitude { get; set; }
+    public string PhoneNumber { get; set; } = string.Empty;
 }
