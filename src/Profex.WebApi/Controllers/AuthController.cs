@@ -7,7 +7,7 @@ using Profex.Service.Interfaces.Auth;
 
 namespace Profex.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {

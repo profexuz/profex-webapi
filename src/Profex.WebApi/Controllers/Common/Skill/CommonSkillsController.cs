@@ -6,14 +6,14 @@ using Profex.Service.Interfaces.Skills;
 
 namespace Profex.WebApi.Controllers.Common.Skill
 {
-    [Route("api/[controller]")]
+    [Route("api/common/skills")]
     [ApiController]
-    public class SkillsController : ControllerBase
+    public class CommonSkillsController : ControllerBase
     {
         private readonly ISkillService _service;
         private readonly int maxPageSize = 30;
 
-        public SkillsController(ISkillService skillService)
+        public CommonSkillsController(ISkillService skillService)
         {
             _service = skillService;
         }
