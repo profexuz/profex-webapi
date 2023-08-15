@@ -9,4 +9,5 @@ public interface IMasterRepository : IRepository<Master, MasterViewModel>, IGetA
 {
     public Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params);
     public Task<int> SearchCountAsync(string search);
+    public Task<Master?> GetByPhoneAsync(string phone);
 }
