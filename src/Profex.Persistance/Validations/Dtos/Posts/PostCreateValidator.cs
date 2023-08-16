@@ -30,7 +30,7 @@ public class PostCreateValidator : AbstractValidator<PostCreateDto>
         RuleFor(dto => dto.Longitude).NotEmpty().NotNull().WithMessage("Longitude is required!");
             
 
-        RuleFor(dto => dto.Phone_number).Must(phone => PhoneNumberValidator.IsValid(phone))
+        RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))
             .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");
 
         RuleFor(dto => dto.Price).Must(price => PriceValidator.IsValid(price))

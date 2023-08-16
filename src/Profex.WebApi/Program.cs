@@ -31,6 +31,7 @@ app.UseStaticFiles();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthorization();
 
+
 app.MapControllers();
 
 

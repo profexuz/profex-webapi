@@ -77,10 +77,8 @@ namespace Profex.DataAccsess.Repositories.Posts
             try
             {
                 await _connection.OpenAsync();
-
-                string query = $"SELECT * FROM public.posts ORDER BY id desc offset {@params.GetSkipCount} " +
-                    $"limit {@params.PageSize}";
-
+                string query = $"SELECT * FROM public.posts ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+                
                 var resMas = (await _connection.QueryAsync<Post>(query)).ToList();
 
                 return resMas;
@@ -163,11 +161,10 @@ namespace Profex.DataAccsess.Repositories.Posts
             try
             {
                 await _connection.OpenAsync();
-
-                string query = $"UPDATE public.posts SET category_id=@CategoryId, user_id=@UserId, title=@Title, " +
-                        $"price=@Price, description=@Description, region=@Region, district=@District, " +
-                            $"longitude=@Longitude, latitude=@Latitude, phone_number=@PhoneNumber, " +
-                                $"created_at=@CreatedAt, updated_at=@UpdatedAt WHERE id = {id};";
+                string query = "UPDATE public.posts SET category_id = @CategoryId, user_id = @UserId, title = @Title, " +
+                    "price = @Price, description = @Description, region = @Region, district = @District, " +
+                        "longitude = @Longitude, latitude = @Latitude, phone_number = @PhoneNumber, " +
+                            "created_at = @CreatedAt, updated_at = @UpdatedAt WHERE id = @Id;";
 
                 var res = await _connection.ExecuteAsync(query, entity);
 

@@ -27,7 +27,7 @@ namespace Profex.WebApi.Controllers.User
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{postId}")]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetByIdAsync(long postId)
         => Ok(await _service.GetByIdAsync(postId));
 
