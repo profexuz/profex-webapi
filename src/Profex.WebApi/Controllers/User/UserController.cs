@@ -23,7 +23,7 @@ namespace Profex.WebApi.Controllers.User
         }
         
         [HttpGet]
-        [AllowAnonymous]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 

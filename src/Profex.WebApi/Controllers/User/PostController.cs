@@ -27,7 +27,7 @@ namespace Profex.WebApi.Controllers.User
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{postId}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetByIdAsync(long postId)
         => Ok(await _service.GetByIdAsync(postId));
 
@@ -56,6 +56,7 @@ namespace Profex.WebApi.Controllers.User
         }
 
         [HttpDelete("{categoryId}")]
+        //[Authorize(Roles = "User")]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long postId)
             => Ok(await _service.DeleteAsync(postId));

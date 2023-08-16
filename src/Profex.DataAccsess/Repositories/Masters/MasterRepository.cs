@@ -116,9 +116,26 @@ namespace Profex.DataAccsess.Repositories.Masters
             }
         }
 
-        public Task<Master?> GetByPhoneAsync(string phone)
+        public async Task<Master?> GetByPhoneAsync(string phone)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+
+                string query = "SELECT * FROM public.masters WHERE phone_number=@PhoneNumber;";
+                var result = await _connection.QueryFirstOrDefaultAsync<Master>(query, new { PhoneNumber = phone });
+
+                return result; 
+            }
+            catch(Exception ex)
+            {
+                
+                throw new Exception(ex.Message); 
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
 
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
