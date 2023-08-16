@@ -7,7 +7,7 @@ using Profex.Service.Interfaces.Posts;
 
 namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
 {
-    [Route("api/[controller]")]
+    [Route("api/master/masterPost")]
     [ApiController]
     public class MasterCommonPostController : MasterBaseController
     {

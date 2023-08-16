@@ -6,6 +6,6 @@ namespace Profex.WebApi.Controllers.Master;
 
 
 [ApiController]
-[Authorize(Roles = "Master")]
+//[Authorize(Roles = "Master")]
 public class MasterBaseController : ControllerBase
 {}
