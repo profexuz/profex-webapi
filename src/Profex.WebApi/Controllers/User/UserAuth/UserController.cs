@@ -7,7 +7,7 @@ using Profex.Persistance.Validations.Dtos.Auth;
 using Profex.Service.Interfaces.Auth;
 using Profex.Service.Interfaces.Users;
 
-namespace Profex.WebApi.Controllers.User
+namespace Profex.WebApi.Controllers.User.UserAuth
 {
     [Route("api/user")]
     [ApiController]
@@ -18,10 +18,10 @@ namespace Profex.WebApi.Controllers.User
         private readonly IAuthService _authService;
         public UserController(IUserService service, IAuthService authService)
         {
-            this._service = service;
-            this._authService = authService;
+            _service = service;
+            _authService = authService;
         }
-        
+
         [HttpGet]
         //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)

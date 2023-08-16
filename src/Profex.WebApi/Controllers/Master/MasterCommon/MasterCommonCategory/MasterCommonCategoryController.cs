@@ -7,7 +7,7 @@ using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonCategory
 {
-    [Route("api/[controller]")]
+    [Route("api/master/masterCategory")]
     [ApiController]
     public class MasterCommonCategoryController : MasterBaseController
     {
@@ -28,7 +28,7 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonCategory
         public async Task<IActionResult> GetByIdAsync(long categoryId)
         => Ok(await _service.GetByIdAsync(categoryId));
 
-        [HttpPost]
+        /*[HttpPost]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
         {
@@ -55,6 +55,6 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonCategory
         [HttpDelete("{categoryId}")]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long categoryId)
-            => Ok(await _service.DeleteAsync(categoryId));
+            => Ok(await _service.DeleteAsync(categoryId));*/
     }
 }
