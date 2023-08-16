@@ -5,7 +5,7 @@ using Profex.Persistance.Validations.Dtos;
 using Profex.Persistance.Validations.Dtos.MasterAuth;
 using Profex.Service.Interfaces.MasterAuth;
 
-namespace Profex.WebApi.Controllers.MasterAuth
+namespace Profex.WebApi.Controllers.Master.MasterAuth
 {
     [Route("api/master")]
     [ApiController]
@@ -14,7 +14,7 @@ namespace Profex.WebApi.Controllers.MasterAuth
         private readonly IAuthMasterService _authMasterService;
         public MasterAuthController(IAuthMasterService authMasterService)
         {
-            this._authMasterService = authMasterService;
+            _authMasterService = authMasterService;
         }
 
         [HttpPost("register")]
