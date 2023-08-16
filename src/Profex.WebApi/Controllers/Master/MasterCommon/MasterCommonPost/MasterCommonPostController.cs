@@ -2,21 +2,19 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.Categories;
 using Profex.Persistance.Dtos.Posts;
-using Profex.Service.Interfaces.Categories;
 using Profex.Service.Interfaces.Posts;
 
-namespace Profex.WebApi.Controllers.User
+namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
 {
-    [Route("api/post")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class PostController : ControllerBase
+    public class MasterCommonPostController : MasterBaseController
     {
         private readonly int maxPageSize = 30;
         private readonly IPostService _service;
 
-        public PostController(IPostService Postservice)
+        public MasterCommonPostController(IPostService Postservice)
         {
             _service = Postservice;
         }
