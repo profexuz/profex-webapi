@@ -51,7 +51,7 @@ namespace Profex.WebApi.Controllers.Master.MasterAuth
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        [HttpPost("login/master-login")]
+        [HttpPost("register/login")]
         public async Task<IActionResult> LoginAsync([FromForm] LoginDto loginDto)
         {
             var validator = new LoginValidator();
