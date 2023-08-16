@@ -2,36 +2,36 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.Skills;
-using Profex.Service.Interfaces.Skills;
+using Profex.Persistance.Dtos.Posts;
+using Profex.Service.Interfaces.Posts;
 
-namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonSkill
+namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
 {
-    [Route("api/master/masterSkill")]
+    [Route("api/user/post")]
     [ApiController]
-    public class MasterCommonSkillController : MasterBaseController
+    public class UserPostController : UserBaseController
     {
-        private readonly ISkillService _service;
         private readonly int maxPageSize = 30;
+        private readonly IPostService _service;
 
-        public MasterCommonSkillController(ISkillService skillService)
+        public UserPostController(IPostService Postservice)
         {
-            _service = skillService;
-        }
+            _service = Postservice;
+        }   
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        [HttpGet("{id}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long id)
-            => Ok(await _service.GetByIdAsync(id));
+        [HttpGet("{postId}")]
+        //[Authorize(Roles = "User")]
+        public async Task<IActionResult> GetByIdAsync(long postId)
+        => Ok(await _service.GetByIdAsync(postId));
 
         [HttpPost]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateAsync([FromForm] SkillCreateDto dto)
+        public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)
         {
             //var validator = new CompanyCreateValidator();
             //var result = validator.Validate(dto);
@@ -42,21 +42,21 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonSkill
             //else return BadRequest(result.Errors);
         }
 
-        [HttpPut("(id)")]
+        [HttpPut("{postId}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long id, [FromForm] SkillUpdateDto dto)
+        public async Task<IActionResult> UpdateAsync(long postId, [FromForm] PostUpdateDto dto)
         {
             //var validator = new CompanyUpdateValidator();
             //var validationResult = validator.Validate(dto);
             //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(companyId, dto));
             //else return BadRequest(validationResult.Errors);
-
-            return Ok(await _service.UpdateAsync(id, dto));
+            return Ok(await _service.UpdateAsync(postId, dto));
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{categoryId}")]
+        //[Authorize(Roles = "User")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long id)
-            => Ok(await _service.DeleteAsync(id));
+        public async Task<IActionResult> DeleteAsync(long postId)
+            => Ok(await _service.DeleteAsync(postId));
     }
 }

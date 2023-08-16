@@ -9,7 +9,7 @@ using Profex.Service.Interfaces.Posts;
 
 namespace Profex.WebApi.Controllers.Common.Post
 {
-    [Route("api/post")]
+    [Route("api/common/post")]
     [ApiController]
     public class CommonPostController : ControllerBase
     {

@@ -7,13 +7,13 @@ using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonCategory
 {
-    [Route("api/master/masterCategory")]
+    [Route("api/master/category")]
     [ApiController]
-    public class MasterCommonCategoryController : MasterBaseController
+    public class MasterCategoryController : MasterBaseController
     {
         private readonly ICategoryService _service;
         private readonly int maxPageSize = 30;
-        public MasterCommonCategoryController(ICategoryService Categoryservice)
+        public MasterCategoryController(ICategoryService Categoryservice)
         {
             _service = Categoryservice;
         }

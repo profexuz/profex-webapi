@@ -2,35 +2,36 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.Categories;
-using Profex.Service.Interfaces.Categories;
+using Profex.Persistance.Dtos.Posts;
+using Profex.Service.Interfaces.Posts;
 
-namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonCategory
+namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
 {
-    [Route("api/user/userCategory")]
+    [Route("api/master/post")]
     [ApiController]
-    public class UserCommonCategoryController : UserBaseController
+    public class MasterPostController : MasterBaseController
     {
-        private readonly ICategoryService _service;
         private readonly int maxPageSize = 30;
-        public UserCommonCategoryController(ICategoryService Categoryservice)
+        private readonly IPostService _service;
+
+        public MasterPostController(IPostService Postservice)
         {
-            _service = Categoryservice;
+            _service = Postservice;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-        => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        [HttpGet("{categoryId}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long categoryId)
-        => Ok(await _service.GetByIdAsync(categoryId));
+        [HttpGet("{postId}")]
+        //[Authorize(Roles = "User")]
+        public async Task<IActionResult> GetByIdAsync(long postId)
+        => Ok(await _service.GetByIdAsync(postId));
 
-        /*[HttpPost]
+        [HttpPost]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
+        public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)
         {
             //var validator = new CompanyCreateValidator();
             //var result = validator.Validate(dto);
@@ -41,20 +42,21 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonCategory
             //else return BadRequest(result.Errors);
         }
 
-        [HttpPut("(catrgoryId)")]
+        [HttpPut("{postId}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
+        public async Task<IActionResult> UpdateAsync(long postId, [FromForm] PostUpdateDto dto)
         {
             //var validator = new CompanyUpdateValidator();
             //var validationResult = validator.Validate(dto);
             //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(companyId, dto));
             //else return BadRequest(validationResult.Errors);
-            return Ok(await _service.UpdateAsync(categoryId, dto));
+            return Ok(await _service.UpdateAsync(postId, dto));
         }
 
         [HttpDelete("{categoryId}")]
+        //[Authorize(Roles = "User")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long categoryId)
-            => Ok(await _service.DeleteAsync(categoryId));*/
+        public async Task<IActionResult> DeleteAsync(long postId)
+            => Ok(await _service.DeleteAsync(postId));
     }
 }
