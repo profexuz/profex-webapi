@@ -8,6 +8,7 @@ using Profex.Service.Interfaces.Skills;
 using Profex.Service.Interfaces.Users;
 using Profex.Service.Services.Auth;
 using Profex.Service.Services.Categories;
+using Profex.Service.Services.Categories.Layers;
 using Profex.Service.Services.Common;
 using Profex.Service.Services.MasterAuth;
 using Profex.Service.Services.Notifications;
@@ -26,6 +27,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IPaginator, Paginator>();
             builder.Services.AddScoped<IAuthMasterService, AuthMasterService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<ISmsSender, SmsSender>();

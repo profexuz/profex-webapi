@@ -19,12 +19,12 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonCategory
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{categoryId}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long categoryId)
         => Ok(await _service.GetByIdAsync(categoryId));
 
