@@ -1,4 +1,5 @@
-﻿using Profex.Application.Exceptions.Users;
+﻿using Profex.Application.Exceptions.Categories;
+using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;
@@ -55,19 +56,19 @@ public class CategoryService : ICategoryService
     public async Task<Category> GetByIdAsync(long categoryId)
     {
         var category = await _repository.GetByIdAsync(categoryId);
-        if (category is null) throw new UserNotFoundException();
+        if (category is null) throw new CategoryNotFoundException();
 
         return category;
     }
 
     public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto)
     {
-        var categroy = await _repository.GetByIdAsync(categoryId);
-        if(categroy is null) throw new UserNotFoundException();
-        categroy.Name = dto.Name;
-        categroy.Description=dto.Description;
-        categroy.UpdatedAt = TimeHelper.GetDateTime();
-        var dbres = await _repository.UpdateAsync(categoryId, categroy);
+        var category = await _repository.GetByIdAsync(categoryId);
+        if(category is null) throw new CategoryNotFoundException();
+        category.Name = dto.Name;
+        category.Description=dto.Description;
+        category.UpdatedAt = TimeHelper.GetDateTime();
+        var dbres = await _repository.UpdateAsync(categoryId, category);
 
         return dbres > 0;
     }
