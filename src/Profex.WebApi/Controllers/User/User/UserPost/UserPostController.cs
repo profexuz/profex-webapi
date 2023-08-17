@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Posts;
@@ -20,7 +19,6 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
         }   
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
@@ -30,7 +28,6 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
         => Ok(await _service.GetByIdAsync(postId));
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)
         {
             //var validator = new CompanyCreateValidator();

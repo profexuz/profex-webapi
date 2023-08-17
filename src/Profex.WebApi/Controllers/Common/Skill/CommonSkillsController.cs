@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.Skills;
 using Profex.Service.Interfaces.Skills;
 
 namespace Profex.WebApi.Controllers.Common.Skill
@@ -19,12 +18,14 @@ namespace Profex.WebApi.Controllers.Common.Skill
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetByIdAsync(long id)
             => Ok(await _service.GetByIdAsync(id));      
     }

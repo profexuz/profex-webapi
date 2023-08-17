@@ -20,7 +20,7 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
@@ -44,6 +44,7 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
 
         [HttpPut("{postId}")]
         //[Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> UpdateAsync(long postId, [FromForm] PostUpdateDto dto)
         {
             //var validator = new CompanyUpdateValidator();
