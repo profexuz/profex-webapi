@@ -1,10 +1,12 @@
 ﻿using Profex.DataAccsess.Interfaces.Categories;
 using Profex.DataAccsess.Interfaces.Masters;
+using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.Interfaces.Posts;
 using Profex.DataAccsess.Interfaces.Skills;
 using Profex.DataAccsess.Interfaces.Users;
 using Profex.DataAccsess.Repositories.Categories;
 using Profex.DataAccsess.Repositories.Masters;
+using Profex.DataAccsess.Repositories.Masters1;
 using Profex.DataAccsess.Repositories.Posts;
 using Profex.DataAccsess.Repositories.Skills;
 using Profex.DataAccsess.Repositories.Users;
@@ -21,6 +23,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<ISkillRepository, SkillRepository>();
             builder.Services.AddScoped<IMasterRepository, MasterRepository>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<IMaster1Repository, Master1Repository>();
 
         }
     }

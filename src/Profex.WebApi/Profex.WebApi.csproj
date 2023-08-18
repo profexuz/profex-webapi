@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Accessers\" />
+    <Folder Include="wwwroot\media\images\" />
     <Folder Include="wwwroot\storage\" />
   </ItemGroup>
 

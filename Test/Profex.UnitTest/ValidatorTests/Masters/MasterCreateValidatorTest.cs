@@ -24,9 +24,9 @@ public class MasterCreateValidatorTest
         {
             FirstName = "Ozodbek",
             LastName = "Jumaqulov",
-            Phone_number = "+998770079639",
-            Image_path = imageFile,
-            Password_hash = "AAaa11@@"
+            PhoneNumber = "+998770079639",
+            ImagePath = imageFile,
+            PasswordHash = "AAaa11@@"
         };
         var validator =new MasterCreateValidator();
         var result = validator.Validate(masterCreateDto);
@@ -58,9 +58,9 @@ public class MasterCreateValidatorTest
         {
             FirstName = name,
             LastName = "Jumaqulov",
-            Phone_number = "+998770079639",
-            Image_path = imageFile,
-            Password_hash = "AAaa11@@"
+            PhoneNumber = "+998770079639",
+            ImagePath = imageFile,
+            PasswordHash = "AAaa11@@"
         };
         var validator = new MasterCreateValidator();
         var result = validator.Validate(masterCreateDto);
@@ -92,9 +92,9 @@ public class MasterCreateValidatorTest
         {
             FirstName = "Ozodbek",
             LastName = lastname,
-            Phone_number = "+998770079639",
-            Image_path = imageFile,
-            Password_hash = "AAaa11@@"
+            PhoneNumber = "+998770079639",
+            ImagePath = imageFile,
+            PasswordHash = "AAaa11@@"
 
         };
         var validator = new MasterCreateValidator();

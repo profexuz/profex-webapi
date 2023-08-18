@@ -1,5 +1,3 @@
-using Profex.Service.Interfaces.Common;
-using Profex.Service.Services.Categories.Layers;
 using Profex.WebApi.Configurations;
 using Profex.WebApi.Configurations.Layers;
 using ProFex.WebApi.Middlewares;
