@@ -55,5 +55,9 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long postId)
             => Ok(await _service.DeleteAsync(postId));
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
+            => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
     }
 }

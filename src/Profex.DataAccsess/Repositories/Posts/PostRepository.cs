@@ -120,12 +120,22 @@ namespace Profex.DataAccsess.Repositories.Posts
                 await _connection.OpenAsync();
 
                 string query = $"SELECT * FROM public.posts WHERE title ILIKE '%{search}%' " +
-                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
 
-                var post = await _connection.QueryAsync<Post>(query);
-                
-                return post.ToList();
+                var posts = await _connection.QueryAsync<Post>(query);
+
+                return posts.ToList();
+
+
+
+                //string query = $"SELECT * FROM public.posts WHERE title ILIKE '%{search}%' " +
+                //    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+
+                //var post = await _connection.QueryAsync<Post>(query);
+
+                //return post.ToList();
             }
+
             catch
             {
                 return new List<Post>();
@@ -146,6 +156,7 @@ namespace Profex.DataAccsess.Repositories.Posts
 
                 return count;
             }
+
             catch
             {
                 return 0;

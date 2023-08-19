@@ -65,6 +65,18 @@ namespace Profex.Service.Services.Posts
             return posts;
         }
 
+        public async Task<IList<Post>> SearchAsync(string search, PaginationParams @params)
+        {
+            var posts = await _postRepository.SearchAsync(search, @params);
+            int count = await _postRepository.SearchCountAsync(search);
+            return posts;
+        }
+
+        public Task<int> SearchCountAsync(string search)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> UpdateAsync(long id, PostUpdateDto dto)
         {
             var posts = await _postRepository.GetByIdAsync(id);
