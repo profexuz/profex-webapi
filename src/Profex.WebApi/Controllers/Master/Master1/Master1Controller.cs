@@ -19,10 +19,12 @@ namespace Profex.WebApi.Controllers.Master.Master1
 
         public async Task<IActionResult> UpdateAsync(long masterId, [FromForm] Master1UpdateDto dto)
         {
+
             /*var updateValidator = new CarUpdateValidator();
             var result = updateValidator.Validate(dto);
             if (result.IsValid) return Ok(await _repository.UpdateAsync(carId, dto));
             else return BadRequest(result.Errors);*/
+            
             return Ok(await _service.UpdateAsync(masterId, dto));
         }
     }
