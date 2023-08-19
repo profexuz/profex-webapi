@@ -28,7 +28,7 @@ public class PostCreateValidator : AbstractValidator<PostCreateDto>
         RuleFor(dto => dto.Latidute).NotEmpty().NotNull().WithMessage("Lattidute is required!");
 
         RuleFor(dto => dto.Longitude).NotEmpty().NotNull().WithMessage("Longitude is required!");
-            
+
 
         RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))
             .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");

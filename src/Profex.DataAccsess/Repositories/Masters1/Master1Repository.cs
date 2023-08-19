@@ -172,18 +172,18 @@ namespace Profex.DataAccsess.Repositories.Masters1
                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
                             $"is_free=@IsFree, updated_at=@UpdatedAt " +
-                                $"WHERE id = @Id"; 
+                                $"WHERE id = @Id";
 
                 var parameters = new Master()
                 {
-                    Id = id, 
+                    Id = id,
                     FirstName = masters.FirstName,
                     LastName = masters.LastName,
                     PhoneNumber = masters.PhoneNumber,
                     PhoneNumberConfirmed = masters.PhoneNumberConfirmed,
                     ImagePath = masters.ImagePath,
                     IsFree = masters.IsFree,
-                    UpdatedAt= masters.UpdatedAt,
+                    UpdatedAt = masters.UpdatedAt,
                 };
 
                 var res = await _connection.ExecuteAsync(query, parameters);

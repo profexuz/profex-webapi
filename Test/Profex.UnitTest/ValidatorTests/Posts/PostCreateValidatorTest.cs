@@ -225,7 +225,7 @@ public class PostCreateValidatorTest
         };
         var validator = new PostCreateValidator();
         var res = validator.Validate(postCreateDto);
-        Assert.False(res.IsValid); 
+        Assert.False(res.IsValid);
 
 
     }

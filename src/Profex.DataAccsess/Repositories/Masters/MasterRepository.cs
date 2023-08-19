@@ -43,13 +43,13 @@ namespace Profex.DataAccsess.Repositories.Masters
 
                 return result;
             }
-            catch 
-            { 
-                return 0; 
+            catch
+            {
+                return 0;
             }
-            finally 
-            { 
-                await _connection.CloseAsync(); 
+            finally
+            {
+                await _connection.CloseAsync();
             }
         }
 
@@ -68,8 +68,8 @@ namespace Profex.DataAccsess.Repositories.Masters
                 return 0;
             }
             finally
-            { 
-                await _connection.CloseAsync(); 
+            {
+                await _connection.CloseAsync();
             }
         }
 
@@ -91,8 +91,8 @@ namespace Profex.DataAccsess.Repositories.Masters
                 return new List<MasterViewModel>();
             }
             finally
-            { 
-                await _connection.CloseAsync(); 
+            {
+                await _connection.CloseAsync();
             }
         }
 
@@ -110,9 +110,9 @@ namespace Profex.DataAccsess.Repositories.Masters
             {
                 return null;
             }
-            finally 
+            finally
             {
-                await _connection.CloseAsync(); 
+                await _connection.CloseAsync();
             }
         }
 
@@ -125,12 +125,12 @@ namespace Profex.DataAccsess.Repositories.Masters
                 string query = "SELECT * FROM public.masters WHERE phone_number=@PhoneNumber;";
                 var result = await _connection.QueryFirstOrDefaultAsync<Master>(query, new { PhoneNumber = phone });
 
-                return result; 
+                return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
-                throw new Exception(ex.Message); 
+
+                throw new Exception(ex.Message);
             }
             finally
             {

@@ -1,9 +1,7 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Users1;
-using Profex.DataAccsess.ViewModels.Masters;
 using Profex.DataAccsess.ViewModels.Users;
-using Profex.Domain.Entities.masters;
 using Profex.Domain.Entities.users;
 
 namespace Profex.DataAccsess.Repositories.Users1
@@ -72,9 +70,9 @@ namespace Profex.DataAccsess.Repositories.Users1
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    ImagePath=user.ImagePath,
-                    CreatedAt=user.CreatedAt,
-                    UpdatedAt=user.UpdatedAt,
+                    ImagePath = user.ImagePath,
+                    CreatedAt = user.CreatedAt,
+                    UpdatedAt = user.UpdatedAt,
                 }).ToList();
 
                 return userViewModels;

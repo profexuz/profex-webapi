@@ -4,7 +4,7 @@
     {
         public MasterAlreadyExistException()
         {
-            this.TitleMessage ="Master already is exists";
+            this.TitleMessage = "Master already is exists";
         }
 
         public MasterAlreadyExistException(string phone)

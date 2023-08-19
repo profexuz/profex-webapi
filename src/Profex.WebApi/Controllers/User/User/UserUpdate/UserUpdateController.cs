@@ -30,7 +30,7 @@ namespace Profex.WebApi.Controllers.User.User.UserUpdate
 
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-            => Ok(await _service.GetAllAsync(new PaginationParams(page,maxPageSize)));
+            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
 
 

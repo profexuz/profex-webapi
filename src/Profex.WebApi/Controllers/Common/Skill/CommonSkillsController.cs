@@ -27,6 +27,6 @@ namespace Profex.WebApi.Controllers.Common.Skill
         //[AllowAnonymous]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> GetByIdAsync(long id)
-            => Ok(await _service.GetByIdAsync(id));      
+            => Ok(await _service.GetByIdAsync(id));
     }
 }

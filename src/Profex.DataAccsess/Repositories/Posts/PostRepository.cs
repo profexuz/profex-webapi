@@ -42,13 +42,13 @@ namespace Profex.DataAccsess.Repositories.Posts
 
                 return result;
             }
-            catch 
+            catch
             {
-                return 0; 
+                return 0;
             }
-            finally 
+            finally
             {
-                await _connection.CloseAsync(); 
+                await _connection.CloseAsync();
             }
         }
 
@@ -78,7 +78,7 @@ namespace Profex.DataAccsess.Repositories.Posts
             {
                 await _connection.OpenAsync();
                 string query = $"SELECT * FROM public.posts ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
-                
+
                 var resMas = (await _connection.QueryAsync<Post>(query)).ToList();
 
                 return resMas;

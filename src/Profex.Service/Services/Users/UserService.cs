@@ -11,7 +11,7 @@ using Profex.Service.Interfaces.Users;
 namespace Profex.Service.Services.Users;
 
 public class UserService : IUserService
-{     
+{
     private readonly IUserRepository _repository;
     private readonly IPaginator _paginator;
 

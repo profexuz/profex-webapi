@@ -48,7 +48,7 @@ namespace Profex.DataAccsess.Repositories.Master_skills
                 {
                     throw new MasterNotFoundException();
                 }
-                if(skillExists == 0)
+                if (skillExists == 0)
                 {
                     throw new SkillNotFoundException();
                 }
@@ -63,7 +63,7 @@ namespace Profex.DataAccsess.Repositories.Master_skills
 
                 return result;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -151,7 +151,7 @@ namespace Profex.DataAccsess.Repositories.Master_skills
 
                 return result;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
                 //return 0;

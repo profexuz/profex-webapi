@@ -63,9 +63,9 @@ public class CategoryService : ICategoryService
     public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto)
     {
         var category = await _repository.GetByIdAsync(categoryId);
-        if(category is null) throw new CategoryNotFoundException();
+        if (category is null) throw new CategoryNotFoundException();
         category.Name = dto.Name;
-        category.Description=dto.Description;
+        category.Description = dto.Description;
         category.UpdatedAt = TimeHelper.GetDateTime();
         var dbres = await _repository.UpdateAsync(categoryId, category);
 

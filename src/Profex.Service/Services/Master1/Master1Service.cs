@@ -54,8 +54,8 @@ namespace Profex.Service.Services.Master1
             master1.LastName = dto.LastName;
             master1.PhoneNumber = dto.PhoneNumber;
             master1.PhoneNumberConfirmed = true;
-            
-            if(dto.ImagePath is not null)
+
+            if (dto.ImagePath is not null)
             {
                 //var deleteRes = await _fileService.DeleteImageAsync(master1.ImagePath);
                 //if (deleteRes is false) throw new BadImageFormatException();
