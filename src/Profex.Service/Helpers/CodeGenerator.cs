@@ -2,9 +2,9 @@
 
 public class CodeGenerator
 {
-    public static int  GenerateRandomNumber()
+    public static int GenerateRandomNumber()
     {
         Random random = new Random();
-        return random.Next(1000,9999);   
+        return random.Next(1000, 9999);
     }
 }

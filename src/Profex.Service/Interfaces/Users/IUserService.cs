@@ -4,7 +4,7 @@ using Profex.Persistance.Dtos.Users;
 
 namespace Profex.Service.Interfaces.Users;
 
-public interface IUserService 
+public interface IUserService
 {
     public Task<bool> CreateAsync(UserCreateDto dto);
     public Task<bool> DeleteAsync(long id);

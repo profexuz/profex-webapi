@@ -27,7 +27,7 @@ public class MasterSkillService : IMasterSkillService
             CreatedAt = TimeHelper.GetDateTime(),
             UpdatedAt = TimeHelper.GetDateTime()
         };
-      
+
 
         var res = await _repository.CreateAsync(ms);
 
@@ -61,12 +61,12 @@ public class MasterSkillService : IMasterSkillService
     public async Task<bool> UpdateAsync(long id, MasterSkillUpdateDto dto)
     {
         var ms = await _repository.GetByIdAsync(id);
-        if(ms is null) throw new MasterSkilNotFoundException();
+        if (ms is null) throw new MasterSkilNotFoundException();
         ms.MasterId = dto.MasterId;
         ms.SkillId = dto.SkillId;
         ms.UpdatedAt = TimeHelper.GetDateTime();
         var Res = await _repository.UpdateAsync(id, ms);
-        
+
         return Res > 0;
     }
 }

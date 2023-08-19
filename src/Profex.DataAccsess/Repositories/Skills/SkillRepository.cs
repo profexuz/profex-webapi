@@ -38,13 +38,13 @@ public class SkillRepository : BaseRepository, ISkillRepository
 
             return result;
         }
-        catch 
-        { 
-            return 0; 
+        catch
+        {
+            return 0;
         }
-        finally 
-        { 
-            await _connection.CloseAsync(); 
+        finally
+        {
+            await _connection.CloseAsync();
         }
     }
 
@@ -64,7 +64,7 @@ public class SkillRepository : BaseRepository, ISkillRepository
         }
         finally
         {
-            await _connection.CloseAsync(); 
+            await _connection.CloseAsync();
         }
     }
 
@@ -84,8 +84,8 @@ public class SkillRepository : BaseRepository, ISkillRepository
             return new List<Skill>();
         }
         finally
-        { 
-            await _connection.CloseAsync(); 
+        {
+            await _connection.CloseAsync();
         }
     }
 
@@ -103,9 +103,9 @@ public class SkillRepository : BaseRepository, ISkillRepository
         {
             return null;
         }
-        finally 
+        finally
         {
-            await _connection.CloseAsync(); 
+            await _connection.CloseAsync();
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace Profex.Application.Exceptions.Users;
 
-public class UserNotFoundException :NotFoundException
+public class UserNotFoundException : NotFoundException
 {
     public UserNotFoundException()
     {

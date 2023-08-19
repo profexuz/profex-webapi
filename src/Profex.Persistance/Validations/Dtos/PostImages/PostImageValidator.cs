@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Profex.Persistance.Dtos.PostImages;
 using Profex.Service.Helpers;
-using System.ComponentModel;
 
 namespace Profex.Persistance.Validations.Dtos.PostImages;
 

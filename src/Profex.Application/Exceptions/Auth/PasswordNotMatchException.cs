@@ -1,6 +1,6 @@
 ﻿namespace Profex.Application.Exceptions.Auth;
 
-public class PasswordNotMatchException :BadRequestException
+public class PasswordNotMatchException : BadRequestException
 {
     public PasswordNotMatchException()
     {

@@ -14,7 +14,7 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             await _connection.OpenAsync();
             string query = $"select count(*) from categories";
             var result = await _connection.QuerySingleAsync<long>(query);
-           
+
             return result;
         }
         catch
@@ -32,12 +32,12 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         try
         {
             await _connection.OpenAsync();
-           
+
             string query = "INSERT INTO public.categories(name, description, created_at, updated_at) " +
                 "VALUES (@Name, @Description, @CreatedAt, @UpdatedAt);";
-           
+
             var result = await _connection.ExecuteAsync(query, entity);
-            
+
             return result;
         }
         catch
@@ -57,7 +57,7 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
             await _connection.OpenAsync();
             string query = "DELETE FROM categories WHERE id=@Id";
             var result = await _connection.ExecuteAsync(query, new { Id = id });
-          
+
             return result;
         }
         catch

@@ -4,7 +4,7 @@ namespace Profex.Persistance.Dtos.Masters;
 
 public class MasterCreateDto
 {
-    public string FirstName { get; set; } =String.Empty;
+    public string FirstName { get; set; } = String.Empty;
     public string LastName { get; set; } = String.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string PhoneNumberConfirmed { get; set; } = string.Empty;

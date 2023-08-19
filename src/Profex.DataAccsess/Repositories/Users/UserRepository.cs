@@ -39,7 +39,7 @@ namespace Profex.DataAccsess.Repositories.Users
                     "image_path, password_hash, salt, created_at, updated_at)" +
                         "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, @PasswordHash, " +
                             "@Salt, @CreatedAt, @UpdatedAt);";
-                
+
                 return await _connection.ExecuteAsync(query, entity);
             }
             catch
@@ -85,9 +85,9 @@ namespace Profex.DataAccsess.Repositories.Users
                 return (IList<UserViewModel>)res;
                 //return (IList<UserViewModel>)res;
             }
-            catch 
-            { 
-                return new List<UserViewModel>(); 
+            catch
+            {
+                return new List<UserViewModel>();
             }
             finally
             {

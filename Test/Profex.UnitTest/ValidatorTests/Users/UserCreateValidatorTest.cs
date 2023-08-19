@@ -63,7 +63,7 @@ public class UserCreateValidatorTest
         {
             FirstName = name,
             LastName = "Example",
-            PhoneNumber= "+998770079639",
+            PhoneNumber = "+998770079639",
             PhoneNumberConfirmed = true,
             ImagePath = imageFile,
             PasswordHash = "AAaa11##"

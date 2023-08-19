@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Posts;
 using Profex.Service.Interfaces.Posts;
@@ -16,7 +15,7 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
         public UserPostController(IPostService Postservice)
         {
             _service = Postservice;
-        }   
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)

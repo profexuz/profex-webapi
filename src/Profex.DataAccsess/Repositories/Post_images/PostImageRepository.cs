@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Post_Images;
-using Profex.DataAccsess.ViewModels.Masters;
-using Profex.Domain.Entities.masters;
 using Profex.Domain.Entities.post_images;
 
 namespace Profex.DataAccsess.Repositories.Post_images
@@ -31,7 +29,7 @@ namespace Profex.DataAccsess.Repositories.Post_images
             }
             finally
             {
-                await _connection.CloseAsync(); 
+                await _connection.CloseAsync();
             }
         }
 
@@ -118,6 +116,6 @@ namespace Profex.DataAccsess.Repositories.Post_images
                 await _connection.CloseAsync();
             }
         }
-            
+
     }
 }

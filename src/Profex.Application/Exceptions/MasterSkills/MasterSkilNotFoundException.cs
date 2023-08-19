@@ -1,6 +1,6 @@
 ﻿namespace Profex.Application.Exceptions.MasterSkills;
 
-public class MasterSkilNotFoundException:NotFoundException
+public class MasterSkilNotFoundException : NotFoundException
 {
     public MasterSkilNotFoundException()
     {

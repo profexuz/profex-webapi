@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.MasterSkill;
-using Profex.Persistance.Dtos.Skills;
 using Profex.Service.Interfaces.MasterSkill;
 
 namespace Profex.WebApi.Controllers.Master.Master.MasterSkill

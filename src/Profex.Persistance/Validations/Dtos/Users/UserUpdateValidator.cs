@@ -1,11 +1,6 @@
 ﻿using FluentValidation;
 using Profex.Persistance.Dtos.User1;
 using Profex.Service.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Profex.Persistance.Validations.Dtos.Users
 {

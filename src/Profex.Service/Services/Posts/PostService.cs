@@ -38,14 +38,14 @@ namespace Profex.Service.Services.Posts
                 UpdatedAt = TimeHelper.GetDateTime(),
             };
             var res = await _postRepository.CreateAsync(post);
-            
-            return res>0;
+
+            return res > 0;
         }
 
         public async Task<bool> DeleteAsync(long id)
         {
-            var dbResult =await _postRepository.DeleteAsync(id);
-         
+            var dbResult = await _postRepository.DeleteAsync(id);
+
             return dbResult > 0;
         }
 
@@ -80,7 +80,7 @@ namespace Profex.Service.Services.Posts
         public async Task<bool> UpdateAsync(long id, PostUpdateDto dto)
         {
             var posts = await _postRepository.GetByIdAsync(id);
-            if(posts is null) throw new PostNotFoundException();
+            if (posts is null) throw new PostNotFoundException();
             posts.CategoryId = dto.CategoryId;
             posts.UserId = dto.UserId;
             posts.Title = dto.Title;

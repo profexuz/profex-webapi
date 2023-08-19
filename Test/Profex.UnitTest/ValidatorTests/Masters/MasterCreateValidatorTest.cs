@@ -28,7 +28,7 @@ public class MasterCreateValidatorTest
             ImagePath = imageFile,
             PasswordHash = "AAaa11@@"
         };
-        var validator =new MasterCreateValidator();
+        var validator = new MasterCreateValidator();
         var result = validator.Validate(masterCreateDto);
         Assert.False(result.IsValid);
     }
