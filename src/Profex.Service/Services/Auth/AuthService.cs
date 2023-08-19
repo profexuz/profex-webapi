@@ -3,6 +3,7 @@ using Profex.Application.Exceptions.Auth;
 using Profex.Application.Exceptions.Users;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Users;
+using Profex.Domain.Entities.masters;
 using Profex.Domain.Entities.users;
 using Profex.Persistance.Dtos.Auth;
 using Profex.Persistance.Dtos.Notifications;
@@ -74,7 +75,7 @@ public class AuthService : IAuthService
                 TimeSpan.FromMinutes(CACHED_MINUTES_FOR_VERIFICATION));
 
             SmsMessage smsMessage = new SmsMessage();
-            smsMessage.Title = "SoftFurniture";
+            smsMessage.Title = "ProFex";
             smsMessage.Content = "Your verification code : " + verificationDto.Code;
             smsMessage.Recipent = phone.Substring(1);
 
@@ -125,14 +126,13 @@ public class AuthService : IAuthService
         user.LastName = registerDto.LastName;
         user.PhoneNumber = registerDto.PhoneNumber;
         user.PhoneNumberConfirmed = true;
-        user.ImagePath = null;
-        var hasherResult = PasswordHasher.Hash(registerDto.Password);
-        user.PasswordHash = hasherResult.Hash;
-        user.Salt = hasherResult.Salt;
-
+        user.ImagePath = "media/images/IMG_0e916352-55a1-4112-9d6b-4c7d01645ec5.jpg";
+        var haserResult = PasswordHasher.Hash(registerDto.Password);
+        user.PasswordHash = haserResult.Hash;
+        user.Salt = haserResult.Salt;
         user.CreatedAt = user.UpdatedAt = TimeHelper.GetDateTime();
-
         var dbResult = await _userRepository.CreateAsync(user);
+
         return dbResult > 0;
     }
 

@@ -14,7 +14,6 @@ namespace Profex.WebApi.Controllers.Master.Master1
             this._service = service;
         }
 
-        //[HttpPut("{carId}")]
         [HttpPut("{masterId}")]
 
         public async Task<IActionResult> UpdateAsync(long masterId, [FromForm] Master1UpdateDto dto)

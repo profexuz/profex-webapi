@@ -6,6 +6,7 @@ using Profex.Service.Interfaces.MasterAuth;
 using Profex.Service.Interfaces.Notifactions;
 using Profex.Service.Interfaces.Posts;
 using Profex.Service.Interfaces.Skills;
+using Profex.Service.Interfaces.User1;
 using Profex.Service.Interfaces.Users;
 using Profex.Service.Services.Auth;
 using Profex.Service.Services.Categories;
@@ -16,6 +17,7 @@ using Profex.Service.Services.MasterAuth;
 using Profex.Service.Services.Notifications;
 using Profex.Service.Services.Posts;
 using Profex.Service.Services.Skills;
+using Profex.Service.Services.User1;
 using Profex.Service.Services.Users;
 
 namespace Profex.WebApi.Configurations.Layers
@@ -35,6 +37,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<ISmsSender, SmsSender>();
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddScoped<IMaster1Service, Master1Service>();
+            builder.Services.AddScoped<IUser1Service, User1Service>();
         }
     }
 }

@@ -164,30 +164,19 @@ namespace Profex.DataAccsess.Repositories.Masters1
 
         public async Task<int> UpdateAsync(long id, MasterViewModel masters)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
 
-                /*string query = $"UPDATE public.masters " +
-                   $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                       $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
-                       $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt " +
-                   $"WHERE @id = {id}";
-
-                var res = await _connection.ExecuteAsync(query, masters);
-
-                return res;*/
-
                 string query = $"UPDATE public.masters " +
                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
-                       $"is_free=@IsFree, updated_at=@UpdatedAt " +
-                   $"WHERE id = @Id"; // Change @id to id
+                            $"is_free=@IsFree, updated_at=@UpdatedAt " +
+                                $"WHERE id = @Id"; 
 
                 var parameters = new Master()
                 {
-                    Id = id, // Correct parameter name
+                    Id = id, 
                     FirstName = masters.FirstName,
                     LastName = masters.LastName,
                     PhoneNumber = masters.PhoneNumber,
@@ -195,7 +184,6 @@ namespace Profex.DataAccsess.Repositories.Masters1
                     ImagePath = masters.ImagePath,
                     IsFree = masters.IsFree,
                     UpdatedAt= masters.UpdatedAt,
-                    // ... other parameters ...
                 };
 
                 var res = await _connection.ExecuteAsync(query, parameters);
@@ -215,7 +203,6 @@ namespace Profex.DataAccsess.Repositories.Masters1
 
         public async Task<int> UpdateAsync(long id, Master entity)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();

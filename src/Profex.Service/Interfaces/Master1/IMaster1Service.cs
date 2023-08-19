@@ -1,7 +1,6 @@
 ﻿using Profex.Application.Utils;
 using Profex.DataAccsess.ViewModels.Masters;
 using Profex.Persistance.Dtos.Master1;
-using Profex.Persistance.Dtos.Masters;
 
 namespace Profex.Service.Interfaces.Master1
 {
