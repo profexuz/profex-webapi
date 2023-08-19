@@ -1,16 +1,11 @@
 ﻿using Profex.Application.Exceptions.Masters;
-using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Masters1;
-using Profex.DataAccsess.Interfaces.Users;
 using Profex.DataAccsess.ViewModels.Masters;
 using Profex.Persistance.Dtos.Master1;
-using Profex.Persistance.Dtos.Masters;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Master1;
-using Profex.Service.Services.Common;
-using System.Xml;
 
 namespace Profex.Service.Services.Master1
 {
