@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.User1;
+using Profex.Persistance.Validations.Dtos.Users;
 using Profex.Service.Interfaces.User1;
 
 namespace Profex.WebApi.Controllers.User.User.UserUpdate
@@ -18,12 +19,12 @@ namespace Profex.WebApi.Controllers.User.User.UserUpdate
         public async Task<IActionResult> UpdateAsync(long userId, [FromForm] User1UpateDto dto)
         {
 
-            /*var updateValidator = new CarUpdateValidator();
+            var updateValidator = new UserUpdateValidator();
             var result = updateValidator.Validate(dto);
-            if (result.IsValid) return Ok(await _repository.UpdateAsync(carId, dto));
-            else return BadRequest(result.Errors);*/
+            if (result.IsValid) return Ok(await _service.UpdateAsync(userId, dto));
+            else return BadRequest(result.Errors);
 
-            return Ok(await _service.UpdateAsync(userId, dto));
+            //return Ok(await _service.UpdateAsync(userId, dto));
         }
     }
 }

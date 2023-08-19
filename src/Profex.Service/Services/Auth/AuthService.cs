@@ -126,7 +126,7 @@ public class AuthService : IAuthService
         user.LastName = registerDto.LastName;
         user.PhoneNumber = registerDto.PhoneNumber;
         user.PhoneNumberConfirmed = true;
-        user.ImagePath = "media/images/IMG_0e916352-55a1-4112-9d6b-4c7d01645ec5.jpg";
+        user.ImagePath = "media/avataruser/user.jpg";
         var haserResult = PasswordHasher.Hash(registerDto.Password);
         user.PasswordHash = haserResult.Hash;
         user.Salt = haserResult.Salt;
