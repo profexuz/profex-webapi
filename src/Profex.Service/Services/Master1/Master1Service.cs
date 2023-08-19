@@ -57,8 +57,8 @@ namespace Profex.Service.Services.Master1
             
             if(dto.ImagePath is not null)
             {
-                var deleteRes = await _fileService.DeleteImageAsync(master1.ImagePath);
-                if (deleteRes is false) throw new BadImageFormatException();
+                //var deleteRes = await _fileService.DeleteImageAsync(master1.ImagePath);
+                //if (deleteRes is false) throw new BadImageFormatException();
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
                 master1.ImagePath = newImagePath;
             }
