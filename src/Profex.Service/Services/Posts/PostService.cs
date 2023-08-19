@@ -1,6 +1,7 @@
 ﻿using Profex.Application.Exceptions.Posts;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
+using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Posts;
 using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Posts;
@@ -63,6 +64,18 @@ namespace Profex.Service.Services.Posts
             if (posts is null) throw new PostNotFoundException();
 
             return posts;
+        }
+
+        public async Task<IList<Post>> SearchAsync(string search, PaginationParams @params)
+        {
+            var posts = await _postRepository.SearchAsync(search, @params);
+            int count = await _postRepository.SearchCountAsync(search);
+            return posts;
+        }
+
+        public Task<int> SearchCountAsync(string search)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateAsync(long id, PostUpdateDto dto)

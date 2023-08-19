@@ -1,5 +1,4 @@
 ﻿using Profex.Application.Exceptions.Categories;
-using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;

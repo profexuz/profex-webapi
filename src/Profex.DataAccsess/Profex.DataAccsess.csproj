@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Repositories\Masters\" />
-    <Folder Include="Repositories\Master_skills\" />
   </ItemGroup>
 
   <ItemGroup>
