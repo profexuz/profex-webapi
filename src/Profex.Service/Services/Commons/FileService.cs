@@ -41,7 +41,6 @@ public class FileService : IFileService
     public async Task<string> UploadImageAsync(IFormFile image)
     {
         string newImageName = MediaHelper.MakeImageName(image.FileName);
-        //string newImageName = MediaHelper.MakeImageName(image.name); - > turgan edi tepadagiga ozgartirdim // Ozodbek
 
         string subpath = Path.Combine(MEDIA, IMAGES, newImageName);
         string path = Path.Combine(ROOTPATH, subpath);
