@@ -62,12 +62,23 @@ namespace Profex.DataAccsess.Repositories.Users1
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.users ORDER BY id desc offset {@params.GetSkipCount} " +
+                string query = $"SELECT * FROM public.users ORDER BY id desc offset {@params.GetSkipCount()} " +
                     $"limit {@params.PageSize}";
 
                 var resUser = (await _connection.QueryAsync<User>(query)).ToList();
 
-                return (IList<UserViewModel>)resUser;
+                var userViewModels = resUser.Select(user => new UserViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    ImagePath=user.ImagePath,
+                    CreatedAt=user.CreatedAt,
+                    UpdatedAt=user.UpdatedAt,
+                }).ToList();
+
+                return userViewModels;
+                //return (IList<UserViewModel>)resUser;
             }
             catch
             {

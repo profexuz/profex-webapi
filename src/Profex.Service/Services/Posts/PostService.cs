@@ -1,7 +1,6 @@
 ﻿using Profex.Application.Exceptions.Posts;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
-using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Posts;
 using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Posts;

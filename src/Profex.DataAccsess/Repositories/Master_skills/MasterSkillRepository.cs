@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using Profex.Application.Exceptions.Masters;
+using Profex.Application.Exceptions.Skills;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Master_skills;
 using Profex.Domain.Entities.master_skills;
@@ -35,6 +37,25 @@ namespace Profex.DataAccsess.Repositories.Master_skills
             {
                 await _connection.OpenAsync();
 
+                // Check if the master_id and skill_id exist in their respective tables
+                string checkMasterQuery = "SELECT COUNT(*) FROM masters WHERE id = @MasterId";
+                string checkSkillQuery = "SELECT COUNT(*) FROM skills WHERE id = @SkillId";
+
+                var masterExists = await _connection.ExecuteScalarAsync<int>(checkMasterQuery, new { MasterId = entity.MasterId });
+                var skillExists = await _connection.ExecuteScalarAsync<int>(checkSkillQuery, new { SkillId = entity.SkillId });
+
+                if (masterExists == 0)
+                {
+                    throw new MasterNotFoundException();
+                }
+                if(skillExists == 0)
+                {
+                    throw new SkillNotFoundException();
+                }
+
+
+
+
                 string query = "INSERT INTO public.master_skills(master_id, skill_id, created_at, updated_at)" +
                     "VALUES (@MasterId, @SkillId, @CreatedAt, @UpdatedAt);";
 
@@ -42,9 +63,9 @@ namespace Profex.DataAccsess.Repositories.Master_skills
 
                 return result;
             }
-            catch
+            catch(Exception ex) 
             {
-                return 0;
+                throw new Exception(ex.Message);
             }
             finally
             {
@@ -122,17 +143,18 @@ namespace Profex.DataAccsess.Repositories.Master_skills
             {
                 await _connection.OpenAsync();
 
-                string query = $"UPDATE public.master_skills" +
-                    $"SET master_id=@MasterId, skill_id=@SkillId, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                        $"WHERE id={id};";
+                string query = $"UPDATE public.master_skills " +
+                    $"SET master_id=@MasterId, skill_id=@SkillId, created_at=@CreatedAt, updated_at=@UpdatedAt " +
+                        $"WHERE id={id}";
 
                 var result = await _connection.ExecuteAsync(query, entity);
 
                 return result;
             }
-            catch
+            catch(Exception ex) 
             {
-                return 0;
+                throw new Exception(ex.Message);
+                //return 0;
             }
             finally
             {
