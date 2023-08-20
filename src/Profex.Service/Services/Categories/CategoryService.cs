@@ -3,6 +3,7 @@ using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
+using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Categories;
 using Profex.Service.Interfaces.Categories;
 using Profex.Service.Interfaces.Common;
@@ -58,6 +59,14 @@ public class CategoryService : ICategoryService
         if (category is null) throw new CategoryNotFoundException();
 
         return category;
+    }
+
+    public async Task<IList<Post>> GetPostsByCategory(long category)
+    {
+        var posts = await _repository.GetPostsByCategory(category);
+        if(posts  is null) throw new CategoryNotFoundException();
+        return posts;
+
     }
 
     public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto)

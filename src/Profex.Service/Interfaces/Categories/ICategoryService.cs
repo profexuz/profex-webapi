@@ -1,5 +1,6 @@
 ﻿using Profex.Application.Utils;
 using Profex.Domain.Entities.Categories;
+using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Categories;
 
 namespace Profex.Service.Interfaces.Categories
@@ -12,5 +13,6 @@ namespace Profex.Service.Interfaces.Categories
         public Task<IList<Category>> GetAllAsync(PaginationParams @params);
         public Task<Category> GetByIdAsync(long categoryId);
         public Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto);
+        public Task<IList<Post>> GetPostsByCategory(long category);
     }
 }
