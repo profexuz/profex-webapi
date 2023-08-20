@@ -2,6 +2,7 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
+using Profex.Domain.Entities.posts;
 
 namespace Profex.DataAccsess.Repositories.Categories;
 
@@ -111,6 +112,19 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         {
             await _connection.CloseAsync();
         }
+    }
+
+    public async Task<IList<Post>> GetPostsByCategory(long category)
+    {
+        string query = "SELECT * FROM posts WHERE category_id = @Category";
+        var parameters = new { Category = category };
+        var posts = await _connection.QueryAsync<Post>(query, parameters);
+        return posts.ToList();
+    }
+
+    public Task<IList<Post>> GetPostsByCategory(string category)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<int> UpdateAsync(long id, Category entity)
