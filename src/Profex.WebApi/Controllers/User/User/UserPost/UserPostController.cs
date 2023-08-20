@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Posts;
+using Profex.Persistance.Validations.Dtos.Posts;
 using Profex.Service.Interfaces.Posts;
 
 namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
@@ -29,13 +30,12 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)
         {
-            //var validator = new CompanyCreateValidator();
+            //var validator = new PostCreateValidator();
             //var result = validator.Validate(dto);
             //if (result.IsValid) return Ok(await _service.CreateAsync(dto));
-            return Ok(await _service.CreateAsync(dto));
-
-            //await _service.CreateAsync(dto);
             //else return BadRequest(result.Errors);
+
+            return Ok(await _service.CreateAsync(dto));
         }
 
         [HttpPut("{postId}")]

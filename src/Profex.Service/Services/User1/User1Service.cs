@@ -1,4 +1,5 @@
-﻿using Profex.Application.Exceptions.Users;
+﻿using Microsoft.AspNetCore.Builder;
+using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Users1;
@@ -20,6 +21,15 @@ namespace Profex.Service.Services.User1
             this._paginator = paginator;
             this._fileService = fileService;
         }
+
+        public async Task<long> CountAsync()
+        {
+            var db = await _repository.CountAsync();
+            return db;
+        }
+
+        
+
         public async Task<bool> DeleteAsync(long id)
         {
             var dbResult = await _repository.DeleteAsync(id);

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Domain.Entities.posts;
+using Profex.Persistance.Dtos.Categories;
+using Profex.Persistance.Validations.Dtos.Categories;
 using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Common.Category
@@ -17,6 +18,31 @@ namespace Profex.WebApi.Controllers.Common.Category
             _service = Categoryservice;
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
+        {
+            var validator = new CategoryCreateValidator();
+            var result = validator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.CreateAsync(dto));
+            else return BadRequest(result.Errors);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
+        {
+            var updateValidator = new CategoryUpdateValidator();
+            
+            var result = updateValidator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
+            else return BadRequest(result.Errors);
+        }
+
+        [HttpDelete("{categoryId}")]
+        public async Task<IActionResult> DeleteAsync(long categoryId)
+            => Ok(await _service.DeleteAsync(categoryId));
+
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
@@ -27,13 +53,6 @@ namespace Profex.WebApi.Controllers.Common.Category
         public async Task<IActionResult> GetByIdAsync(long categoryId)
         => Ok(await _service.GetByIdAsync(categoryId));
 
-
-        /*[HttpGet("byCategory/{category}")]
-        public async Task<ActionResult<IList<Car>>> GetCarsByCategory(string category)
-        {
-            var cars = await _carRepository.GetCarsByCategory(category.ToUpper());
-            return Ok(cars);
-        }*/
         [HttpGet("ByCategory")]
         public async Task<ActionResult<IList<Domain.Entities.posts.Post>>> GetPostsByCategory(long category)
         {

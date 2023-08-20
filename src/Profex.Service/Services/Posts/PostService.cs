@@ -84,12 +84,12 @@ namespace Profex.Service.Services.Posts
             posts.CategoryId = dto.CategoryId;
             posts.UserId = dto.UserId;
             posts.Title = dto.Title;
-            posts.Price = double.Parse(dto.Price);
+            posts.Price = double.Parse(dto.Price.ToString());
             posts.Description = dto.Description;
             posts.Region = dto.Region;
             posts.District = dto.District;
-            posts.Latidute = double.Parse(dto.Lattidute);
-            posts.Longitude = double.Parse(dto.Longitude);
+            posts.Latidute = double.Parse(dto.Latidute.ToString());
+            posts.Longitude = double.Parse(dto.Longitude.ToString());
             posts.PhoneNumber = dto.PhoneNumber;
             posts.UpdatedAt = TimeHelper.GetDateTime();
             var dbRes = await _postRepository.UpdateAsync(id, posts);

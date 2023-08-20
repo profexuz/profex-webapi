@@ -6,7 +6,6 @@ using Profex.Service.Interfaces.User1;
 
 namespace Profex.WebApi.Controllers.User.User.UserUpdate
 {
-    //[Route("api/user/update")]
     [Route("api/user")]
     [ApiController]
     public class UserUpdateController : ControllerBase
@@ -32,7 +31,13 @@ namespace Profex.WebApi.Controllers.User.User.UserUpdate
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-       
+        [HttpGet("count")]
+        public async Task<IActionResult> CountAsync()
+             => Ok(await _service.CountAsync());
+
+        [HttpGet("getbyid/{userId}")]
+        public async Task<IActionResult> GetByIdAsync(long userId)
+            => Ok(await _service.GetByIdAsync(userId));
 
     }
 }
