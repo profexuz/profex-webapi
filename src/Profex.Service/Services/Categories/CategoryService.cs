@@ -40,7 +40,7 @@ public class CategoryService : ICategoryService
     public async Task<bool> DeleteAsync(long categoryId)
     {
         var dbResult = await _repository.DeleteAsync(categoryId);
-
+        
         return dbResult > 0;
     }
 
