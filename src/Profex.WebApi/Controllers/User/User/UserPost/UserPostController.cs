@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Posts;
-using Profex.Persistance.Validations.Dtos.Posts;
 using Profex.Service.Interfaces.Posts;
 
 namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
