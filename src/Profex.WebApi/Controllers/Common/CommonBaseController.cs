@@ -4,6 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Profex.WebApi.Controllers.Common;
 
 [ApiController]
-[AllowAnonymous]
+//[AllowAnonymous]
 public class CommonBaseController : ControllerBase
 { }

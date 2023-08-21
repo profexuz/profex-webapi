@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.MasterSkill;
 using Profex.Service.Interfaces.MasterSkill;
@@ -25,6 +26,7 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
 
 
         [HttpPost]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> CreateAsync([FromForm] MasterSkillCreateDto dto)
         {
             //var validator = new CompanyCreateValidator();
@@ -36,7 +38,8 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
             //else return BadRequest(result.Errors);
         }
 
-        [HttpPut("(id)")]
+        [HttpPut("{id}")]
+        [Authorize(Roles ="Master")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] MasterSkillUpdateDto dto)
         {
             //var validator = new CompanyUpdateValidator();
@@ -48,6 +51,7 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles ="Master")]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _service.DeleteAsync(id));
     }
