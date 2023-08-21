@@ -151,10 +151,10 @@ namespace Profex.DataAccsess.Repositories.Master_skills
 
                 return result;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
-                throw new Exception(ex.Message);
-                //return 0;
+                //throw new Exception(ex.Message);
+                return 0;
             }
             finally
             {

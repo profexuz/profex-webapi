@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Domain.Entities.master_skills;
+using Profex.Persistance.Dtos.Master1;
+using Profex.Persistance.Validations.Dtos.Masters;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Master1;
 
@@ -49,6 +51,19 @@ namespace Profex.WebApi.Controllers.Common.Master
         [AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(long masterId)
             => Ok(await _service.DeleteAsync(masterId));
+
+        
+        
+        [HttpPut("{masterId}")]
+        [Authorize(Roles ="Master")]
+        public async Task<IActionResult> UpdateAsync(long masterId, [FromForm] Master1UpdateDto dto)
+        {
+
+            var updateValidator = new MasterUpdateValidator();
+            var result = updateValidator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.UpdateAsync(masterId, dto));
+            else return BadRequest(result.Errors);
+        }
 
 
     }
