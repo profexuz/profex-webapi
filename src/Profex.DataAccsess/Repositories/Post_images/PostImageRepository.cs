@@ -7,9 +7,19 @@ namespace Profex.DataAccsess.Repositories.Post_images
 {
     public class PostImageRepository : BaseRepository, IPostImageRepository
     {
-        public Task<long> CountAsync()
+        public async Task<long> CountAsync()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"select count(*) from post_images";
+                var result = await _connection.QuerySingleAsync<long>(query);
+
+                return result;
+            }
+            catch { return 0; }
+            finally { await _connection.CloseAsync(); }
         }
 
         public async Task<int> CreateAsync(Post_image entity)
@@ -58,7 +68,7 @@ namespace Profex.DataAccsess.Repositories.Post_images
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.post_images ORDER BY id desc offset {@params.GetSkipCount} " +
+                string query = $"SELECT * FROM public.post_images ORDER BY id desc offset {@params.GetSkipCount()} " +
                     $"limit {@params.PageSize}";
                 var result = (await _connection.QueryAsync<Post_image>(query)).ToList();
 
