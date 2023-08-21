@@ -65,8 +65,8 @@ namespace Profex.Service.Services.User1
 
             if (dto.ImagePath is not null)
             {
-                var deleteRes = await _fileService.DeleteImageAsync(user1.ImagePath);
-                if (deleteRes is false) throw new BadImageFormatException();
+                //var deleteRes = await _fileService.DeleteImageAsync(user1.ImagePath);
+                //if (deleteRes is false) throw new BadImageFormatException();
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
                 user1.ImagePath = newImagePath;
             }

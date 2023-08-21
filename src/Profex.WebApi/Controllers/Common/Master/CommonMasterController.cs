@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Domain.Entities.master_skills;
@@ -10,12 +9,12 @@ namespace Profex.WebApi.Controllers.Common.Master
 {
     [Route("api/common/master")]
     [ApiController]
-    public class CommonMasteriesController : ControllerBase
+    public class CommonMasterController : ControllerBase
     {
         private readonly IMaster1Service _service;
         private readonly IPaginator _paginator;
         private readonly int maxPageSize = 30;
-        public CommonMasteriesController(IMaster1Service service, IPaginator paginator)
+        public CommonMasterController(IMaster1Service service, IPaginator paginator)
         {
             this._service = service;
             this._paginator = paginator;
@@ -38,11 +37,19 @@ namespace Profex.WebApi.Controllers.Common.Master
             => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
 
 
-        [HttpGet("ByCategory")]
+        [HttpGet("sort/bySkill")]
         public async Task<ActionResult<IList<Master_skill>>> GetPostsByCategory(long skillId)
         {
             var ps = await _service.SortBySkillId(skillId);
             return Ok(ps);
         }
+
+        [HttpDelete("{masterId}")]
+        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeleteAsync(long masterId)
+            => Ok(await _service.DeleteAsync(masterId));
+
+
     }
 }

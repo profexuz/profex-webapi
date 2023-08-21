@@ -2,10 +2,8 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
-using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.master_skills;
 using Profex.Domain.Entities.masters;
-using Profex.Domain.Entities.posts;
 using static Dapper.SqlMapper;
 
 namespace Profex.DataAccsess.Repositories.Masters1

@@ -9,6 +9,7 @@ using Profex.Domain.Entities.master_skills;
 using Profex.Persistance.Dtos.Master1;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Master1;
+using System.Security.Cryptography.Xml;
 
 namespace Profex.Service.Services.Master1
 {
@@ -28,7 +29,7 @@ namespace Profex.Service.Services.Master1
         public async Task<bool> DeleteAsync(long id)
         {
             var dbResult = await _repository.DeleteAsync(id);
-
+            
             return dbResult > 0;
         }
 
