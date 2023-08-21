@@ -2,7 +2,10 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
+using Profex.Domain.Entities.Categories;
+using Profex.Domain.Entities.master_skills;
 using Profex.Domain.Entities.masters;
+using Profex.Domain.Entities.posts;
 using static Dapper.SqlMapper;
 
 namespace Profex.DataAccsess.Repositories.Masters1
@@ -60,12 +63,22 @@ namespace Profex.DataAccsess.Repositories.Masters1
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} " +
+                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount()} " +
                     $"limit {@params.PageSize}";
 
                 var resMas = (await _connection.QueryAsync<Master>(query)).ToList();
+                
+                var masterViewModels = resMas.Select(master => new MasterViewModel
+                {
+                    Id = master.Id,
+                    FirstName = master.FirstName,
+                    LastName = master.LastName,
+                    ImagePath = master.ImagePath,
+                    IsFree = master.IsFree,
+                    PhoneNumber = master.PhoneNumber,
+                }).ToList();
 
-                return (IList<MasterViewModel>)resMas;
+                return masterViewModels;
             }
             catch
             {
@@ -125,8 +138,8 @@ namespace Profex.DataAccsess.Repositories.Masters1
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' " +
-                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+                string query = $"SELECT * FROM public.masters WHERE first_name ILIKE '%{search}%' " +
+                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
 
                 var master = await _connection.QueryAsync<MasterViewModel>(query);
 
@@ -160,6 +173,15 @@ namespace Profex.DataAccsess.Repositories.Masters1
             {
                 await _connection.CloseAsync();
             }
+        }
+
+        public async Task<IList<Master_skill>> SortBySkillId(long skillId)
+        {
+            string query = "SELECT * FROM master_skills WHERE skill_id = @SkillId";
+            var parameters = new { SkillId = skillId };
+            var posts = await _connection.QueryAsync<Master_skill>(query, parameters);
+            return posts.ToList();
+
         }
 
         public async Task<int> UpdateAsync(long id, MasterViewModel masters)

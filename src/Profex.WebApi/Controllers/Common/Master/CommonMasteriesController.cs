@@ -1,0 +1,48 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Profex.Application.Utils;
+using Profex.Domain.Entities.master_skills;
+using Profex.Service.Interfaces.Common;
+using Profex.Service.Interfaces.Master1;
+
+namespace Profex.WebApi.Controllers.Common.Master
+{
+    [Route("api/common/master")]
+    [ApiController]
+    public class CommonMasteriesController : ControllerBase
+    {
+        private readonly IMaster1Service _service;
+        private readonly IPaginator _paginator;
+        private readonly int maxPageSize = 30;
+        public CommonMasteriesController(IMaster1Service service, IPaginator paginator)
+        {
+            this._service = service;
+            this._paginator = paginator;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
+        => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+
+        
+        [HttpGet("{masterId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdAsync(long masterId)
+        => Ok(await _service.GetByIdAsync(masterId));
+
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
+            => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
+
+
+        [HttpGet("ByCategory")]
+        public async Task<ActionResult<IList<Master_skill>>> GetPostsByCategory(long skillId)
+        {
+            var ps = await _service.SortBySkillId(skillId);
+            return Ok(ps);
+        }
+    }
+}
