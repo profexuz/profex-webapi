@@ -19,16 +19,18 @@ namespace Profex.WebApi.Controllers.Common.Category
         }
 
 
-        /*[HttpPost]
+        [HttpPost]
+        [Authorize(Roles ="User")]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
         {
             var validator = new CategoryCreateValidator();
             var result = validator.Validate(dto);
             if (result.IsValid) return Ok(await _service.CreateAsync(dto));
             else return BadRequest(result.Errors);
-        }*/
+        }
 
-        /*[HttpPut]
+        [HttpPut]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
         {
             var updateValidator = new CategoryUpdateValidator();
@@ -37,11 +39,12 @@ namespace Profex.WebApi.Controllers.Common.Category
             if (result.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
             else return BadRequest(result.Errors);
         }
-*/
-        /*[HttpDelete("{categoryId}")]
+
+        [HttpDelete("{categoryId}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteAsync(long categoryId)
             => Ok(await _service.DeleteAsync(categoryId));
-*/
+
 
         [HttpGet]
         [AllowAnonymous]
