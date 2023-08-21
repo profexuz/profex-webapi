@@ -1,8 +1,11 @@
-﻿using Profex.Application.Exceptions.Masters;
+﻿using Profex.Application.Exceptions.Categories;
+using Profex.Application.Exceptions.Masters;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
+using Profex.Domain.Entities.Categories;
+using Profex.Domain.Entities.master_skills;
 using Profex.Persistance.Dtos.Master1;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Master1;
@@ -44,6 +47,28 @@ namespace Profex.Service.Services.Master1
             if (masters1 is null) throw new MasterNotFoundException();
 
             return masters1;
+        }
+
+        public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
+        {
+            //throw new NotImplementedException();
+            var masters =await _repository.SearchAsync(search, @params);
+            if(masters is null) throw new MasterNotFoundException();
+            return masters;
+        }
+
+        public Task<int> SearchCountAsync(string search)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        public async Task<IList<Master_skill>> SortBySkillId(long skillId)
+        {
+            //throw new NotImplementedException();
+            var posts = await _repository.SortBySkillId(skillId);
+            if (posts is null) throw new MasterNotFoundException();
+            return posts;
         }
 
         public async Task<bool> UpdateAsync(long id, Master1UpdateDto dto)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Skills;
 using Profex.Service.Interfaces.Skills;
@@ -29,6 +30,7 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonSkill
 
         [HttpPost("skill")]
         //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateAsync([FromForm] SkillCreateDto dto)
         {
             //var validator = new CompanyCreateValidator();
