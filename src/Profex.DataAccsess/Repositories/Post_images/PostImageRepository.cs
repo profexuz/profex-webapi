@@ -19,8 +19,12 @@ namespace Profex.DataAccsess.Repositories.Post_images
                 return result;
             }
             catch { return 0; }
-            finally { await _connection.CloseAsync(); }
+            finally 
+            { 
+                await _connection.CloseAsync(); 
+            }
         }
+
 
         public async Task<int> CreateAsync(Post_image entity)
         {
