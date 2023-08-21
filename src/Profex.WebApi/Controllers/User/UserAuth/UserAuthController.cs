@@ -11,27 +11,27 @@ namespace Profex.WebApi.Controllers.User.UserAuth
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserAuthController : ControllerBase
     {
-        private readonly int maxPageSize = 30;
+        private readonly int maxPageSize = 30;  
         private readonly IUserService _service;
         private readonly IAuthService _authService;
-        public UserController(IUserService service, IAuthService authService)
+        public UserAuthController(IUserService service, IAuthService authService)
         {
             _service = service;
             _authService = authService;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));*/
 
 
-        [HttpGet("{userId}")]
+        /*[HttpGet("{userId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long userId)
-        => Ok(await _service.GetByIdAsync(userId));
+        => Ok(await _service.GetByIdAsync(userId));*/
 
 
 
