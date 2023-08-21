@@ -7,20 +7,20 @@ using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Common.Category
 {
-    [Route("api/common/categories")]
+    [Route("api/common/category")]
     [ApiController]
-    public class CommonCategoriesController : ControllerBase
+    public class CommonCategoryController : ControllerBase
     {
         private readonly ICategoryService _service;
         private readonly int maxPageSize = 30;
-        public CommonCategoriesController(ICategoryService Categoryservice)
+        public CommonCategoryController(ICategoryService Categoryservice)
         {
             _service = Categoryservice;
         }
 
 
         [HttpPost]
-        [Authorize(Roles ="User")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
         {
             var validator = new CategoryCreateValidator();
@@ -30,7 +30,7 @@ namespace Profex.WebApi.Controllers.Common.Category
         }
 
         [HttpPut]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
         {
             var updateValidator = new CategoryUpdateValidator();
@@ -41,7 +41,7 @@ namespace Profex.WebApi.Controllers.Common.Category
         }
 
         [HttpDelete("{categoryId}")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long categoryId)
             => Ok(await _service.DeleteAsync(categoryId));
 
@@ -56,7 +56,7 @@ namespace Profex.WebApi.Controllers.Common.Category
         public async Task<IActionResult> GetByIdAsync(long categoryId)
         => Ok(await _service.GetByIdAsync(categoryId));
 
-        [HttpGet("ByCategory")]
+        [HttpGet("sort/byCategory")]
         public async Task<ActionResult<IList<Domain.Entities.posts.Post>>> GetPostsByCategory(long category)
         {
             var ps = await _service.GetPostsByCategory(category);

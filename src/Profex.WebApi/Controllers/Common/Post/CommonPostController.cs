@@ -18,13 +18,19 @@ namespace Profex.WebApi.Controllers.Common.Post
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{postId}")]
-        [Authorize(Roles = "User")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long postId)
         => Ok(await _service.GetByIdAsync(postId));
+
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
+            => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
+
     }
 }

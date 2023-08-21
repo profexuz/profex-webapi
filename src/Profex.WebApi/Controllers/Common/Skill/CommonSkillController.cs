@@ -7,25 +7,23 @@ namespace Profex.WebApi.Controllers.Common.Skill
 {
     [Route("api/common/skills")]
     [ApiController]
-    public class CommonSkillsController : ControllerBase
+    public class CommonSkillController : ControllerBase
     {
         private readonly ISkillService _service;
         private readonly int maxPageSize = 30;
 
-        public CommonSkillsController(ISkillService skillService)
+        public CommonSkillController(ISkillService skillService)
         {
             _service = skillService;
         }
 
         [HttpGet]
-        //[AllowAnonymous]
-        [Authorize(Roles = "User")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{id}")]
-        //[AllowAnonymous]
-        [Authorize(Roles = "User")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long id)
             => Ok(await _service.GetByIdAsync(id));
     }

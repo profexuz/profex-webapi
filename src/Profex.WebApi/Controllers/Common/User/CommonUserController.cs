@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
+using Profex.Persistance.Dtos.User1;
+using Profex.Persistance.Validations.Dtos.Users;
 using Profex.Service.Interfaces.Auth;
+using Profex.Service.Interfaces.User1;
 using Profex.Service.Interfaces.Users;
 
 namespace Profex.WebApi.Controllers.Common.User
@@ -10,24 +13,38 @@ namespace Profex.WebApi.Controllers.Common.User
     [ApiController]
     public class CommonUserController : CommonBaseController
     {
+        private readonly IUser1Service _service;
         private readonly int maxPageSize = 30;
-        private readonly IUserService _service;
-        private readonly IAuthService _authService;
-        public CommonUserController(IUserService service, IAuthService authService)
+        public CommonUserController(IUser1Service service)
         {
-            _service = service;
-            _authService = authService;
+            this._service = service;
+        }
+        [HttpPut("update/{userId}")]
+        [Authorize(Roles ="User")]
+        public async Task<IActionResult> UpdateAsync(long userId, [FromForm] User1UpateDto dto)
+        {
+
+            var updateValidator = new UserUpdateValidator();
+            var result = updateValidator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.UpdateAsync(userId, dto));
+            else return BadRequest(result.Errors);
         }
 
-        [HttpGet]
-        //[Authorize(Roles = "User")]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
+        [HttpGet("count")]
+        public async Task<IActionResult> CountAsync()
+             => Ok(await _service.CountAsync());
 
-        [HttpGet("{userId}")]
-        [AllowAnonymous]
+        [HttpGet("getbyId")]
         public async Task<IActionResult> GetByIdAsync(long userId)
-        => Ok(await _service.GetByIdAsync(userId));
+            => Ok(await _service.GetByIdAsync(userId));
+
+        [HttpDelete("userId")]
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> DeleteAsync(long postId)
+            => Ok(await _service.DeleteAsync(postId));
     }
 }

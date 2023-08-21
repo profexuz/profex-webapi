@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Posts;
 using Profex.Service.Interfaces.Posts;
@@ -55,6 +56,7 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
             => Ok(await _service.DeleteAsync(postId));
 
         [HttpGet("search")]
+        [AllowAnonymous]
         public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
             => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
     }
