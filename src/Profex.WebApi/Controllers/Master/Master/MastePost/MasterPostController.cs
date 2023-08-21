@@ -18,7 +18,7 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
             _service = Postservice;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         //[AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
@@ -27,7 +27,7 @@ namespace Profex.WebApi.Controllers.Master.MasterCommon.MasterCommonPost
         //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetByIdAsync(long postId)
         => Ok(await _service.GetByIdAsync(postId));
-
+*/
         [HttpPost]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)

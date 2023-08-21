@@ -7,9 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Master\Master\MasterCategory\**" />
+    <Compile Remove="Controllers\User\User\UserCategory\**" />
+    <Content Remove="Controllers\Master\Master\MasterCategory\**" />
+    <Content Remove="Controllers\User\User\UserCategory\**" />
+    <EmbeddedResource Remove="Controllers\Master\Master\MasterCategory\**" />
+    <EmbeddedResource Remove="Controllers\User\User\UserCategory\**" />
+    <None Remove="Controllers\Master\Master\MasterCategory\**" />
+    <None Remove="Controllers\User\User\UserCategory\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.143" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
