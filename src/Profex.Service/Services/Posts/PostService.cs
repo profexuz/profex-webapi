@@ -57,6 +57,14 @@ namespace Profex.Service.Services.Posts
             return posts;
         }
 
+        public async Task<IList<Post>> GetAllPostById(long id)
+        {
+            var posts = await _postRepository.GetAllPostById(id);          
+            //var count =await _postRepository.CountAsync();
+            //_paginator.Paginate(count, @params);
+            return posts;
+        }
+
         public async Task<Post> GetByIdAsync(long id)
         {
             var posts = await _postRepository.GetByIdAsync(id);

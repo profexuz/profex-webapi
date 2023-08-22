@@ -13,4 +13,5 @@ public interface IPostService
     public Task<bool> UpdateAsync(long id, PostUpdateDto dto);
     public Task<IList<Post>> SearchAsync(string search, PaginationParams @params);
     public Task<int> SearchCountAsync(string search);
+    public Task<IList<Post>> GetAllPostById(long id);
 }

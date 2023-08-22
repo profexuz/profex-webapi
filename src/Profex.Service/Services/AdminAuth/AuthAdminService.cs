@@ -3,16 +3,13 @@ using Profex.Application.Exceptions.Auth;
 using Profex.Application.Exceptions.Users;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Users;
-using Profex.DataAccsess.Repositories.Users;
 using Profex.Domain.Entities.users;
 using Profex.Persistance.Dtos.AdminAuth;
-using Profex.Persistance.Dtos.Auth;
 using Profex.Persistance.Dtos.Notifications;
 using Profex.Persistance.Dtos.Security;
 using Profex.Service.Common.Security;
 using Profex.Service.Helpers;
 using Profex.Service.Interfaces.AdminAuth;
-using Profex.Service.Interfaces.Auth;
 using Profex.Service.Interfaces.Notifactions;
 
 namespace Profex.Service.Services.AdminAuth
@@ -22,7 +19,6 @@ namespace Profex.Service.Services.AdminAuth
         private readonly IMemoryCache _memoryCache;
         private readonly IUserRepository _userRepository;
         private readonly ISmsSender _smsSender;
-        //private readonly ITokenService _tokenService;
         private readonly ITokenAdminService _tokenService;
         private const int CACHED_MINUTES_FOR_REGISTER = 60;
         private const int CACHED_MINUTES_FOR_VERIFICATION = 50;
@@ -43,7 +39,6 @@ namespace Profex.Service.Services.AdminAuth
 
         public async Task<(bool Result, string Token)> LoginAsync(AdminDto loginDto)
         {
-            //throw new NotImplementedException();
             var user = await _userRepository.GetByPhoneAsync(loginDto.PhoneNumber);
             if (user is null) throw new UserNotFoundException();
 
@@ -59,7 +54,6 @@ namespace Profex.Service.Services.AdminAuth
             var user = await _userRepository.GetByPhoneAsync(dto.PhoneNumber);
             if (user is not null) throw new UserAlreadyExistException(dto.PhoneNumber);
 
-            // delete if exists user by this phone number
             if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + dto.PhoneNumber, out RegisterAdminDto cachedRegisterDto))
             {
                 cachedRegisterDto.FirstName = cachedRegisterDto.FirstName;
@@ -73,7 +67,6 @@ namespace Profex.Service.Services.AdminAuth
 
         public async Task<(bool Result, int CachedVerificationMinutes)> SendCodeForRegisterAsync(string phone)
         {
-            //throw new NotImplementedException();
             if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + phone, out RegisterAdminDto registerDto))
             {
                 VerificationDto verificationDto = new VerificationDto();
@@ -105,7 +98,6 @@ namespace Profex.Service.Services.AdminAuth
 
         public async Task<(bool Result, string Token)> VerifyRegisterAsync(string phone, int code)
         {
-            //throw new NotImplementedException();
             if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + phone, out RegisterAdminDto registerDto))
             {
                 if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + phone, out VerificationDto verificationDto))
@@ -139,13 +131,12 @@ namespace Profex.Service.Services.AdminAuth
 
         private async Task<bool> RegisterToDatabaseAsync(RegisterAdminDto? registerDto)
         {
-            //throw new NotImplementedException();
             var user = new User();
             user.FirstName = registerDto.FirstName;
             //user.LastName = registerDto.LastName;
             user.PhoneNumber = registerDto.PhoneNumber;
             user.PhoneNumberConfirmed = true;
-            user.ImagePath = "media/avatarmaster/user.jpg";
+            user.ImagePath = "media/avatarmaster/admin.jpg";
             var haserResult = PasswordHasher.Hash(registerDto.Password);
             user.PasswordHash = haserResult.Hash;
             user.Salt = haserResult.Salt;
@@ -155,22 +146,4 @@ namespace Profex.Service.Services.AdminAuth
             return dbResult > 0;
         }
     }
-
-    //private async Task<bool> RegisterToDatabaseAsync(RegisterDto registerDto)
-    //{
-    //    var user = new User();
-    //    user.FirstName = registerDto.FirstName;
-    //    user.LastName = registerDto.LastName;
-    //    user.PhoneNumber = registerDto.PhoneNumber;
-    //    user.PhoneNumberConfirmed = true;
-    //    user.ImagePath = "media/avatarmaster/user.jpg";
-    //    var haserResult = PasswordHasher.Hash(registerDto.Password);
-    //    user.PasswordHash = haserResult.Hash;
-    //    user.Salt = haserResult.Salt;
-    //    user.CreatedAt = user.UpdatedAt = TimeHelper.GetDateTime();
-    //    //var dbResult = await _user.CreateAsync(user);
-        
-    //    return dbResult > 0;
-    //}
-
 }

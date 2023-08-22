@@ -15,7 +15,6 @@ namespace Profex.WebApi.Controllers.Admin.AdminAuth
     {
         private readonly int maxPageSize = 30;
         private readonly IUserService _service;
-        //private readonly IAuthService _authService;
         private readonly IAuthAdminService _authService;
         public AdminAuthController(IUserService service, IAuthAdminService authAdminService)
         {

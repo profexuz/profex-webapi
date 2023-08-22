@@ -8,21 +8,21 @@ public class PostCreateValidator : AbstractValidator<PostCreateDto>
     public PostCreateValidator()
     {
         RuleFor(dto => dto.Title).NotEmpty().NotNull().WithMessage("Title is required!")
-            .MinimumLength(20).WithMessage("Title length lass be than 20 characters")
+            .MaximumLength(20).WithMessage("Title length lass be than 20 characters")
             .MinimumLength(3).WithMessage("Title lenght must ber than 3 characters");
 
         RuleFor(dto => dto.Price).NotEmpty().WithMessage("Price is required!");
 
         RuleFor(dto => dto.Description).NotEmpty().NotNull().WithMessage("Description is required!")
-            .MinimumLength(20).WithMessage("Description length lass be than 20 characters")
+            .MaximumLength(20).WithMessage("Description length lass be than 20 characters")
             .MinimumLength(3).WithMessage("Description lenght must ber than 3 characters");
 
         RuleFor(dto => dto.Region).NotEmpty().NotNull().WithMessage("Region is required!")
-            .MinimumLength(20).WithMessage("Region length lass be than 20 characters")
+            .MaximumLength(20).WithMessage("Region length lass be than 20 characters")
             .MinimumLength(3).WithMessage("Region lenght must ber than 3 characters");
 
         RuleFor(dto => dto.District).NotEmpty().NotNull().WithMessage("District is required!")
-            .MinimumLength(20).WithMessage("District length lass be than 20 characters")
+            .MaximumLength(20).WithMessage("District length lass be than 20 characters")
             .MinimumLength(3).WithMessage("District lenght must ber than 3 characters");
 
         RuleFor(dto => dto.Latidute).NotEmpty().NotNull().WithMessage("Lattidute is required!");

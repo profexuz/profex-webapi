@@ -42,7 +42,6 @@ public class AuthService : IAuthService
         var user = await _userRepository.GetByPhoneAsync(dto.PhoneNumber);
         if (user is not null) throw new UserAlreadyExistException(dto.PhoneNumber);
 
-        // delete if exists user by this phone number
         if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + dto.PhoneNumber, out RegisterDto cachedRegisterDto))
         {
             cachedRegisterDto.FirstName = cachedRegisterDto.FirstName;

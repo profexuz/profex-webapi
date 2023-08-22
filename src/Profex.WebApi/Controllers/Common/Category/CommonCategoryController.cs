@@ -63,5 +63,13 @@ namespace Profex.WebApi.Controllers.Common.Category
             var ps = await _service.GetPostsByCategory(category);
             return Ok(ps);
         }
+
+        [HttpGet("getall/by/categoryId")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IList<Domain.Entities.skills.Skill>>> GetAllSkillByCategoryId(long  categoryId)
+        {
+            var ps = await _service.GetAllSkillByCategoryId(categoryId);
+            return Ok(ps);
+        }
     }
 }

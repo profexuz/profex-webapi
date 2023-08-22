@@ -3,13 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.Domain.Entities.users;
 using Profex.Service.Interfaces.AdminAuth;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Profex.Service.Services.AdminAuth
 {

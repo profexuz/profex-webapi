@@ -3,6 +3,7 @@ using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.posts;
+using Profex.Domain.Entities.skills;
 
 namespace Profex.DataAccsess.Repositories.Categories;
 
@@ -92,6 +93,33 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         {
             await _connection.CloseAsync();
         }
+    }
+
+    public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId)
+    {
+        /*try
+        {
+            await _connection.OpenAsync();
+            string query = "select * from skills where category_id=@categoryId";
+            var res = await _connection.QuerySingleAsync<Skill>(query, new { categoryId = categoryId });
+
+            return (IList<Skill>)res;
+        }
+        catch { return new List<Skill>(); }
+        finally { await _connection.CloseAsync(); }*/
+
+        try
+        {
+            await _connection.OpenAsync();
+            string query = "select * from skills where category_id=@categoryId";
+            var skills = await _connection.QueryAsync<Skill>(query, new { categoryId = categoryId });
+
+            return skills.ToList(); // Convert IEnumerable<Skill> to IList<Skill>
+        }
+        catch { return new List<Skill>(); }
+        finally { await _connection.CloseAsync(); }
+
+
     }
 
     public async Task<Category?> GetByIdAsync(long id)
