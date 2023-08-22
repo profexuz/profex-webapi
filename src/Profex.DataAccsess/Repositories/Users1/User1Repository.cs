@@ -60,8 +60,10 @@ namespace Profex.DataAccsess.Repositories.Users1
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.users ORDER BY id desc offset {@params.GetSkipCount()} " +
-                    $"limit {@params.PageSize}";
+                //string query = $"SELECT * FROM public.users ORDER BY id desc offset {@params.GetSkipCount()} " +
+                //    $"limit {@params.PageSize}";
+                string query = $"SELECT * FROM public.users WHERE LENGTH(last_name) > 0 ORDER BY id DESC OFFSET {@params.GetSkipCount()} " +
+                    $"LIMIT {@params.PageSize}";
 
                 var resUser = (await _connection.QueryAsync<User>(query)).ToList();
 
@@ -70,6 +72,7 @@ namespace Profex.DataAccsess.Repositories.Users1
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
                     ImagePath = user.ImagePath,
                     CreatedAt = user.CreatedAt,
                     UpdatedAt = user.UpdatedAt,
