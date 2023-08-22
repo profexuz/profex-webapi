@@ -57,6 +57,7 @@ namespace Profex.WebApi.Controllers.Common.Category
         => Ok(await _service.GetByIdAsync(categoryId));
 
         [HttpGet("sort/byCategory")]
+        [AllowAnonymous]
         public async Task<ActionResult<IList<Domain.Entities.posts.Post>>> GetPostsByCategory(long category)
         {
             var ps = await _service.GetPostsByCategory(category);

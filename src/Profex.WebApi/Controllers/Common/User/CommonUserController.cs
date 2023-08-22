@@ -29,14 +29,17 @@ namespace Profex.WebApi.Controllers.Common.User
         }
 
         [HttpGet("get-all")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("count")]
+        [AllowAnonymous]
         public async Task<IActionResult> CountAsync()
              => Ok(await _service.CountAsync());
 
         [HttpGet("getbyId")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long userId)
             => Ok(await _service.GetByIdAsync(userId));
 

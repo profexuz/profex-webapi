@@ -17,10 +17,12 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
             this._service = service;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long id)
             => Ok(await _service.GetByIdAsync(id));
 

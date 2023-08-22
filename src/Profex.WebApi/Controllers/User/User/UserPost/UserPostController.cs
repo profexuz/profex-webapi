@@ -52,7 +52,7 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
 
         [HttpDelete("{categoryId}")]
         //[Authorize(Roles = "User")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long postId)
             => Ok(await _service.DeleteAsync(postId));
 
