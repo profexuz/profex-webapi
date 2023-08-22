@@ -48,7 +48,6 @@ namespace Profex.WebApi.Controllers.Common.Master
 
         [HttpDelete("{masterId}")]
         [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(long masterId)
             => Ok(await _service.DeleteAsync(masterId));
 
