@@ -93,6 +93,26 @@ namespace Profex.DataAccsess.Repositories.Posts
             }
         }
 
+        public async Task<IList<Post>> GetAllPostById(long id)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = "SELECT * FROM posts where user_id=@Id";
+                var res = await _connection.QueryAsync<Post>(query, new { Id = id });
+                
+                return (IList<Post>)res;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
+
         public async Task<Post?> GetByIdAsync(long id)
         {
             try

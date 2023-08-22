@@ -4,6 +4,7 @@ using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.posts;
+using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Categories;
 using Profex.Service.Interfaces.Categories;
 using Profex.Service.Interfaces.Common;
@@ -51,6 +52,16 @@ public class CategoryService : ICategoryService
         _paginator.Paginate(count, @params);
 
         return categories;
+    }
+
+    public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId)
+    {
+        //throw new NotImplementedException();
+        
+        var skills = await _repository.GetAllSkillByCategoryId(categoryId);
+
+        return skills;
+        
     }
 
     public async Task<Category> GetByIdAsync(long categoryId)

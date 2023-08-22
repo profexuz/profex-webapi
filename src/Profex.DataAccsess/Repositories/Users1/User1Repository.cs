@@ -60,8 +60,6 @@ namespace Profex.DataAccsess.Repositories.Users1
             {
                 await _connection.OpenAsync();
 
-                //string query = $"SELECT * FROM public.users ORDER BY id desc offset {@params.GetSkipCount()} " +
-                //    $"limit {@params.PageSize}";
                 string query = $"SELECT * FROM public.users WHERE LENGTH(last_name) > 0 ORDER BY id DESC OFFSET {@params.GetSkipCount()} " +
                     $"LIMIT {@params.PageSize}";
 
@@ -79,7 +77,6 @@ namespace Profex.DataAccsess.Repositories.Users1
                 }).ToList();
 
                 return userViewModels;
-                //return (IList<UserViewModel>)resUser;
             }
             catch
             {

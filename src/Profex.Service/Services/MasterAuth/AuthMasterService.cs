@@ -144,9 +144,7 @@ namespace Profex.Service.Services.MasterAuth
             master.LastName = registerDto.LastName;
             master.PhoneNumber = registerDto.PhoneNumber;
             master.PhoneNumberConfirmed = true;
-            //master.ImagePath = "media/images/IMG_3aab214c-6ec8-42ad-9d17-5f1e344ef2fc.jpg";
-            master.ImagePath = "media/avatarmaster/usta.jpg";
-            //master.ImagePath = MediaHelper.MakeImageName("media/ico/masterIco.png");
+            master.ImagePath = "media/avatarmaster/cats.jpg";
             var haserResult = PasswordHasher.Hash(registerDto.Password);
             master.PasswordHash = haserResult.Hash;
             master.Salt = haserResult.Salt;
