@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.User1;
 using Profex.Persistance.Validations.Dtos.Users;
-using Profex.Service.Interfaces.Auth;
 using Profex.Service.Interfaces.User1;
-using Profex.Service.Interfaces.Users;
 
 namespace Profex.WebApi.Controllers.Common.User
 {

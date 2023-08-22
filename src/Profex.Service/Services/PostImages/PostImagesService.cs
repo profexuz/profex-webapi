@@ -28,10 +28,11 @@ namespace Profex.Service.Services.PostImages
         }
         public async Task<bool> CreateAsync(PostImageCreateDto dto)
         {
+            string imagepath = await _fileService.UploadImageAsync(dto.ImagePath);
             Post_image ps = new Post_image()
             {
                 PostId = dto.PostId,
-                ImagePath = dto.ImagePath.FileName,
+                ImagePath = imagepath,
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime()
             };
