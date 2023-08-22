@@ -22,8 +22,8 @@ namespace Profex.UnitTest.ValidatorTests.PostImages
             IFormFile imageFile = new FormFile(new MemoryStream(byteImage), 0, imageSizeInBytes, "data", "file.png");
             PostImageCreateDto postImageCreateDto = new PostImageCreateDto()
             {
-                Post_id = 1,
-                Image_path = imageFile
+                PostId = 1,
+                ImagePath = imageFile
             };
             var validator = new PostImageValidator();
             var result = validator.Validate(postImageCreateDto);
