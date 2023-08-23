@@ -73,20 +73,36 @@ namespace Profex.DataAccsess.Repositories.Posts
             }
         }
 
-        public async Task<IList<Post>> GetAllAsync(PaginationParams @params)
+        public async Task<IList<PostViewModel>> GetAllAsync(PaginationParams @params)
         {
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.posts ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+                //string query = $"SELECT * FROM public.posts ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+                string query = $"SELECT p.id, p.category_id, p.user_id, p.title, p.price, " +
+            $"p.description, p.region, p.district, p.longitude, p.latitude, p.phone_number, " +
+            $"p.created_at, p.updated_at, Array_agg(pi.image_path) as image_path, u.first_name, u.last_name, " +
+            $"c.name AS category_name, Array_agg(s.title) AS skill_title " +
+            $"FROM posts p " +
+            $"LEFT JOIN post_images pi ON p.id = pi.post_id " +
+            $"LEFT JOIN users u ON p.user_id = u.id " +
+            $"LEFT JOIN categories c ON p.category_id = c.id " +
+            $"LEFT JOIN skills s ON p.category_id = s.category_id " +
+            $"WHERE (pi.image_path != '') " + // Shart
+            $"GROUP BY p.id, u.id, c.id, s.id " +
+            $"ORDER BY p.id DESC " +
+            $"OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
 
-                var resMas = (await _connection.QueryAsync<Post>(query)).ToList();
+                //var resMas = (await _connection.QueryAsync<PostViewModel>(query)).ToList();
+                var result = await _connection.QueryAsync<PostViewModel>(query);
 
-                return resMas;
+                return result.ToList();
+
+                //return (IList<PostViewModel>)resMas;
             }
             catch
             {
-                return new List<Post>();
+                return new List<PostViewModel>();
             }
             finally
             {
@@ -163,32 +179,38 @@ namespace Profex.DataAccsess.Repositories.Posts
             finally { await _connection.CloseAsync(); }
         }
 
-        public async Task<IList<Post>> SearchAsync(string search, PaginationParams @params)
+        public async Task<IList<PostViewModel>> SearchAsync(string search, PaginationParams @params)
         {
             try
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.posts WHERE title ILIKE '%{search}%' " +
-                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+                //string query = $"SELECT * FROM public.posts WHERE title ILIKE '%{search}%' " +
+                //    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+                string query = $"SELECT    p.id,    p.category_id,    p.user_id,    p.title,    p.price,    " +
+                    $"p.description,    p.region,    p.district,    p.longitude,    p.latitude,    p.phone_number,   " +
+                        $"p.created_at,    p.updated_at,    Array_agg(pi.image_path) as image_path,    u.first_name,    u.last_name,   " +
+                            $"c.name AS category_name,    Array_agg(s.title) AS skill_title " +
+                                $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id LEFT JOIN     " +
+                                    $"users u ON p.user_id = u.id LEFT JOIN     categories c ON p.category_id = c.id LEFT JOIN    " +
+                                        $" skills s ON p.category_id = s.category_id  WHERE  p.title ILIKE '%{search}%' AND (pi.image_path IS NULL OR pi.image_path != '') " +
+                                            $"GROUP BY p.id, u.id, c.id, s.id " +
+                                        $"ORDER BY p.id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
 
-                var posts = await _connection.QueryAsync<Post>(query);
 
-                return posts.ToList();
-
-
-
+                var posts = await _connection.QueryAsync<PostViewModel>(query);
+                return (IList<PostViewModel>)posts;
+                //return posts.ToList();
                 //string query = $"SELECT * FROM public.posts WHERE title ILIKE '%{search}%' " +
                 //    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
 
                 //var post = await _connection.QueryAsync<Post>(query);
-
                 //return post.ToList();
             }
 
             catch
             {
-                return new List<Post>();
+                return new List<PostViewModel>();
             }
             finally
             {

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.AdminAuth;
 using Profex.Persistance.Dtos.Auth;
 using Profex.Persistance.Validations.Dtos;
@@ -23,7 +22,7 @@ namespace Profex.WebApi.Controllers.Admin.AdminAuth
         }
 
         [HttpPost("register")]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> RegisterAsync([FromForm] RegisterAdminDto registerDto)
         {
             var validator = new RegisterValdiator();
@@ -39,7 +38,7 @@ namespace Profex.WebApi.Controllers.Admin.AdminAuth
 
 
         [HttpPost("register/send-code")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> SendCodeRegisterAsync(string phone)
         {
             var result = PhoneNumberValidator.IsValid(phone);
@@ -51,7 +50,7 @@ namespace Profex.WebApi.Controllers.Admin.AdminAuth
 
 
         [HttpPost("register/verify")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> VerifyRegisterAsync([FromBody] VerifyRegisterDto verifyRegisterDto)
         {
             var serviceResult = await _authService.VerifyRegisterAsync(verifyRegisterDto.PhoneNumber, verifyRegisterDto.Code);
