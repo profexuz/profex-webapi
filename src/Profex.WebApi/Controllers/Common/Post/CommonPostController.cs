@@ -27,6 +27,11 @@ namespace Profex.WebApi.Controllers.Common.Post
         public async Task<IActionResult> GetByIdAsync(long postId)
         => Ok(await _service.GetByIdAsync(postId));
 
+        [HttpGet("join/{postId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdJoin(long postId)
+        => Ok(await _service.GetByIdJoin(postId));
+
         [HttpGet("search")]
         [AllowAnonymous]
         public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)

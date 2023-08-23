@@ -2,6 +2,7 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Posts;
+using Profex.DataAccsess.ViewModels.Posts;
 using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Posts;
 using Profex.Service.Interfaces.Common;
@@ -65,11 +66,19 @@ namespace Profex.Service.Services.Posts
             return posts;
         }
 
-        public async Task<Post> GetByIdAsync(long id)
+        public async Task<IList<Post>> GetByIdAsync(long id)
         {
             var posts = await _postRepository.GetByIdAsync(id);
             if (posts is null) throw new PostNotFoundException();
 
+            return (IList<Post>)posts;
+        }
+
+        public async Task<IList<PostViewModel>> GetByIdJoin(long id)
+        {
+            //throw new NotImplementedException();
+            var posts = await _postRepository.GetByIdJoin(id);
+            if(posts is null) throw new PostNotFoundException();
             return posts;
         }
 
