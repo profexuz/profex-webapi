@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Posts;
+using Profex.DataAccsess.ViewModels.Posts;
 using Profex.Domain.Entities.posts;
 
 namespace Profex.DataAccsess.Repositories.Posts
@@ -118,10 +119,17 @@ namespace Profex.DataAccsess.Repositories.Posts
             try
             {
                 await _connection.OpenAsync();
-                string qeury = $"SELECT * FROM posts where id=@Id";
-                var res = await _connection.QuerySingleAsync<Post>(qeury, new { Id = id });
+                //string qeury = $"SELECT * FROM posts where id=@Id";
 
-                return res;
+                string query = $"SELECT    p.category_id,   p.user_id,    p.title,    p.price,    p.description,    p.region,    p.district,    p.longitude,    p.latitude,    p.phone_number,    p.created_at,    p.updated_at,    pi.image_path " +
+                    $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id WHERE    p.id =@Id AND (pi.image_path IS NULL OR pi.image_path != '');";
+                //var res = await _connection.QueryAsync<Post>(query, new { Id = id });
+                var res = await _connection.QueryAsync<Post>(query, new { Id = id });
+                var post = res.SingleOrDefault();
+
+                return post;
+
+                //return (Post?)res;
             }
             catch
             {
@@ -131,6 +139,28 @@ namespace Profex.DataAccsess.Repositories.Posts
             {
                 await _connection.CloseAsync();
             }
+        }
+
+        public async Task<IList<PostViewModel>> GetByIdJoin(long id)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                /*string query = $"SELECT    p.category_id,   p.user_id,    p.title,    p.price,    p.description,    p.region,    p.district,    p.longitude,    p.latitude,    p.phone_number,    p.created_at,    p.updated_at,    pi.image_path " +
+                    $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id WHERE    p.id =@Id AND (pi.image_path IS NULL OR pi.image_path != '');";*/
+                string query = $"SELECT    p.id,    p.category_id,    p.user_id,    p.title,    p.price,    " +
+                    $"p.description,    p.region,    p.district,    p.longitude,    p.latitude,    p.phone_number,   " +
+                        $"p.created_at,    p.updated_at,    Array_agg(pi.image_path) as image_path,    u.first_name,    u.last_name,   " +
+                            $"c.name AS category_name,    Array_agg(s.title) AS skill_title " +
+                                $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id LEFT JOIN     " +
+                                    $"users u ON p.user_id = u.id LEFT JOIN     categories c ON p.category_id = c.id LEFT JOIN    " +
+                                        $" skills s ON p.category_id = s.category_id  WHERE    p.id = @Id AND (pi.image_path IS NULL OR pi.image_path != '') group by p.id, u.id, c.id, s.id ;";
+                var result = await _connection.QueryAsync<PostViewModel>(query, new { Id = id });
+
+                return result.ToList();
+            }
+            catch { return null; }
+            finally { await _connection.CloseAsync(); }
         }
 
         public async Task<IList<Post>> SearchAsync(string search, PaginationParams @params)

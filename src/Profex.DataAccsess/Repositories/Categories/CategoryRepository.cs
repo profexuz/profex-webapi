@@ -112,6 +112,7 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         {
             await _connection.OpenAsync();
             string query = "select * from skills where category_id=@categoryId";
+            //string query = "select * from skills where category_id=9;"
             var skills = await _connection.QueryAsync<Skill>(query, new { categoryId = categoryId });
 
             return skills.ToList(); // Convert IEnumerable<Skill> to IList<Skill>
