@@ -50,12 +50,13 @@ namespace Profex.Service.Services.Posts
             return dbResult > 0;
         }
 
-        public async Task<IList<Post>> GetAllAsync(PaginationParams @params)
+        public async Task<IList<PostViewModel>> GetAllAsync(PaginationParams @params)
         {
             var posts = await _postRepository.GetAllAsync(@params);
             var count = await _postRepository.CountAsync();
             _paginator.Paginate(count, @params);
             return posts;
+            //return (IList<PostViewModel>)posts;
         }
 
         public async Task<IList<Post>> GetAllPostById(long id)
@@ -82,7 +83,7 @@ namespace Profex.Service.Services.Posts
             return posts;
         }
 
-        public async Task<IList<Post>> SearchAsync(string search, PaginationParams @params)
+        public async Task<IList<PostViewModel>> SearchAsync(string search, PaginationParams @params)
         {
             var posts = await _postRepository.SearchAsync(search, @params);
             int count = await _postRepository.SearchCountAsync(search);

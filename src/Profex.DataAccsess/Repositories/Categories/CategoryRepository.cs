@@ -4,6 +4,7 @@ using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.posts;
 using Profex.Domain.Entities.skills;
+using System.Transactions;
 
 namespace Profex.DataAccsess.Repositories.Categories;
 
@@ -58,9 +59,10 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         {
             await _connection.OpenAsync();
             string query = "DELETE FROM categories WHERE id=@Id";
-            var result = await _connection.ExecuteAsync(query, new { Id = id });
 
+            var result = await _connection.ExecuteAsync(query, new { Id = id });
             return result;
+
         }
         catch
         {

@@ -22,11 +22,7 @@ namespace Profex.WebApi.Controllers.Common.Post
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        [HttpGet("{postId}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long postId)
-        => Ok(await _service.GetByIdAsync(postId));
-
+        
         [HttpGet("join/{postId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdJoin(long postId)
@@ -37,7 +33,7 @@ namespace Profex.WebApi.Controllers.Common.Post
         public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
             => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
         
-        [HttpGet("postsById")]
+        [HttpGet("categoryId/sort")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllPostsById([FromQuery] long id)
             => Ok(await _service.GetAllPostById(id));
