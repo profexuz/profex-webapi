@@ -47,14 +47,14 @@ namespace Profex.WebApi.Controllers.Common.Master
         }
 
         [HttpDelete("{masterId}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Master,Admin")]
         public async Task<IActionResult> DeleteAsync(long masterId)
             => Ok(await _service.DeleteAsync(masterId));
 
         
         
         [HttpPut("{masterId}")]
-        [Authorize(Roles ="Master")]
+        [Authorize(Roles ="Master,Admin")]
         public async Task<IActionResult> UpdateAsync(long masterId, [FromForm] Master1UpdateDto dto)
         {
 

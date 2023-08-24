@@ -88,6 +88,16 @@ namespace Profex.DataAccsess.Repositories.Users1
             }
         }
 
+        public async Task<IList<User1ViewModel>> GetALlPostByUserId(long userId)
+        {
+            throw new NotImplementedException();
+            //try
+            //{
+            //    await _connection.OpenAsync();
+            //    string query 
+            //}
+        }
+
         public async Task<UserViewModel?> GetByIdAsync(long id)
         {
             try

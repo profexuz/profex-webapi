@@ -30,7 +30,8 @@ namespace Profex.WebApi.Controllers.Common.Skill
 
 
         [HttpPost("skill")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] SkillCreateDto dto)
         {
             //var validator = new CompanyCreateValidator();
@@ -43,8 +44,8 @@ namespace Profex.WebApi.Controllers.Common.Skill
 
         
         [HttpPut("skill/(id)")]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] SkillUpdateDto dto)
         {
             //var validator = new CompanyUpdateValidator();
@@ -57,8 +58,8 @@ namespace Profex.WebApi.Controllers.Common.Skill
 
 
         [HttpDelete("skill/{id}")]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _service.DeleteAsync(id));
     }

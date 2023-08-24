@@ -11,5 +11,6 @@ namespace Profex.DataAccsess.Interfaces.Users1
         public Task<int> SearchCountAsync(string search);
         public Task<User?> GetByPhoneAsync(string phone);
         public Task<int> UpdateAsync(long id, UserViewModel users);
+        public Task<IList<User1ViewModel>> GetALlPostByUserId(long userId);
     }
 }
