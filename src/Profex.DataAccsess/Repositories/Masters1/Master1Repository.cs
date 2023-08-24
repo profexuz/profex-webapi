@@ -76,6 +76,8 @@ namespace Profex.DataAccsess.Repositories.Masters1
                     ImagePath = master.ImagePath,
                     IsFree = master.IsFree,
                     PhoneNumber = master.PhoneNumber,
+                    CreatedAt=master.CreatedAt,
+                    UpdatedAt=master.UpdatedAt,
                 }).ToList();
 
                 return masterViewModels;
@@ -138,20 +140,22 @@ namespace Profex.DataAccsess.Repositories.Masters1
             {
                 await _connection.OpenAsync();
                 string query = $@"
-            SELECT 
-                ms.id AS master_skill_id,
-                m.id AS master_id, m.first_name, m.last_name, m.phone_number_confirmed, m.image_path, m.is_free,
-                s.title AS skill_title
-            FROM 
-                master_skills ms
-                JOIN masters m ON ms.master_id = m.id
-                JOIN skills s ON ms.skill_id = s.id
-            WHERE 
-                ms.master_id = @MasterId;";
+            SELECT
+                m.first_name,
+                m.last_name,
+                m.phone_number,
+                m.image_path,
+                m.is_free,
+                m.created_at,
+                m.updated_at,
+                s.title AS skill_title FROM masters AS m JOIN skills AS s ON m.masterId = s.masterId;";
 
                 var result = await _connection.QueryAsync<UserSkillViewModel>(query, new { MasterId = masterId });
                 return result.ToList();
             }
+
+
+
             catch
             {
                 //.//return MasterViewModel();

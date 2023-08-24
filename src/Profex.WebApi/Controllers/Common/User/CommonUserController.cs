@@ -21,7 +21,7 @@ namespace Profex.WebApi.Controllers.Common.User
             this._msService = master1Service;
         }
         [HttpPut("update/{userId}")]
-        [Authorize(Roles ="User")]
+        [Authorize(Roles ="User,Admin")]
         public async Task<IActionResult> UpdateAsync(long userId, [FromForm] User1UpateDto dto)
         {
 
@@ -54,7 +54,7 @@ namespace Profex.WebApi.Controllers.Common.User
 
 
         [HttpDelete("userId")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="User,Admin")]
         public async Task<IActionResult> DeleteAsync(long postId)
             => Ok(await _service.DeleteAsync(postId));
     }

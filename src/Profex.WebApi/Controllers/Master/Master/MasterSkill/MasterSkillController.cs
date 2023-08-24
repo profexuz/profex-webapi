@@ -41,7 +41,7 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles ="Master")]
+        [Authorize(Roles = "Master,Admin")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] MasterSkillUpdateDto dto)
         {
             //var validator = new CompanyUpdateValidator();
@@ -53,7 +53,7 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles ="Master")]
+        [Authorize(Roles = "Master,Admin")]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _service.DeleteAsync(id));
     }
