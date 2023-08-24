@@ -3,8 +3,9 @@ using Profex.Persistance.Validations.Dtos.Posts;
 
 namespace Profex.UnitTest.ValidatorTests.Posts;
 
-public class PostCreateValidatorTest
+public class PostUpdateValidatorTest
 {
+
     [Theory]
     [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
     [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
