@@ -1,11 +1,14 @@
 ﻿using Profex.Application.Exceptions.Categories;
 using Profex.Application.Exceptions.Masters;
+using Profex.Application.Exceptions.Skills;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
+using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.master_skills;
+using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Master1;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Master1;
@@ -49,6 +52,15 @@ namespace Profex.Service.Services.Master1
 
             return masters1;
         }
+
+        public async Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId)
+        {
+            var masters = await _repository.GetMasterSkillById(masterId);
+            if(masters is null) throw new SkillNotFoundException();
+            return masters;
+        }
+            
+        
 
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {

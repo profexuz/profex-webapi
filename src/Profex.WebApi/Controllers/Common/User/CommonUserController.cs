@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.User1;
 using Profex.Persistance.Validations.Dtos.Users;
+using Profex.Service.Interfaces.Master1;
 using Profex.Service.Interfaces.User1;
 
 namespace Profex.WebApi.Controllers.Common.User
@@ -12,10 +13,12 @@ namespace Profex.WebApi.Controllers.Common.User
     public class CommonUserController : CommonBaseController
     {
         private readonly IUser1Service _service;
+        private readonly IMaster1Service _msService;
         private readonly int maxPageSize = 30;
-        public CommonUserController(IUser1Service service)
+        public CommonUserController(IUser1Service service, IMaster1Service master1Service)
         {
             this._service = service;
+            this._msService = master1Service;
         }
         [HttpPut("update/{userId}")]
         [Authorize(Roles ="User")]
@@ -42,6 +45,13 @@ namespace Profex.WebApi.Controllers.Common.User
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long userId)
             => Ok(await _service.GetByIdAsync(userId));
+
+        [HttpGet("getSkillsById")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetMasterSkillById(long masterId)
+            => Ok(await _msService.GetMasterSkillById(masterId));
+        
+
 
         [HttpDelete("userId")]
         [Authorize(Roles ="Admin")]

@@ -2,8 +2,10 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
+using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.master_skills;
 using Profex.Domain.Entities.masters;
+using Profex.Domain.Entities.skills;
 using static Dapper.SqlMapper;
 
 namespace Profex.DataAccsess.Repositories.Masters1
@@ -127,6 +129,37 @@ namespace Profex.DataAccsess.Repositories.Masters1
             finally
             {
                 await _connection.CloseAsync();
+            }
+        }
+
+        public async Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $@"
+            SELECT 
+                ms.id AS master_skill_id,
+                m.id AS master_id, m.first_name, m.last_name, m.phone_number_confirmed, m.image_path, m.is_free,
+                s.title AS skill_title
+            FROM 
+                master_skills ms
+                JOIN masters m ON ms.master_id = m.id
+                JOIN skills s ON ms.skill_id = s.id
+            WHERE 
+                ms.master_id = @MasterId;";
+
+                var result = await _connection.QueryAsync<UserSkillViewModel>(query, new { MasterId = masterId });
+                return result.ToList();
+            }
+            catch
+            {
+                //.//return MasterViewModel();
+                return new List<UserSkillViewModel>();
+            }
+            finally
+            {
+                await _connection.CloseAsync(); 
             }
         }
 
