@@ -1,6 +1,8 @@
 ﻿using Profex.Application.Utils;
 using Profex.DataAccsess.ViewModels.Masters;
+using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.master_skills;
+using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Master1;
 
 namespace Profex.Service.Interfaces.Master1
@@ -14,5 +16,6 @@ namespace Profex.Service.Interfaces.Master1
         public Task<IList<MasterViewModel>> GetAllAsync(PaginationParams @params);
         public Task<MasterViewModel> GetByIdAsync(long id);
         public Task<bool> UpdateAsync(long id, Master1UpdateDto dto);
+        public Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId);
     }
 }

@@ -88,7 +88,7 @@ namespace Profex.DataAccsess.Repositories.Posts
             $"LEFT JOIN users u ON p.user_id = u.id " +
             $"LEFT JOIN categories c ON p.category_id = c.id " +
             $"LEFT JOIN skills s ON p.category_id = s.category_id " +
-            $"WHERE (pi.image_path != '') " + // Shart
+            $"WHERE (pi.image_path is null or pi.image_path != '') " + // Shart
             $"GROUP BY p.id, u.id, c.id, s.id " +
             $"ORDER BY p.id DESC " +
             $"OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
