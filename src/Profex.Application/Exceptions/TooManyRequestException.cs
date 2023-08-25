@@ -2,8 +2,8 @@
 
 namespace Profex.Application.Exceptions;
 
-public class TooManyRequestException : Exception
+public class TooManyRequestException : ClientException
 {
-    public HttpStatusCode StatusCode { get; } = HttpStatusCode.TooManyRequests;
-    public string TitleMessage { get; protected set; } = string.Empty;
+    public override HttpStatusCode StatusCode { get; } = HttpStatusCode.TooManyRequests;
+    public override string TitleMessage { get; protected set; } = string.Empty;
 }

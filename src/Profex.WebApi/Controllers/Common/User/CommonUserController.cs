@@ -10,18 +10,18 @@ namespace Profex.WebApi.Controllers.Common.User
 {
     [Route("api/common/user")]
     [ApiController]
-    public class CommonUserController : CommonBaseController
+    public class CommonUserController : ControllerBase
     {
         private readonly IUser1Service _service;
         private readonly IMaster1Service _msService;
-        private readonly int maxPageSize = 30;
+        private readonly int maxPageSize = 4;
         public CommonUserController(IUser1Service service, IMaster1Service master1Service)
         {
             this._service = service;
             this._msService = master1Service;
         }
         [HttpPut("update/{userId}")]
-        [Authorize(Roles ="User,Admin")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> UpdateAsync(long userId, [FromForm] User1UpateDto dto)
         {
 
@@ -54,7 +54,7 @@ namespace Profex.WebApi.Controllers.Common.User
 
 
         [HttpDelete("userId")]
-        [Authorize(Roles ="User,Admin")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> DeleteAsync(long postId)
             => Ok(await _service.DeleteAsync(postId));
     }

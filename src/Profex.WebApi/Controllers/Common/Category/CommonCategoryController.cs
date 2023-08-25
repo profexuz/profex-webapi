@@ -34,7 +34,6 @@ namespace Profex.WebApi.Controllers.Common.Category
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
         {
             var updateValidator = new CategoryUpdateValidator();
-            
             var result = updateValidator.Validate(dto);
             if (result.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
             else return BadRequest(result.Errors);

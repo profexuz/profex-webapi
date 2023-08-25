@@ -45,6 +45,8 @@ namespace Profex.Service.Services.Posts
 
         public async Task<bool> DeleteAsync(long id)
         {
+            var db = await _postRepository.GetByIdAsync(id);
+            if (db is null) throw new PostNotFoundException();
             var dbResult = await _postRepository.DeleteAsync(id);
 
             return dbResult > 0;
@@ -56,14 +58,11 @@ namespace Profex.Service.Services.Posts
             var count = await _postRepository.CountAsync();
             _paginator.Paginate(count, @params);
             return posts;
-            //return (IList<PostViewModel>)posts;
         }
 
         public async Task<IList<Post>> GetAllPostById(long id)
         {
             var posts = await _postRepository.GetAllPostById(id);          
-            //var count =await _postRepository.CountAsync();
-            //_paginator.Paginate(count, @params);
             return posts;
         }
 
@@ -77,7 +76,6 @@ namespace Profex.Service.Services.Posts
 
         public async Task<IList<PostViewModel>> GetByIdJoin(long id)
         {
-            //throw new NotImplementedException();
             var posts = await _postRepository.GetByIdJoin(id);
             if(posts is null) throw new PostNotFoundException();
             return posts;

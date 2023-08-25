@@ -1,5 +1,6 @@
 using Profex.WebApi.Configurations;
 using Profex.WebApi.Configurations.Layers;
+using Profex.WebApi.Middlewares;
 using ProFex.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseStaticFiles();
+app.UseMiddleware<CrosOriginAccessMiddleware>();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

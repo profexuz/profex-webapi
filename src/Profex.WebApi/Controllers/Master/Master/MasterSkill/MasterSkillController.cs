@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.MasterSkill;
+using Profex.Persistance.Validations.Dtos.MasterSkill;
 using Profex.Service.Interfaces.MasterSkill;
 
 namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
@@ -31,29 +32,24 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
         [Authorize(Roles = "Master")]
         public async Task<IActionResult> CreateAsync([FromForm] MasterSkillCreateDto dto)
         {
-            //var validator = new CompanyCreateValidator();
-            //var result = validator.Validate(dto);
-            //if (result.IsValid) return Ok(await _service.CreateAsync(dto));
-            return Ok(await _service.CreateAsync(dto));
-
-            //await _service.CreateAsync(dto);
-            //else return BadRequest(result.Errors);
+            var validator = new MasterSkillCreateValidator();
+            var result = validator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.CreateAsync(dto));
+            else return BadRequest(result.Errors);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Master,Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] MasterSkillUpdateDto dto)
         {
-            //var validator = new CompanyUpdateValidator();
-            //var validationResult = validator.Validate(dto);
-            //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(companyId, dto));
-            //else return BadRequest(validationResult.Errors);
-
-            return Ok(await _service.UpdateAsync(id, dto));
+            var validator = new MasterSkillUpdateValidator();
+            var validationResult = validator.Validate(dto);
+            if (validationResult.IsValid) return Ok(await _service.UpdateAsync(id, dto));
+            else return BadRequest(validationResult.Errors);
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Master,Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _service.DeleteAsync(id));
     }
