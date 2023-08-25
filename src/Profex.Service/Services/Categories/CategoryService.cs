@@ -40,6 +40,9 @@ public class CategoryService : ICategoryService
 
     public async Task<bool> DeleteAsync(long categoryId)
     {
+        var natija = await _repository.GetByIdAsync(categoryId);
+        if (natija == null) throw new CategoryNotFoundException();
+
         var dbResult = await _repository.DeleteAsync(categoryId);
         
         return dbResult > 0;
@@ -56,8 +59,8 @@ public class CategoryService : ICategoryService
 
     public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId)
     {
-        //throw new NotImplementedException();
-        
+        var natija = await _repository.GetByIdAsync(categoryId);
+        if (natija == null) throw new CategoryNotFoundException();
         var skills = await _repository.GetAllSkillByCategoryId(categoryId);
 
         return skills;

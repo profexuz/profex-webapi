@@ -2,8 +2,8 @@
 
 namespace Profex.Application.Exceptions;
 
-public class BadRequestException : Exception
+public class BadRequestException : ClientException
 {
-    public HttpStatusCode StatusCode { get; } = HttpStatusCode.BadRequest;
-    public string TitleMessage { get; protected set; } = string.Empty;
+    public override HttpStatusCode StatusCode { get; } = HttpStatusCode.BadRequest;
+    public override string TitleMessage { get; protected set; } = string.Empty;
 }

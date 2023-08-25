@@ -11,7 +11,6 @@ namespace Profex.WebApi.Controllers.User.User.UserPostImage
     public class UserPostImageController : ControllerBase
     {
         private readonly int maxPageSize = 30;
-        //private readonly IPostService _service;
         private readonly IPostImagesService _service;
         public UserPostImageController(IPostImagesService service)
         {

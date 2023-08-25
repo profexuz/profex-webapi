@@ -20,6 +20,7 @@ public class MasterSkillService : IMasterSkillService
     }
     public async Task<bool> CreateAsync(MasterSkillCreateDto dto)
     {
+
         Master_skill ms = new Master_skill()
         {
             MasterId = dto.MasterId,
@@ -36,6 +37,8 @@ public class MasterSkillService : IMasterSkillService
 
     public async Task<bool> DeleteAsync(long id)
     {
+        var natija = await _repository.GetByIdAsync(id);
+        if (natija == null) throw new MasterSkilNotFoundException();
         var dbResult = await _repository.DeleteAsync(id);
 
         return dbResult > 0;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Auth;
 using Profex.Persistance.Validations.Dtos;
 using Profex.Persistance.Validations.Dtos.Auth;
@@ -22,19 +21,7 @@ namespace Profex.WebApi.Controllers.User.UserAuth
             _authService = authService;
         }
 
-        /*[HttpGet]
-        //[Authorize(Roles = "User")]
-        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));*/
-
-
-        /*[HttpGet("{userId}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long userId)
-        => Ok(await _service.GetByIdAsync(userId));*/
-
-
-
+        
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromForm] RegisterDto registerDto)
         {

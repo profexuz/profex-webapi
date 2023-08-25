@@ -2,8 +2,8 @@
 
 namespace Profex.Application.Exceptions;
 
-public class NotFoundException : Exception
+public class NotFoundException : ClientException
 {
-    public HttpStatusCode StatusCode { get; } = HttpStatusCode.NotFound;
-    public string TitleMessage { get; protected set; } = string.Empty;
+    public override HttpStatusCode StatusCode { get; } = HttpStatusCode.NotFound;
+    public override string TitleMessage { get; protected set; } = string.Empty;
 }

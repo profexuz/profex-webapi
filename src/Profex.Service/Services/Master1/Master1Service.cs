@@ -1,18 +1,15 @@
-﻿using Profex.Application.Exceptions.Categories;
-using Profex.Application.Exceptions.Masters;
+﻿using Profex.Application.Exceptions.Masters;
+using Profex.Application.Exceptions.MasterSkills;
 using Profex.Application.Exceptions.Skills;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
 using Profex.DataAccsess.ViewModels.Skills;
-using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.master_skills;
-using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Master1;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Master1;
-using System.Security.Cryptography.Xml;
 
 namespace Profex.Service.Services.Master1
 {
@@ -31,6 +28,9 @@ namespace Profex.Service.Services.Master1
 
         public async Task<bool> DeleteAsync(long id)
         {
+            var natjia = await _repository.GetByIdAsync(id);
+            if (natjia == null) throw new MasterNotFoundException();
+
             var dbResult = await _repository.DeleteAsync(id);
             
             return dbResult > 0;
@@ -64,7 +64,6 @@ namespace Profex.Service.Services.Master1
 
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {
-            //throw new NotImplementedException();
             var masters =await _repository.SearchAsync(search, @params);
             if(masters is null) throw new MasterNotFoundException();
             return masters;
@@ -78,9 +77,8 @@ namespace Profex.Service.Services.Master1
 
         public async Task<IList<Master_skill>> SortBySkillId(long skillId)
         {
-            //throw new NotImplementedException();
             var posts = await _repository.SortBySkillId(skillId);
-            if (posts is null) throw new MasterNotFoundException();
+            if (posts is null) throw new MasterSkilNotFoundException();
             return posts;
         }
 
@@ -95,8 +93,6 @@ namespace Profex.Service.Services.Master1
 
             if (dto.ImagePath is not null)
             {
-                //var deleteRes = await _fileService.DeleteImageAsync(master1.ImagePath);
-                //if (deleteRes is false) throw new BadImageFormatException();
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
                 master1.ImagePath = newImagePath;
             }

@@ -2,8 +2,8 @@
 
 namespace Profex.Application.Exceptions;
 
-public class ExpiredException : Exception
+public class ExpiredException : ClientException
 {
-    public HttpStatusCode StatusCode { get; } = HttpStatusCode.Gone;
-    public string TitleMessage { get; protected set; } = string.Empty;
+    public override HttpStatusCode StatusCode { get; } = HttpStatusCode.Gone;
+    public override string TitleMessage { get; protected set; } = string.Empty;
 }
