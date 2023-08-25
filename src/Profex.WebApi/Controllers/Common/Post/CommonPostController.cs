@@ -9,7 +9,7 @@ namespace Profex.WebApi.Controllers.Common.Post
     [ApiController]
     public class CommonPostController : ControllerBase
     {
-        private readonly int maxPageSize = 30;
+        private readonly int maxPageSize = 6;
         private readonly IPostService _service;
 
         public CommonPostController(IPostService Postservice)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Skills;
@@ -43,14 +44,14 @@ namespace Profex.WebApi.Controllers.Common.Skill
         
         [HttpPut("skill/(id)")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long id, [FromForm] SkillUpdateDto dto)
+        public async Task<IActionResult> UpdateAsync(long id,[FromForm] SkillUpdateDto dto)
         {
             //var validator = new SkillCreateValidator();
-            
+
             //var result = validator.Validate(id,dto)
-            ////var validationResult = validator.Validate(dt);
+            //var validationResult = validator.Validate(dto);
             //if (result.IsValid) return Ok(await _service.UpdateAsync(id, dto));
-            //else return BadRequest(validationResult.Errors);
+            //else return BadRequest(result.Errors);
             return Ok(await _service.UpdateAsync(id, dto));
         }
 

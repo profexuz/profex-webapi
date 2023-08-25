@@ -2,8 +2,8 @@
 
 namespace Profex.Application.Exceptions;
 
-public class AlreadyExistsException : Exception
+public class AlreadyExistsException : ClientException
 {
-    public HttpStatusCode StatusCode = HttpStatusCode.Conflict;
-    public string TitleMessage { get; protected set; } = string.Empty;
+    public override HttpStatusCode StatusCode { get; } = HttpStatusCode.Conflict;
+    public override string TitleMessage { get; protected set; } = string.Empty;
 }

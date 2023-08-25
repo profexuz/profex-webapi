@@ -11,7 +11,6 @@ namespace Profex.DataAccsess.Repositories.Master_skills
     {
         public async Task<long> CountAsync()
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
@@ -32,12 +31,10 @@ namespace Profex.DataAccsess.Repositories.Master_skills
 
         public async Task<int> CreateAsync(Master_skill entity)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
 
-                // Check if the master_id and skill_id exist in their respective tables
                 string checkMasterQuery = "SELECT COUNT(*) FROM masters WHERE id = @MasterId";
                 string checkSkillQuery = "SELECT COUNT(*) FROM skills WHERE id = @SkillId";
 

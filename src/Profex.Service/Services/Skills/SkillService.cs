@@ -1,6 +1,8 @@
-﻿using Profex.Application.Exceptions.Skills;
+﻿using Profex.Application.Exceptions.Categories;
+using Profex.Application.Exceptions.Skills;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
+using Profex.DataAccsess.Interfaces.Categories;
 using Profex.DataAccsess.Interfaces.Skills;
 using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Skills;
@@ -13,10 +15,13 @@ namespace Profex.Service.Services.Skills
     {
         private readonly ISkillRepository _repository;
         private readonly IPaginator _paginator;
-        public SkillService(ISkillRepository skillRepository, IPaginator paginator)
+        private readonly ICategoryRepository _category;
+        
+        public SkillService(ISkillRepository skillRepository, IPaginator paginator,ICategoryRepository categoryRepository)
         {
             this._paginator = paginator;
             this._repository = skillRepository;
+            this._category = categoryRepository;
         }
         public async Task<bool> CreateAsync(SkillCreateDto dto)
         {
@@ -28,7 +33,10 @@ namespace Profex.Service.Services.Skills
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime()
             };
-
+            skill.CategoryId = dto.CategoryId;
+            var js = _category.GetByIdAsync(skill.CategoryId);
+            if (js == null) throw new CategoryNotFoundException();
+            
             var res = await _repository.CreateAsync(skill);
 
             return res > 0;
