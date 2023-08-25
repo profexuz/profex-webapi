@@ -99,25 +99,14 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
 
     public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId)
     {
-        /*try
-        {
-            await _connection.OpenAsync();
-            string query = "select * from skills where category_id=@categoryId";
-            var res = await _connection.QuerySingleAsync<Skill>(query, new { categoryId = categoryId });
-
-            return (IList<Skill>)res;
-        }
-        catch { return new List<Skill>(); }
-        finally { await _connection.CloseAsync(); }*/
-
+        
         try
         {
             await _connection.OpenAsync();
             string query = "select * from skills where category_id=@categoryId";
-            //string query = "select * from skills where category_id=9;"
             var skills = await _connection.QueryAsync<Skill>(query, new { categoryId = categoryId });
 
-            return skills.ToList(); // Convert IEnumerable<Skill> to IList<Skill>
+            return skills.ToList(); 
         }
         catch { return new List<Skill>(); }
         finally { await _connection.CloseAsync(); }

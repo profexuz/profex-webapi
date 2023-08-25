@@ -8,6 +8,8 @@ public class PostImageValidator : AbstractValidator<PostImageCreateDto>
 {
     public PostImageValidator()
     {
+        RuleFor(dto=>dto.PostId).NotEmpty().WithMessage("Post id is required!");
+
         int maxImageSizeMB = 3;
         RuleFor(dto => dto.ImagePath).NotEmpty().NotNull().WithMessage("Image field is required");
         RuleFor(dto => dto.ImagePath.Length).LessThan(maxImageSizeMB * 1024 * 1024 + 1).WithMessage($"Image size must be less than {maxImageSizeMB} MB");

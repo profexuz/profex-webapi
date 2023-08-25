@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Profex.Application.Exceptions.Users;
+﻿using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Users1;
@@ -32,6 +31,8 @@ namespace Profex.Service.Services.User1
 
         public async Task<bool> DeleteAsync(long id)
         {
+            var js = await _repository.GetByIdAsync(id);
+            if (js == null) throw new UserNotFoundException();
             var dbResult = await _repository.DeleteAsync(id);
 
             return dbResult > 0;
@@ -65,8 +66,6 @@ namespace Profex.Service.Services.User1
 
             if (dto.ImagePath is not null)
             {
-                //var deleteRes = await _fileService.DeleteImageAsync(user1.ImagePath);
-                //if (deleteRes is false) throw new BadImageFormatException();
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
                 user1.ImagePath = newImagePath;
             }

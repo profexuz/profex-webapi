@@ -1,7 +1,11 @@
-﻿using Profex.Application.Exceptions.MasterSkills;
+﻿using Profex.Application.Exceptions.Masters;
+using Profex.Application.Exceptions.MasterSkills;
+using Profex.Application.Exceptions.Skills;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Master_skills;
+using Profex.DataAccsess.Interfaces.Masters;
+using Profex.DataAccsess.Interfaces.Skills;
 using Profex.Domain.Entities.master_skills;
 using Profex.Persistance.Dtos.MasterSkill;
 using Profex.Service.Interfaces.Common;
@@ -12,11 +16,15 @@ namespace Profex.Service.Services.MasterSkill;
 public class MasterSkillService : IMasterSkillService
 {
     private readonly IMasterSkillRepository _repository;
+    private readonly IMasterRepository _master;
+    private readonly ISkillRepository _skill;
     private readonly IPaginator _paginator;
-    public MasterSkillService(IMasterSkillRepository repository, IPaginator paginator)
+    public MasterSkillService(IMasterSkillRepository repository, IPaginator paginator, IMasterRepository masterRepository, ISkillRepository skill)
     {
         this._repository = repository;
         this._paginator = paginator;
+        this._master = masterRepository;
+        this._skill = skill;
     }
     public async Task<bool> CreateAsync(MasterSkillCreateDto dto)
     {
@@ -24,12 +32,19 @@ public class MasterSkillService : IMasterSkillService
         Master_skill ms = new Master_skill()
         {
             MasterId = dto.MasterId,
+            
             SkillId = dto.SkillId,
             CreatedAt = TimeHelper.GetDateTime(),
             UpdatedAt = TimeHelper.GetDateTime()
         };
 
-
+        ms.MasterId = dto.MasterId;
+        ms.SkillId = dto.SkillId;
+        var rap = await _master.GetByIdAsync(ms.MasterId);
+        if (rap == null) throw new MasterNotFoundException();
+        ms.SkillId = dto.SkillId;
+        var rp = await _skill.GetByIdAsync(ms.SkillId);
+        if(rp==null) throw new SkillNotFoundException();
         var res = await _repository.CreateAsync(ms);
 
         return res > 0;

@@ -1,15 +1,14 @@
 ﻿using Profex.Application.Exceptions.MasterSkills;
 using Profex.Application.Exceptions.PostImages;
+using Profex.Application.Exceptions.Posts;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Post_Images;
-using Profex.Domain.Entities.master_skills;
-using Profex.Domain.Entities.masters;
+using Profex.DataAccsess.Interfaces.Posts;
 using Profex.Domain.Entities.post_images;
 using Profex.Persistance.Dtos.PostImages;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.PostImages;
-using Profex.Service.Services.Common;
 
 namespace Profex.Service.Services.PostImages
 {
@@ -17,13 +16,15 @@ namespace Profex.Service.Services.PostImages
     {
         private readonly IPostImageRepository _repository;
         private readonly IPaginator _paginator;
+        private readonly IPostRepository _post;
         private IFileService _fileService;
         public PostImagesService(IPostImageRepository repository,
-            IPaginator paginator, IFileService fileService)
+            IPaginator paginator, IFileService fileService, IPostRepository post)
         {
             this._repository = repository;
             this._paginator = paginator;
             _fileService = fileService;
+            this._post = post;
 
         }
         public async Task<bool> CreateAsync(PostImageCreateDto dto)
@@ -36,6 +37,9 @@ namespace Profex.Service.Services.PostImages
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime()
             };
+            ps.PostId = dto.PostId;
+            var natija = await _post.GetByIdAsync(ps.PostId);
+            if (natija == null) throw new PostNotFoundException();
             var res = await _repository.CreateAsync(ps);
 
             return res > 0;
@@ -43,6 +47,8 @@ namespace Profex.Service.Services.PostImages
 
         public async Task<bool> DeleteAsync(long id)
         {
+            var rp =await _repository.GetByIdAsync(id);
+            if (rp == null) throw new PostImageNotFoundException();
             var dbResult = await _repository.DeleteAsync(id);
 
             return dbResult > 0;
