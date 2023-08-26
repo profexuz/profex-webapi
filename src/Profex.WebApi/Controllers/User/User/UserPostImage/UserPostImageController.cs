@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.PostImages;
+using Profex.Persistance.Validations.Dtos.PostImages;
 using Profex.Service.Interfaces.PostImages;
 
 namespace Profex.WebApi.Controllers.User.User.UserPostImage
@@ -21,12 +22,10 @@ namespace Profex.WebApi.Controllers.User.User.UserPostImage
         [AllowAnonymous]
         public async Task<IActionResult> CreateAsync([FromForm] PostImageCreateDto dto)
         {
-            //var validator = new PostImageCreateValidator();
-            //var result = validator.Validate(dto);
-            //if (result.IsValid) return Ok(await _service.CreateAsync(dto));
-            //else return BadRequest(result.Errors);
-
-            return Ok(await _service.CreateAsync(dto));
+            var validator = new PostImageValidator();
+            var result = validator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.CreateAsync(dto));
+            else return BadRequest(result.Errors);
         }
 
 
