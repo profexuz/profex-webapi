@@ -27,6 +27,7 @@ namespace Profex.WebApi.Controllers.Common.Category
             var result = validator.Validate(dto);
             if (result.IsValid) return Ok(await _service.CreateAsync(dto));
             else return BadRequest(result.Errors);
+
         }
 
         [HttpPut]

@@ -55,7 +55,7 @@ namespace Profex.WebApi.Controllers.Common.Master
         
         
         [HttpPut("{masterId}")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Master")]
         public async Task<IActionResult> UpdateAsync(long masterId, [FromForm] Master1UpdateDto dto)
         {
 
