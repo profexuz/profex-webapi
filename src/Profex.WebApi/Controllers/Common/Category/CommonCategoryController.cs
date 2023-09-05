@@ -20,7 +20,7 @@ namespace Profex.WebApi.Controllers.Common.Category
 
 
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
         {
             var validator = new CategoryCreateValidator();

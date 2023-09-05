@@ -20,14 +20,19 @@ namespace Profex.Service.Services.Posts
     public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
-        private readonly IPaginator _paginator;
         private readonly ICategoryRepository _category;
+        private readonly IPaginator _paginator;
         private readonly IUser1Repository _user;
-        public PostService(IPostRepository postRepository,
-            IPaginator paginator)
+        public PostService(
+            IPostRepository postRepository,
+            IPaginator paginator,
+            ICategoryRepository category,
+            IUser1Repository user)
         {
             this._paginator = paginator;
             this._postRepository = postRepository;
+            this._category = category;
+            this._user = user;
         }
 
         public async Task<bool> CreateAsync(PostCreateDto dto)
@@ -47,12 +52,16 @@ namespace Profex.Service.Services.Posts
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime(),
             };
+
             post.CategoryId = dto.CategoryId;
             var js = await _category.GetByIdAsync(post.CategoryId);
+
             if (js == null) throw new CategoryNotFoundException();
             post.UserId = dto.UserId;
             var cs = await _user.GetByIdAsync(post.UserId);
+
             if (cs == null) throw new UserNotFoundException();
+
             var res = await _postRepository.CreateAsync(post);
 
             return res > 0;

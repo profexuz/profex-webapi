@@ -35,7 +35,7 @@ namespace Profex.DataAccsess.Repositories.Users
             {
                 await _connection.OpenAsync();
 
-                string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, " +
+                string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_numer_confirmed, " +
                     "image_path, password_hash, salt, created_at, updated_at)" +
                         "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, @PasswordHash, " +
                             "@Salt, @CreatedAt, @UpdatedAt);";
