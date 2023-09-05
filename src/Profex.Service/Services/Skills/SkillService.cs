@@ -45,7 +45,7 @@ namespace Profex.Service.Services.Skills
         public async Task<bool> DeleteAsync(long id)
         {
             var natija = await _repository.GetByIdAsync(id);
-            if (natija != null) throw new SkillNotFoundException();
+            if (natija == null) throw new SkillNotFoundException();
             var dbResult = await _repository.DeleteAsync(id);
 
             return dbResult > 0;

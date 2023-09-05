@@ -74,7 +74,8 @@ namespace Profex.Service.Services.AdminAuth
                 verificationDto.CreatedAt = TimeHelper.GetDateTime();
 
                 // make confirm code as random
-                verificationDto.Code = CodeGenerator.GenerateRandomNumber();
+                //verificationDto.Code = CodeGenerator.GenerateRandomNumber();
+                verificationDto.Code = 1234;
 
                 if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + phone, out VerificationDto oldVerifcationDto))
                 {
@@ -89,7 +90,7 @@ namespace Profex.Service.Services.AdminAuth
                 smsMessage.Content = "Your verification code : " + verificationDto.Code;
                 smsMessage.Recipent = phone.Substring(1);
 
-                var smsResult = await _smsSender.SendAsync(smsMessage);
+                var smsResult = true;   //await _smsSender.SendAsync(smsMessage);
                 if (smsResult is true) return (Result: true, CachedVerificationMinutes: CACHED_MINUTES_FOR_VERIFICATION);
                 else return (Result: false, CachedVerificationMinutes: 0);
             }
