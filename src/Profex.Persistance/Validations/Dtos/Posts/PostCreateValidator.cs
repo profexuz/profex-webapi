@@ -9,7 +9,7 @@ public class PostCreateValidator : AbstractValidator<PostCreateDto>
     {
         RuleFor(dto => dto.CategoryId).NotEmpty().WithMessage("Category id is required!");
 
-        RuleFor(dto => dto.UserId).NotEmpty().WithMessage("User id is required!");
+    
 
 
         RuleFor(dto => dto.Title).NotEmpty().NotNull().WithMessage("Title is required!")

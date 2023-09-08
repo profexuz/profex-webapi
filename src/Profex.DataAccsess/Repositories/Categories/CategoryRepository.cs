@@ -4,7 +4,6 @@ using Profex.DataAccsess.Interfaces.Categories;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.posts;
 using Profex.Domain.Entities.skills;
-using System.Transactions;
 
 namespace Profex.DataAccsess.Repositories.Categories;
 
@@ -97,21 +96,37 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         }
     }
 
-    public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId)
+    public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId, PaginationParams @params)
     {
-        
+
         try
         {
             await _connection.OpenAsync();
-            string query = "select * from skills where category_id=@categoryId";
+            string query = "select * from skills where category_id=@categoryId " +
+                             $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
             var skills = await _connection.QueryAsync<Skill>(query, new { categoryId = categoryId });
 
-            return skills.ToList(); 
+            return skills.ToList();
         }
         catch { return new List<Skill>(); }
         finally { await _connection.CloseAsync(); }
+    }
 
+    public async Task<IList<Post>> GetPostsByCategory(long category, PaginationParams @params)
+    {
+        try
+        {
+            string query = "SELECT * FROM posts WHERE category_id = @Category " +
+                             $"offset {@params.GetSkipCount()} limit {@params.PageSize}";
 
+            var parameters = new { Category = category };
+
+            var posts = await _connection.QueryAsync<Post>(query, parameters);
+
+            return posts.ToList();
+        }
+        catch { return new List<Post>(); }
+        finally { await _connection.CloseAsync(); }
     }
 
     public async Task<Category?> GetByIdAsync(long id)
@@ -134,18 +149,9 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         }
     }
 
-    public async Task<IList<Post>> GetPostsByCategory(long category)
-    {
-        string query = "SELECT * FROM posts WHERE category_id = @Category";
-        var parameters = new { Category = category };
-        var posts = await _connection.QueryAsync<Post>(query, parameters);
-        return posts.ToList();
-    }
 
-    public Task<IList<Post>> GetPostsByCategory(string category)
-    {
-        throw new NotImplementedException();
-    }
+
+
 
     public async Task<int> UpdateAsync(long id, Category entity)
     {

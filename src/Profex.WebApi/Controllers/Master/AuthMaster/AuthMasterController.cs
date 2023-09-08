@@ -1,27 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Profex.Persistance.Dtos.Auth;
+using Profex.Persistance.Dtos.MasterAuth;
 using Profex.Persistance.Validations.Dtos;
-using Profex.Persistance.Validations.Dtos.Auth;
-using Profex.Service.Interfaces.Auth;
-using Profex.Service.Interfaces.Users;
+using Profex.Persistance.Validations.Dtos.MasterAuth;
+using Profex.Service.Interfaces.MasterAuth;
 
-namespace Profex.WebApi.Controllers.User.UserAuth
+namespace Profex.WebApi.Controllers.Master.MasterAuth
 {
-    [Route("api/user")]
+    [Route("api/master")]
     [ApiController]
-    public class UserAuthController : ControllerBase
+    public class AuthMasterController : ControllerBase
     {
-        private readonly int maxPageSize = 30;  
-        private readonly IUserService _service;
-        private readonly IAuthService _authService;
-        public UserAuthController(IUserService service, IAuthService authService)
+        private readonly IAuthMasterService _authMasterService;
+        public AuthMasterController(IAuthMasterService authMasterService)
         {
-            _service = service;
-            _authService = authService;
+            _authMasterService = authMasterService;
         }
 
-        
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromForm] RegisterDto registerDto)
         {
@@ -29,7 +24,7 @@ namespace Profex.WebApi.Controllers.User.UserAuth
             var result = validator.Validate(registerDto);
             if (result.IsValid)
             {
-                var serviceResult = await _authService.RegisterAsync(registerDto);
+                var serviceResult = await _authMasterService.RegisterAsync(registerDto);
 
                 return Ok(new { serviceResult.Result, serviceResult.CachedMinutes });
             }
@@ -43,28 +38,28 @@ namespace Profex.WebApi.Controllers.User.UserAuth
             var result = PhoneNumberValidator.IsValid(phone);
             if (result == false) return BadRequest("Phone number is invalid!");
 
-            var serviceResult = await _authService.SendCodeForRegisterAsync(phone);
+            var serviceResult = await _authMasterService.SendCodeForRegisterAsync(phone);
             return Ok(new { serviceResult.Result, serviceResult.CachedVerificationMinutes });
         }
 
         [HttpPost("register/verify")]
-        public async Task<IActionResult> VerifyRegisterAsync([FromBody] VerifyRegisterDto verifyRegisterDto)
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyRegisterAsync([FromForm] VerifyRegisterDto verifyRegisterDto)
         {
-            var serviceResult = await _authService.VerifyRegisterAsync(verifyRegisterDto.PhoneNumber, verifyRegisterDto.Code);
+            var serviceResult = await _authMasterService.VerifyRegisterAsync(verifyRegisterDto.PhoneNumber, verifyRegisterDto.Code);
 
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
+        [HttpPost("register/login")]
+        public async Task<IActionResult> LoginAsync([FromForm] LoginDto loginDto)
         {
             var validator = new LoginValidator();
             var valResult = validator.Validate(loginDto);
             if (valResult.IsValid == false) return BadRequest(valResult.Errors);
-            var serviceResult = await _authService.LoginAsync(loginDto);
+            var serviceResult = await _authMasterService.LoginAsync(loginDto);
 
             return Ok(new { serviceResult.Result, serviceResult.Token });
         }
-
     }
 }

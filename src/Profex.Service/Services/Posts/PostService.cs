@@ -11,6 +11,7 @@ using Profex.DataAccsess.ViewModels.Posts;
 using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Posts;
 using Profex.Service.Interfaces.Common;
+using Profex.Service.Interfaces.Identity;
 using Profex.Service.Interfaces.Posts;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.PortableExecutable;
@@ -21,14 +22,17 @@ namespace Profex.Service.Services.Posts
     {
         private readonly IPostRepository _postRepository;
         private readonly ICategoryRepository _category;
+        private readonly IIdentityService _identity;
         private readonly IPaginator _paginator;
         private readonly IUser1Repository _user;
         public PostService(
+            IIdentityService identity,
             IPostRepository postRepository,
             IPaginator paginator,
             ICategoryRepository category,
             IUser1Repository user)
         {
+            this._identity = identity;
             this._paginator = paginator;
             this._postRepository = postRepository;
             this._category = category;
@@ -40,7 +44,7 @@ namespace Profex.Service.Services.Posts
             Post post = new Post()
             {
                 CategoryId = dto.CategoryId,
-                UserId = dto.UserId,
+                UserId = _identity.UserId,
                 Title = dto.Title,
                 Price = dto.Price,
                 Description = dto.Description,
@@ -57,7 +61,7 @@ namespace Profex.Service.Services.Posts
             var js = await _category.GetByIdAsync(post.CategoryId);
 
             if (js == null) throw new CategoryNotFoundException();
-            post.UserId = dto.UserId;
+            post.UserId = _identity.UserId;
             var cs = await _user.GetByIdAsync(post.UserId);
 
             if (cs == null) throw new UserNotFoundException();
@@ -86,7 +90,7 @@ namespace Profex.Service.Services.Posts
 
         public async Task<IList<Post>> GetAllPostById(long id)
         {
-            var posts = await _postRepository.GetAllPostById(id);          
+            var posts = await _postRepository.GetUserAllPost(id);          
             return posts;
         }
 
@@ -122,7 +126,7 @@ namespace Profex.Service.Services.Posts
             var posts = await _postRepository.GetByIdAsync(id);
             if (posts is null) throw new PostNotFoundException();
             posts.CategoryId = dto.CategoryId;
-            posts.UserId = dto.UserId;
+            posts.UserId = _identity.UserId;
             posts.Title = dto.Title;
             posts.Price = double.Parse(dto.Price.ToString());
             posts.Description = dto.Description;

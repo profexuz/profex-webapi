@@ -7,16 +7,16 @@ using Profex.Persistance.Validations.Dtos.Admin;
 using Profex.Service.Interfaces.AdminAuth;
 using Profex.Service.Interfaces.Users;
 
-namespace Profex.WebApi.Controllers.Admin.AdminAuth
+namespace Profex.WebApi.Controllers.Admin.AuthAdmin
 {
     [Route("api/administrator")]
     [ApiController]
-    public class AdminAuthController : ControllerBase
+    public class AuthAdminController : ControllerBase
     {
         private readonly int maxPageSize = 30;
         private readonly IUserService _service;
         private readonly IAuthAdminService _authService;
-        public AdminAuthController(IUserService service, IAuthAdminService authAdminService)
+        public AuthAdminController(IUserService service, IAuthAdminService authAdminService)
         {
             this._authService = authAdminService;
             this._service = service;
