@@ -90,8 +90,9 @@ namespace Profex.Service.Services.Posts
 
         public async Task<IList<Post>> GetAllPostById(long id)
         {
-            var posts = await _postRepository.GetUserAllPost(id);          
-            return posts;
+            /*var posts = await _postRepository.GetAllPostById(id);          
+            return posts;*/
+            throw new NotImplementedException();
         }
 
         public async Task<IList<Post>> GetByIdAsync(long id)

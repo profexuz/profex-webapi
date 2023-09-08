@@ -35,7 +35,7 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.OpenAsync();
 
                 string query = "INSERT INTO public.masters(first_name, last_name, phone_number, " +
-                    "phone_number_confirmed, image_path, password_hash, salt, is_free, created_at, updated_at)" +
+                    "phone_numer_confirmed, image_path, password_hash, salt, is_free, created_at, updated_at)" +
                         "VALUES (@FirstName, @LastName, @PhoneNumber, @PhoneNumberConfirmed, @ImagePath, " +
                             "@PasswordHash, @Salt, @IsFree, @CreatedAt, @UpdatedAt);";
 
