@@ -57,15 +57,17 @@ public class CategoryService : ICategoryService
         return categories;
     }
 
-    public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId)
+    public async Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId, PaginationParams @params)
     {
         var natija = await _repository.GetByIdAsync(categoryId);
         if (natija == null) throw new CategoryNotFoundException();
-        var skills = await _repository.GetAllSkillByCategoryId(categoryId);
+        var skills = await _repository.GetAllSkillByCategoryId(categoryId,  @params);
 
         return skills;
         
     }
+
+   
 
     public async Task<Category> GetByIdAsync(long categoryId)
     {
@@ -75,13 +77,15 @@ public class CategoryService : ICategoryService
         return category;
     }
 
-    public async Task<IList<Post>> GetPostsByCategory(long category)
+    public async Task<IList<Post>> GetPostsByCategory(long category, PaginationParams @params)
     {
-        var posts = await _repository.GetPostsByCategory(category);
+        var posts = await _repository.GetPostsByCategory(category, @params);
         if(posts  is null) throw new CategoryNotFoundException();
         return posts;
 
     }
+
+  
 
     public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto)
     {

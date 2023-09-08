@@ -14,8 +14,7 @@ namespace Profex.Service.Interfaces.Categories
         public Task<IList<Category>> GetAllAsync(PaginationParams @params);
         public Task<Category> GetByIdAsync(long categoryId);
         public Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto dto);
-        public Task<IList<Post>> GetPostsByCategory(long category);
-
-        public Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId);
+        public Task<IList<Post>> GetPostsByCategory(long category, PaginationParams @params);
+        public Task<IList<Skill>> GetAllSkillByCategoryId(long categoryId, PaginationParams @params);
     }
 }
