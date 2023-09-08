@@ -7,12 +7,11 @@ using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Admin.Categories;
 
-[Route("api/admincontroller")]
+[Route("api/admin/category")]
 [ApiController]
 public class AdminCategory : ControllerBase
 {
     private readonly ICategoryService _service;
-    private readonly int maxPageSize = 30;
     public AdminCategory(ICategoryService Categoryservice)
     {
         _service = Categoryservice;
@@ -20,7 +19,7 @@ public class AdminCategory : ControllerBase
     
     
     [HttpPost]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
     {
         var validator = new CategoryCreateValidator();
@@ -30,19 +29,19 @@ public class AdminCategory : ControllerBase
 
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(long id, [FromForm] CategoryUpdateDto dto)
     {
         var updateValidator = new CategoryUpdateValidator();
         var result = updateValidator.Validate(dto);
-        if (result.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
+        if (result.IsValid) return Ok(await _service.UpdateAsync(id, dto));
         else return BadRequest(result.Errors);
     }
 
-    [HttpDelete("{categoryId}")]
+    [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteAsync(long categoryId)
-        => Ok(await _service.DeleteAsync(categoryId));
+    public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(await _service.DeleteAsync(id));
 
 }

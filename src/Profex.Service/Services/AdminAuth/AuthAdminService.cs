@@ -104,7 +104,9 @@ namespace Profex.Service.Services.AdminAuth
                 if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + phone, out VerificationDto verificationDto))
                 {
                     if (verificationDto.Attempt >= VERIFICATION_MAXIMUM_ATTEMPTS)
+                    {
                         throw new VerificationTooManyRequestsException();
+                    }
                     else if (verificationDto.Code == code)
                     {
                         var dbResult = await RegisterToDatabaseAsync(registerDto);

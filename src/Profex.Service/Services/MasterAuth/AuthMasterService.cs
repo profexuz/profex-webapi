@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using Profex.Application.Exceptions;
 using Profex.Application.Exceptions.Auth;
 using Profex.Application.Exceptions.Masters;
 using Profex.Application.Exceptions.Users;
@@ -10,7 +9,6 @@ using Profex.Persistance.Dtos.MasterAuth;
 using Profex.Persistance.Dtos.Notifications;
 using Profex.Persistance.Dtos.Security;
 using Profex.Service.Common.Security;
-using Profex.Service.Helpers;
 using Profex.Service.Interfaces.Auth;
 using Profex.Service.Interfaces.MasterAuth;
 using Profex.Service.Interfaces.Notifactions;
@@ -74,7 +72,7 @@ namespace Profex.Service.Services.MasterAuth
                 verificationDto.CreatedAt = TimeHelper.GetDateTime();
 
                 //make confirm code as radnom
-                verificationDto.Code = CodeGenerator.GenerateRandomNumber();
+                verificationDto.Code = 1234; //CodeGenerator.GenerateRandomNumber();
                 if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + phone, out VerificationDto oldVerifcationDto))
                 {
                     _memoryCache.Remove(VERIFY_REGISTER_CACHE_KEY + phone);
@@ -86,7 +84,8 @@ namespace Profex.Service.Services.MasterAuth
                 smsMessage.Title = "ProFex";
                 smsMessage.Content = "Your verification code : " + verificationDto.Code;
                 smsMessage.Recipent = phone.Substring(1);
-                var smsres = await _sender.SendAsync(smsMessage);
+
+                var smsres = true; // await _sender.SendAsync(smsMessage);
                 if (smsres is true) return (Result: true, CachedVerificationMinutes: CACHED_MINUTES_FOR_VERIFICATION);
                 else return (Result: false, CachedVerificationMinutes: 0);
             }
@@ -95,7 +94,6 @@ namespace Profex.Service.Services.MasterAuth
 
         public async Task<(bool Result, string Token)> VerifyRegisterAsync(string phone, int code)
         {
-
             if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + phone, out RegisterDto registerDto))
             {
                 if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + phone, out VerificationDto verificationDto))
@@ -113,10 +111,7 @@ namespace Profex.Service.Services.MasterAuth
                             string token = _tokenService.GenerateToken(master);
                             return (Result: true, Token: token);
                         }
-                        else
-                        {
-                            throw new NotFoundException();
-                        }
+                        else return (Result: false, Token: "");
                     }
                     else
                     {

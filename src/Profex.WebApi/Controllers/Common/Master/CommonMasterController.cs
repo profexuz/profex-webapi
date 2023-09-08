@@ -46,25 +46,6 @@ namespace Profex.WebApi.Controllers.Common.Master
             var ps = await _service.SortBySkillId(skillId);
             return Ok(ps);
         }
-
-        [HttpDelete("{masterId}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long masterId)
-            => Ok(await _service.DeleteAsync(masterId));
-
-        
-        
-        [HttpPut("{masterId}")]
-        [Authorize(Roles ="Master")]
-        public async Task<IActionResult> UpdateAsync(long masterId, [FromForm] Master1UpdateDto dto)
-        {
-
-            var updateValidator = new MasterUpdateValidator();
-            var result = updateValidator.Validate(dto);
-            if (result.IsValid) return Ok(await _service.UpdateAsync(masterId, dto));
-            else return BadRequest(result.Errors);
-        }
-
-
+ 
     }
 }

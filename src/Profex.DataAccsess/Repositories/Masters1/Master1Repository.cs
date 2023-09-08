@@ -74,7 +74,7 @@ namespace Profex.DataAccsess.Repositories.Masters1
                     FirstName = master.FirstName,
                     LastName = master.LastName,
                     ImagePath = master.ImagePath,
-                    IsFree = master.IsFree,
+                  
                     PhoneNumber = master.PhoneNumber,
                     CreatedAt=master.CreatedAt,
                     UpdatedAt=master.UpdatedAt,
@@ -97,7 +97,7 @@ namespace Profex.DataAccsess.Repositories.Masters1
             try
             {
                 await _connection.OpenAsync();
-                string qeury = $"SELECT * FROM masters where id=@Id";
+                string qeury = $"SELECT * FROM masters WHERE id = @Id";
                 var result = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
 
                 return result;
@@ -219,7 +219,7 @@ namespace Profex.DataAccsess.Repositories.Masters1
 
         }
 
-        public async Task<int> UpdateAsync(long id, MasterViewModel masters)
+        public async Task<int> UpdateAsync(long id, MasterViewModel entity)
         {
             try
             {
@@ -227,23 +227,11 @@ namespace Profex.DataAccsess.Repositories.Masters1
 
                 string query = $"UPDATE public.masters " +
                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                       $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
-                            $"is_free=@IsFree, updated_at=@UpdatedAt " +
-                                $"WHERE id = @Id";
-
-                var parameters = new Master()
-                {
-                    Id = id,
-                    FirstName = masters.FirstName,
-                    LastName = masters.LastName,
-                    PhoneNumber = masters.PhoneNumber,
-                    PhoneNumberConfirmed = masters.PhoneNumberConfirmed,
-                    ImagePath = masters.ImagePath,
-                    IsFree = masters.IsFree,
-                    UpdatedAt = masters.UpdatedAt,
-                };
-
-                var res = await _connection.ExecuteAsync(query, parameters);
+                       $" image_path=@ImagePath, updated_at=@UpdatedAt WHERE id = @Id";
+                            
+                           
+       
+                var res = await _connection.ExecuteAsync(query, entity);
 
                 return res;
             }
@@ -258,30 +246,9 @@ namespace Profex.DataAccsess.Repositories.Masters1
 
         }
 
-        public async Task<int> UpdateAsync(long id, Master entity)
+        public Task<int> UpdateAsync(long id, Master entity)
         {
-            try
-            {
-                await _connection.OpenAsync();
-
-                string query = $"UPDATE public.masters" +
-                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
-                            $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                                $"WHERE id = {id}";
-
-                var res = await _connection.ExecuteAsync(query, entity);
-
-                return res;
-            }
-            catch
-            {
-                return 0;
-            }
-            finally
-            {
-                await _connection.CloseAsync();
-            }
+            throw new NotImplementedException();
         }
     }
 }

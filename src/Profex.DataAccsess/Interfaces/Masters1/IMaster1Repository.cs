@@ -4,6 +4,7 @@ using Profex.DataAccsess.ViewModels.Masters;
 using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.master_skills;
 using Profex.Domain.Entities.masters;
+using static Dapper.SqlMapper;
 
 namespace Profex.DataAccsess.Interfaces.Masters1
 {
@@ -13,7 +14,7 @@ namespace Profex.DataAccsess.Interfaces.Masters1
         public Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params);
         public Task<int> SearchCountAsync(string search);
         public Task<Master?> GetByPhoneAsync(string phone);
-        public Task<int> UpdateAsync(long id, MasterViewModel masters);
         public Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId);
+        public Task<int> UpdateAsync(long id, MasterViewModel entity);
     }
 }
