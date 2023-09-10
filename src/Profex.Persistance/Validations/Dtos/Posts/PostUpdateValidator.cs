@@ -9,9 +9,7 @@ namespace Profex.Persistance.Validations.Dtos.Posts
         {
             RuleFor(dto => dto.CategoryId).NotEmpty().WithMessage("Category id is required!");
 
-            RuleFor(dto => dto.UserId).NotEmpty().WithMessage("User id is required!");
-
-
+            
             RuleFor(dto => dto.Title).NotEmpty().NotNull().WithMessage("Title is required!")
             .MaximumLength(20).WithMessage("Title length lass be than 20 characters")
             .MinimumLength(3).WithMessage("Title lenght must ber than 3 characters");

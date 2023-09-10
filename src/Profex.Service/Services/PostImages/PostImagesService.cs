@@ -5,9 +5,11 @@ using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Post_Images;
 using Profex.DataAccsess.Interfaces.Posts;
+using Profex.DataAccsess.Interfaces.Users1;
 using Profex.Domain.Entities.post_images;
 using Profex.Persistance.Dtos.PostImages;
 using Profex.Service.Interfaces.Common;
+using Profex.Service.Interfaces.Identity;
 using Profex.Service.Interfaces.PostImages;
 
 namespace Profex.Service.Services.PostImages
@@ -17,14 +19,21 @@ namespace Profex.Service.Services.PostImages
         private readonly IPostImageRepository _repository;
         private readonly IPaginator _paginator;
         private readonly IPostRepository _post;
+        private readonly IIdentityService _identity;
+        private readonly IUser1Repository _user;
         private IFileService _fileService;
         public PostImagesService(IPostImageRepository repository,
-            IPaginator paginator, IFileService fileService, IPostRepository post)
+                                 IPaginator paginator, IFileService fileService, 
+                                 IPostRepository post, IIdentityService identity,
+                                 IUser1Repository user)
+                                 
         {
             this._repository = repository;
             this._paginator = paginator;
             _fileService = fileService;
             this._post = post;
+            this._identity = identity;
+            this._user = user;
 
         }
         public async Task<bool> CreateAsync(PostImageCreateDto dto)
@@ -48,6 +57,12 @@ namespace Profex.Service.Services.PostImages
         public async Task<bool> DeleteAsync(long id)
         {
             var rp =await _repository.GetByIdAsync(id);
+            var post = await _post.GetByIdAsync(rp.PostId);
+            var user = await _user.GetByIdAsync(post.UserId);
+            if (_identity.UserId != user.Id)
+            {
+                throw new UnauthorizedAccessException();
+            }
             if (rp == null) throw new PostImageNotFoundException();
             var dbResult = await _repository.DeleteAsync(id);
 
@@ -63,6 +78,13 @@ namespace Profex.Service.Services.PostImages
 
             return mss;
         }
+        public async Task<IList<Post_image>> GetByPostIdAsync(long id)
+        {
+            var mss = await _repository.GetByPostIdAsync(id);
+            if (mss is null) throw new PostImageNotFoundException();
+            
+            else  return mss;
+        }
 
         public async Task<Post_image> GetByIdAsync(long id)
         {
@@ -73,9 +95,15 @@ namespace Profex.Service.Services.PostImages
 
         }
 
-        public async Task<bool> UpdateAsync(long id, PostImageUpdateDto dto)
+        public async Task<bool> UpdateAsync(long id, PostImageCreateDto dto)
         {
             var ms = await _repository.GetByIdAsync(id);
+            var post = await _post.GetByIdAsync(ms.PostId);
+            var user = await _user.GetByIdAsync(post.UserId);
+            if (_identity.UserId != user.Id) 
+            {
+                throw new UnauthorizedAccessException();
+            }
             if (ms is null) throw new MasterSkilNotFoundException();
             ms.PostId = dto.PostId;
             if (dto.ImagePath is not null)

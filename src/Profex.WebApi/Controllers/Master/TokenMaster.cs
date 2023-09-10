@@ -24,12 +24,6 @@ namespace Profex.WebApi.Controllers.Master
         }
 
 
-        [HttpDelete]
-        [Authorize(Roles = "Master")]
-        public async Task<IActionResult> DeleteMasterAsync()
-            => Ok(await _masterService.DeleteMasterAsync());
-
-
         [HttpPut]
         [Authorize(Roles = "Master")]
         public async Task<IActionResult> UpdateAsync([FromForm] Master1UpdateDto dto)
@@ -38,8 +32,13 @@ namespace Profex.WebApi.Controllers.Master
             var updateValidator = new MasterUpdateValidator();
             var result = updateValidator.Validate(dto);
             if (result.IsValid) return Ok(await _masterService.UpdateAsync(id, dto));
-            
+
             else return BadRequest(result.Errors);
         }
+
+        [HttpDelete]
+        [Authorize(Roles = "Master")]
+        public async Task<IActionResult> DeleteMasterAsync()
+          => Ok(await _masterService.DeleteMasterAsync());
     }
 }

@@ -7,24 +7,17 @@ using Profex.Service.Services.Identity;
 
 namespace Profex.WebApi.Controllers.Admin.Master
 {
-    [Route("api/adminMaster")]
+    [Route("api/admin/master")]
     [ApiController]
     public class AdminMaster : ControllerBase
     {
         private readonly IMaster1Service _masterService;
-        private readonly IdentityService _identity;
+       
 
         public AdminMaster(IMaster1Service master1Service )
         {
             _masterService = master1Service;
         }
-
-
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long id)
-            => Ok(await _masterService.DeleteAsync(id));
-
 
 
         [HttpPut("{id}")]
@@ -37,6 +30,12 @@ namespace Profex.WebApi.Controllers.Admin.Master
 
             else return BadRequest(result.Errors);
         }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteAsync(long id)
+             => Ok(await _masterService.DeleteAsync(id));
+
 
     }
 }

@@ -30,23 +30,22 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
             else return BadRequest(result.Errors);
         }
 
-        [HttpPut("{postId}")]
-        public async Task<IActionResult> UpdateAsync(long postId, [FromForm] PostUpdateDto dto)
+
+        [HttpPut("{id}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> UpdateAsync(long id, [FromForm] PostUpdateDto dto)
         {
             var validator = new PostUpdateValidator();
             var validationResult = validator.Validate(dto);
-            if (validationResult.IsValid) return Ok(await _service.UpdateAsync(postId, dto));
+            if (validationResult.IsValid) return Ok(await _service.UpdateAsync(id, dto));
             else return BadRequest(validationResult.Errors);
         }
 
-        [HttpDelete("{postId}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long postId)
-            => Ok(await _service.DeleteAsync(postId));
 
-        [HttpGet("search")]
-        [AllowAnonymous]
-        public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
-            => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> DeleteAsync(long id)
+            => Ok(await _service.DeleteAsync(id));
+    
     }
 }

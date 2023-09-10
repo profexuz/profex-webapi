@@ -109,14 +109,34 @@ namespace Profex.DataAccsess.Repositories.Post_images
 
         }
 
+        public async Task<IList<Post_image>> GetByPostIdAsync(long id)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"SELECT * FROM public.post_images WHERE post_id = {id} ";
+                var result = (await _connection.QueryAsync<Post_image>(query)).ToList();
+
+                return result;
+            }
+            catch
+            {
+                return new List<Post_image>();
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
+
         public async Task<int> UpdateAsync(long id, Post_image entity)
         {
             try
             {
                 await _connection.OpenAsync();
-                string query = $"UPDATE public.post_images" +
-                    $"SET post_id=@PostId, image_path=@ImagePath, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                        $"WHERE id = {id};";
+                string query = $"UPDATE public.post_images " +
+                    $" SET post_id=@PostId, image_path=@ImagePath, created_at=@CreatedAt, updated_at=@UpdatedAt " +
+                        $" WHERE id = {id};";
                 var res = await _connection.ExecuteAsync(query, entity);
 
                 return res;
@@ -130,6 +150,8 @@ namespace Profex.DataAccsess.Repositories.Post_images
                 await _connection.CloseAsync();
             }
         }
+
+
 
     }
 }

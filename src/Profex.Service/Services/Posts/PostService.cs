@@ -5,6 +5,7 @@ using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;
+using Profex.DataAccsess.Interfaces.Post_Images;
 using Profex.DataAccsess.Interfaces.Posts;
 using Profex.DataAccsess.Interfaces.Users1;
 using Profex.DataAccsess.ViewModels.Posts;
@@ -25,18 +26,22 @@ namespace Profex.Service.Services.Posts
         private readonly IIdentityService _identity;
         private readonly IPaginator _paginator;
         private readonly IUser1Repository _user;
+        private readonly IPostImageRepository _images;
+
         public PostService(
             IIdentityService identity,
             IPostRepository postRepository,
             IPaginator paginator,
             ICategoryRepository category,
-            IUser1Repository user)
+            IUser1Repository user,
+            IPostImageRepository images)
         {
             this._identity = identity;
             this._paginator = paginator;
             this._postRepository = postRepository;
             this._category = category;
             this._user = user;
+            this._images = images;
         }
 
         public async Task<bool> CreateAsync(PostCreateDto dto)
@@ -83,6 +88,11 @@ namespace Profex.Service.Services.Posts
         public async Task<IList<PostViewModel>> GetAllAsync(PaginationParams @params)
         {
             var posts = await _postRepository.GetAllAsync(@params);
+            foreach (var post in posts)
+            {
+               var imagePaths =  await _images.GetByPostIdAsync(post.Id);
+                post.Images.AddRange(imagePaths);
+            }
             var count = await _postRepository.CountAsync();
             _paginator.Paginate(count, @params);
             return posts;

@@ -4,7 +4,7 @@ using Profex.Service.Helpers;
 
 namespace Profex.Persistance.Validations.Dtos.PostImages;
 
-public class PostImageValidator : AbstractValidator<PostImageCreateDto>
+public class PostImageValidator : AbstractValidator<PostImageCreateDto> 
 {
     public PostImageValidator()
     {

@@ -64,7 +64,7 @@ namespace Profex.Service.Services.User1
             user1.PhoneNumber = dto.PhoneNumber;
             user1.PhoneNumberConfirmed = true;
 
-            if (dto.ImagePath is not null)
+            if (dto.ImagePath is not null )
             {
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
                 user1.ImagePath = newImagePath;

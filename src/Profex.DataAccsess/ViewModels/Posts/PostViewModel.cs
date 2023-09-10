@@ -1,4 +1,5 @@
 ﻿using Profex.Domain.Entities;
+using Profex.Domain.Entities.post_images;
 
 namespace Profex.DataAccsess.ViewModels.Posts
 {
@@ -18,6 +19,7 @@ namespace Profex.DataAccsess.ViewModels.Posts
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string CategoryName { get; set;} = string.Empty;
-        public string[] SkillTitle { get; set; } = {};
+        public List<Post_image> Images { get; set; } = new List<Post_image>();
+
     }
 }

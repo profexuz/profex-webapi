@@ -191,10 +191,10 @@ namespace Profex.DataAccsess.Repositories.Users1
 
                 string query = $"UPDATE public.users " +
                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                       $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
+                       $"phone_numer_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, " +
                             $"updated_at=@UpdatedAt " +
                                 $"WHERE id = @Id";
-
+                // string query = "";
                 var parameters = new User()
                 {
                     Id = id,
@@ -226,12 +226,13 @@ namespace Profex.DataAccsess.Repositories.Users1
             {
                 await _connection.OpenAsync();
 
-                string query = $"UPDATE public.users" +
-                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
-                            $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                                $"WHERE id = {id}";
+                //string query = $"UPDATE public.users" +
+                //    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
+                //        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
+                //            $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
+                //                $"WHERE id = {id}";
 
+                string query = "";
                 var res = await _connection.ExecuteAsync(query, entity);
 
                 return res;

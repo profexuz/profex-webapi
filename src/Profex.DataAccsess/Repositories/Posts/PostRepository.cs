@@ -35,7 +35,7 @@ namespace Profex.DataAccsess.Repositories.Posts
                 await _connection.OpenAsync();
 
                 string query = "INSERT INTO public.posts(category_id, user_id, title, price, description, region, " +
-                    "district, longitude, lattitude, phone_number, created_at, updated_at)" +
+                    "district, longitude, latitude, phone_number, created_at, updated_at)" +
                         "VALUES (@CategoryId, @UserId, @Title, @Price, @Description, @Region, @District, @Longitude, " +
                             "@Latidute, @PhoneNumber, @CreatedAt, @UpdatedAt);";
 
@@ -78,9 +78,27 @@ namespace Profex.DataAccsess.Repositories.Posts
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT * FROM public.posts ORDER BY id DESC " +
-            
-                    $"OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
+                string query = $@"SELECT p.id, p.category_id, p.user_id, p.title, p.price,
+                                         p.description, p.region, p.district, p.longitude,
+                                         p.latitude, p.phone_number, p.created_at, p.updated_at,
+                                    ARRAY_AGG(DISTINCT pi.image_path) AS image_path,
+                                    u.first_name,
+                                    u.last_name,
+                                    c.name AS category_name
+                                FROM
+                                    posts p
+                                LEFT JOIN
+                                    post_images pi ON p.id = pi.post_id
+                                LEFT JOIN
+                                    users u ON p.user_id = u.id
+                                LEFT JOIN
+                                    categories c ON p.category_id = c.id
+                                WHERE
+                                    pi.image_path IS NULL OR pi.image_path != ''
+                                GROUP BY
+                                    p.id, u.id, c.id " +
+
+                    $" OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
 
                 var result = await _connection.QueryAsync<PostViewModel>(query);
 
@@ -123,8 +141,7 @@ namespace Profex.DataAccsess.Repositories.Posts
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT    p.category_id,   p.user_id,    p.title,    p.price,    p.description,    p.region,    p.district,    p.longitude,    p.latitude,    p.phone_number,    p.created_at,    p.updated_at,    pi.image_path " +
-                    $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id WHERE    p.id =@Id AND (pi.image_path IS NULL OR pi.image_path != '');";
+                string query = $"SELECT * FROM posts WHERE id = @Id";
                 var res = await _connection.QueryAsync<Post>(query, new { Id = id });
                 var post = res.SingleOrDefault();
 

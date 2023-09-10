@@ -20,16 +20,7 @@ namespace Profex.WebApi.Controllers.Common.User
             this._service = service;
             this._msService = master1Service;
         }
-        [HttpPut("update/{userId}")]
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> UpdateAsync(long userId, [FromForm] User1UpateDto dto)
-        {
-
-            var updateValidator = new UserUpdateValidator();
-            var result = updateValidator.Validate(dto);
-            if (result.IsValid) return Ok(await _service.UpdateAsync(userId, dto));
-            else return BadRequest(result.Errors);
-        }
+ 
 
         [HttpGet("get-all")]
         [AllowAnonymous]
@@ -53,9 +44,6 @@ namespace Profex.WebApi.Controllers.Common.User
         
 
 
-        [HttpDelete("userId")]
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> DeleteAsync(long postId)
-            => Ok(await _service.DeleteAsync(postId));
+      
     }
 }

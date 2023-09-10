@@ -7,7 +7,7 @@ using Profex.Service.Interfaces.PostImages;
 
 namespace Profex.WebApi.Controllers.User.User.UserPostImage
 {
-    [Route("api/[controller]")]
+    [Route("api/user/post/image")]
     [ApiController]
     public class UserPostImageController : ControllerBase
     {
@@ -18,28 +18,43 @@ namespace Profex.WebApi.Controllers.User.User.UserPostImage
             this._service = service;            
         }
 
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
+        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
+             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdAsync(long id)
+            => Ok(await _service.GetByIdAsync(id));
+        
+        
+        [HttpPost]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateAsync([FromForm] PostImageCreateDto dto)
         {
             var validator = new PostImageValidator();
             var result = validator.Validate(dto);
             if (result.IsValid) return Ok(await _service.CreateAsync(dto));
+
             else return BadRequest(result.Errors);
         }
 
+        [HttpPut]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> UpdateAsync(long id, [FromForm] PostImageCreateDto dto)
+        {
+            var validator = new PostImageValidator();
+            var result = validator.Validate(dto);
+            if (result.IsValid) return Ok(await _service.UpdateAsync(id, dto));
+                     
+            else  return BadRequest(result.Errors);
+        }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-        => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
-
-
-
-        [HttpGet("{categoryId}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long categoryId)
-        => Ok(await _service.GetByIdAsync(categoryId));
+        [HttpDelete]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> DeleteAsync(long id)
+          => Ok(await _service.DeleteAsync(id));
 
     }
 }
