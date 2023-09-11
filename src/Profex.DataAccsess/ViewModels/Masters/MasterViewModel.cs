@@ -8,5 +8,5 @@ public class MasterViewModel : Auditable
     public string LastName { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string ImagePath { get; set; } = string.Empty;
-    public bool IsFree { get; set; } = true;
+    public bool IsFree { get; set; } 
 }

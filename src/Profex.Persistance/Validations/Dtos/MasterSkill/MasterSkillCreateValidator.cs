@@ -7,8 +7,7 @@ namespace Profex.Persistance.Validations.Dtos.MasterSkill
     {
         public MasterSkillCreateValidator()
         {
-            RuleFor(dto => dto.MasterId).NotEmpty().NotNull().WithMessage("MasterId is required!");
-
+           
             RuleFor(dto => dto.SkillId).NotEmpty().NotNull().WithMessage("SkillId is required!");
         }
     }

@@ -38,18 +38,10 @@ namespace Profex.WebApi.Controllers.Master.Master.MasterSkill
             else return BadRequest(result.Errors);
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long id, [FromForm] MasterSkillUpdateDto dto)
-        {
-            var validator = new MasterSkillUpdateValidator();
-            var validationResult = validator.Validate(dto);
-            if (validationResult.IsValid) return Ok(await _service.UpdateAsync(id, dto));
-            else return BadRequest(validationResult.Errors);
-        }
+  
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _service.DeleteAsync(id));
     }

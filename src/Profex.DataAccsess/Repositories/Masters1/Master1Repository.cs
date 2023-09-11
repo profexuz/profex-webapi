@@ -73,7 +73,7 @@ namespace Profex.DataAccsess.Repositories.Masters1
                     FirstName = master.FirstName,
                     LastName = master.LastName,
                     ImagePath = master.ImagePath,
-
+                    IsFree = master.IsFree,
                     PhoneNumber = master.PhoneNumber,
                     CreatedAt = master.CreatedAt,
                     UpdatedAt = master.UpdatedAt,
@@ -133,6 +133,8 @@ namespace Profex.DataAccsess.Repositories.Masters1
             }
         }
 
+
+
         public async Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId)
         {
             try
@@ -152,8 +154,6 @@ namespace Profex.DataAccsess.Repositories.Masters1
                 var result = await _connection.QueryAsync<UserSkillViewModel>(query, new { MasterId = masterId });
                 return result.ToList();
             }
-
-
 
             catch
             {

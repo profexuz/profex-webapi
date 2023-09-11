@@ -16,5 +16,6 @@ namespace Profex.DataAccsess.Interfaces.Masters1
         public Task<Master?> GetByPhoneAsync(string phone);
         public Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId);
         public Task<int> UpdateAsync(long id, MasterViewModel entity);
+       
     }
 }
