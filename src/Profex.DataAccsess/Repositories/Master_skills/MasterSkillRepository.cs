@@ -158,5 +158,24 @@ namespace Profex.DataAccsess.Repositories.Master_skills
                 await _connection.CloseAsync();
             }
         }
+
+        public async Task<IList<Master_skill>> GetMasterAllSkill(long masterId)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"SELECT * FROM public.master_skills WHERE master_id = {masterId}";
+
+                return (await _connection.QueryAsync<Master_skill>(query)).ToList();
+            }
+            catch
+            {
+                return new List<Master_skill>();
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
     }
 }
