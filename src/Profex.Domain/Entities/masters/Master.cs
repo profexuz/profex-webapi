@@ -9,5 +9,5 @@ public class Master : Auditable
     public string ImagePath { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string Salt { get; set; } = string.Empty;
-    public bool IsFree { get; set; }    
+    public bool IsFree { get; set; } = true;
 }

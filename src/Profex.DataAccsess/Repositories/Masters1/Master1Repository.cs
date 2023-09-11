@@ -5,7 +5,6 @@ using Profex.DataAccsess.ViewModels.Masters;
 using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.master_skills;
 using Profex.Domain.Entities.masters;
-using Profex.Domain.Entities.skills;
 using static Dapper.SqlMapper;
 
 namespace Profex.DataAccsess.Repositories.Masters1
@@ -67,17 +66,17 @@ namespace Profex.DataAccsess.Repositories.Masters1
                     $"limit {@params.PageSize}";
 
                 var resMas = (await _connection.QueryAsync<Master>(query)).ToList();
-                
+
                 var masterViewModels = resMas.Select(master => new MasterViewModel
                 {
                     Id = master.Id,
                     FirstName = master.FirstName,
                     LastName = master.LastName,
                     ImagePath = master.ImagePath,
-                  
+
                     PhoneNumber = master.PhoneNumber,
-                    CreatedAt=master.CreatedAt,
-                    UpdatedAt=master.UpdatedAt,
+                    CreatedAt = master.CreatedAt,
+                    UpdatedAt = master.UpdatedAt,
                 }).ToList();
 
                 return masterViewModels;
@@ -163,7 +162,7 @@ namespace Profex.DataAccsess.Repositories.Masters1
             }
             finally
             {
-                await _connection.CloseAsync(); 
+                await _connection.CloseAsync();
             }
         }
 
@@ -227,10 +226,10 @@ namespace Profex.DataAccsess.Repositories.Masters1
 
                 string query = $"UPDATE public.masters " +
                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                       $" image_path=@ImagePath, updated_at=@UpdatedAt WHERE id = @Id";
-                            
-                           
-       
+                       $" image_path=@ImagePath, is_free=@IsFree, updated_at=@UpdatedAt WHERE id = @Id";
+
+
+
                 var res = await _connection.ExecuteAsync(query, entity);
 
                 return res;

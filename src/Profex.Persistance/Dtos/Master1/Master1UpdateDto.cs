@@ -8,4 +8,5 @@ public class Master1UpdateDto
     public string LastName { get; set; } = String.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public IFormFile ImagePath { get; set; } = default!;
+    public bool IsFree { get; set; } = true;
 }

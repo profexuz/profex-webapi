@@ -143,6 +143,7 @@ namespace Profex.Service.Services.MasterAuth
             var haserResult = PasswordHasher.Hash(registerDto.Password);
             master.PasswordHash = haserResult.Hash;
             master.Salt = haserResult.Salt;
+            master.IsFree = true;
             master.CreatedAt = master.UpdatedAt = TimeHelper.GetDateTime();
             var dbResult = await _masterRepository.CreateAsync(master);
 
