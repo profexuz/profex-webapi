@@ -103,7 +103,7 @@ namespace Profex.Service.Services.Master1
             master1.FirstName = dto.FirstName;
             master1.LastName = dto.LastName;
             master1.PhoneNumber = dto.PhoneNumber;
-          
+            master1.IsFree = dto.IsFree;
             if (dto.ImagePath is not null)
             {
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);

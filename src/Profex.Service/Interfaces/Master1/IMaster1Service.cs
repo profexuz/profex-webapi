@@ -2,7 +2,6 @@
 using Profex.DataAccsess.ViewModels.Masters;
 using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.master_skills;
-using Profex.Domain.Entities.masters;
 using Profex.Persistance.Dtos.Master1;
 
 namespace Profex.Service.Interfaces.Master1
