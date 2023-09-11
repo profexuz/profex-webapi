@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
-using Profex.Application.Exceptions.Categories;
+﻿using Profex.Application.Exceptions.Categories;
 using Profex.Application.Exceptions.Posts;
 using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
@@ -14,8 +13,6 @@ using Profex.Persistance.Dtos.Posts;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Identity;
 using Profex.Service.Interfaces.Posts;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.PortableExecutable;
 
 namespace Profex.Service.Services.Posts
 {
@@ -90,20 +87,17 @@ namespace Profex.Service.Services.Posts
             var posts = await _postRepository.GetAllAsync(@params);
             foreach (var post in posts)
             {
-               var imagePaths =  await _images.GetByPostIdAsync(post.Id);
+                var imagePaths = await _images.GetByPostIdAsync(post.Id);
                 post.Images.AddRange(imagePaths);
             }
             var count = await _postRepository.CountAsync();
             _paginator.Paginate(count, @params);
+
             return posts;
         }
 
-        public async Task<IList<Post>> GetAllPostById(long id)
-        {
-            /*var posts = await _postRepository.GetAllPostById(id);          
-            return posts;*/
-            throw new NotImplementedException();
-        }
+
+
 
         public async Task<IList<Post>> GetByIdAsync(long id)
         {
@@ -113,17 +107,42 @@ namespace Profex.Service.Services.Posts
             return (IList<Post>)posts;
         }
 
-        public async Task<IList<PostViewModel>> GetByIdJoin(long id)
+
+
+        public async Task<PostViewModel> GetByIdJoin(long id)
         {
-            var posts = await _postRepository.GetByIdJoin(id);
-            if(posts is null) throw new PostNotFoundException();
+            var post = await _postRepository.GetByIdJoin(id);
+            if (post is null) throw new PostNotFoundException();
+
+            var imagePaths = await _images.GetByPostIdAsync(post.Id);
+            post.Images.AddRange(imagePaths);
+
+            return post; // Return a single PostViewModel, not a list
+        }
+
+        public async Task<IList<PostViewModel>> GetUserAllPostAsync(long id, PaginationParams @params)
+        {
+            var posts = await _postRepository.GetUserAllPostAsync(id, @params);
+            if (posts is null) throw new PostNotFoundException();
+            foreach (var post in posts)
+            {
+                var imagePaths = await _images.GetByPostIdAsync(post.Id);
+                post.Images.AddRange(imagePaths);
+            }
             return posts;
         }
 
         public async Task<IList<PostViewModel>> SearchAsync(string search, PaginationParams @params)
         {
             var posts = await _postRepository.SearchAsync(search, @params);
+            foreach (var post in posts)
+            {
+                var imagePaths = await _images.GetByPostIdAsync(post.Id);
+                post.Images.AddRange(imagePaths);
+            }
+
             int count = await _postRepository.SearchCountAsync(search);
+            _paginator.Paginate(count, @params);
             return posts;
         }
 

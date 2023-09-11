@@ -100,9 +100,9 @@ namespace Profex.DataAccsess.Repositories.Posts
 
                     $" OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
 
-                var result = await _connection.QueryAsync<PostViewModel>(query);
+                var result = (await _connection.QueryAsync<PostViewModel>(query)).ToList();
 
-                return result.ToList();
+                return result;
 
             }
             catch
@@ -158,7 +158,7 @@ namespace Profex.DataAccsess.Repositories.Posts
             }
         }
 
-        public async Task<IList<PostViewModel>> GetByIdJoin(long id)
+        public async Task<PostViewModel> GetByIdJoin(long id)
         {
             try
             {
@@ -170,9 +170,9 @@ namespace Profex.DataAccsess.Repositories.Posts
                                 $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id LEFT JOIN     " +
                                     $"users u ON p.user_id = u.id LEFT JOIN     categories c ON p.category_id = c.id LEFT JOIN    " +
                                         $" skills s ON p.category_id = s.category_id  WHERE    p.id = @Id AND (pi.image_path IS NULL OR pi.image_path != '') group by p.id, u.id, c.id, s.id ;";
-                var result = await _connection.QueryAsync<PostViewModel>(query, new { Id = id });
+                var result = await _connection.QuerySingleAsync<PostViewModel>(query, new { Id = id });
 
-                return result.ToList();
+                return result;
             }
             catch { return null; }
             finally { await _connection.CloseAsync(); }
@@ -253,9 +253,49 @@ namespace Profex.DataAccsess.Repositories.Posts
             }
         }
 
-        public Task<IList<Post>> GetUserAllPost(long id)
+ 
+
+        public async Task<IList<PostViewModel>> GetUserAllPostAsync(long id, PaginationParams @params)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $@"SELECT p.id, p.category_id, p.user_id, p.title,
+                                        p.price, p.description, p.region, p.district,
+                                        p.longitude, p.latitude, p.phone_number, p.created_at,
+                                         p.updated_at, ARRAY_AGG(DISTINCT pi.image_path) AS image_path,
+                                        u.first_name, u.last_name, c.name AS category_name
+                                       
+                                    FROM
+                                        posts p
+                                    LEFT JOIN
+                                        post_images pi ON p.id = pi.post_id
+                                    LEFT JOIN
+                                        users u ON p.user_id = u.id
+                                    LEFT JOIN
+                                        categories c ON p.category_id = c.id
+                                    WHERE
+                                        (pi.image_path IS NULL OR pi.image_path != '')
+                                        AND p.user_id = {id}
+                                    GROUP BY
+                                        p.id, u.id, c.id " +
+                                    
+
+                    $" OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
+
+                var result = await _connection.QueryAsync<PostViewModel>(query);
+
+                return result.ToList();
+
+            }
+            catch
+            {
+                return new List<PostViewModel>();
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ public interface IPostRepository : IRepository<Post, Post>, IGetAll<PostViewMode
 {
     public Task<IList<PostViewModel>> SearchAsync(string search, PaginationParams @params);
     public Task<int> SearchCountAsync(string search);
-    public Task<IList<Post>> GetUserAllPost(long id);
-    public Task<IList<PostViewModel>> GetByIdJoin(long id);
+    public Task<IList<PostViewModel>> GetUserAllPostAsync(long id, PaginationParams @params);
+    public Task<PostViewModel> GetByIdJoin(long id);
+  
 }
