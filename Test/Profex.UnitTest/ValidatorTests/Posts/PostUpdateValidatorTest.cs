@@ -27,7 +27,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+          
             Title = title,
             Price = 1200,
             Description = "Assalomu alekum hammga c# dasturlash tili zo'r til",
@@ -62,7 +62,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+           
             Title = "C# program language",
             Price = double.Parse(price),
             Description = "Assalomu alekum hammga c# dasturlash tili zo'r til",
@@ -98,7 +98,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+           
             Title = "C# program language",
             Price = 12000.21,
             Description = description,
@@ -137,7 +137,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+        
             Title = "C# program language",
             Price = 120.200,
             Description = "C# program language is best",
@@ -174,7 +174,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+         
             Title = "C# program language",
             Price = 1200.210,
             Description = "C# program language is best",
@@ -209,7 +209,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+         
             Title = "C# program language",
             Price = 233.234,
             Description = "C# program language is best",
@@ -245,7 +245,7 @@ public class PostUpdateValidatorTest
         PostCreateDto postCreateDto = new PostCreateDto()
         {
             CategoryId = 1,
-            UserId = 1,
+          
             Title = "C# program language",
             Price = 234.123,
             Description = "C# program language is best",
