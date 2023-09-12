@@ -25,6 +25,25 @@ namespace Profex.DataAccsess.Repositories.Post_images
             }
         }
 
+        public async Task<int> CountPostImagesAsync(long postId)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"SELECT   COUNT(*) FROM    post_images WHERE   post_id = {postId}";
+                var result = await _connection.QuerySingleAsync<int>(query);
+
+                return result;
+            }
+            catch 
+            { 
+                return 0; 
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
 
         public async Task<int> CreateAsync(Post_image entity)
         {

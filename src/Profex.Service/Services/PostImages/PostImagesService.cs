@@ -38,20 +38,28 @@ namespace Profex.Service.Services.PostImages
         }
         public async Task<bool> CreateAsync(PostImageCreateDto dto)
         {
-            string imagepath = await _fileService.UploadImageAsync(dto.ImagePath);
-            Post_image ps = new Post_image()
+            var countImages = await _repository.CountPostImagesAsync(dto.PostId);
+            if (countImages < 5)
             {
-                PostId = dto.PostId,
-                ImagePath = imagepath,
-                CreatedAt = TimeHelper.GetDateTime(),
-                UpdatedAt = TimeHelper.GetDateTime()
-            };
-            ps.PostId = dto.PostId;
-            var natija = await _post.GetByIdAsync(ps.PostId);
-            if (natija == null) throw new PostNotFoundException();
-            var res = await _repository.CreateAsync(ps);
+                string imagepath = await _fileService.UploadImageAsync(dto.ImagePath);
+                Post_image ps = new Post_image()
+                {
+                    PostId = dto.PostId,
+                    ImagePath = imagepath,
+                    CreatedAt = TimeHelper.GetDateTime(),
+                    UpdatedAt = TimeHelper.GetDateTime()
+                };
+                ps.PostId = dto.PostId;
+                var natija = await _post.GetByIdAsync(ps.PostId);
+                if (natija == null) throw new PostNotFoundException();
+                var res = await _repository.CreateAsync(ps);
+                return res > 0;
+            }
+            else
+            {
+                throw new PostImageLimitException();
+            }
 
-            return res > 0;
         }
 
         public async Task<bool> DeleteAsync(long id)
