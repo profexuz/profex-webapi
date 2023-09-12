@@ -13,9 +13,10 @@ namespace Profex.Service.Interfaces.Master1
         public Task<int> SearchCountAsync(string search);
         public Task<bool> DeleteAsync(long id);
         public Task<bool> DeleteMasterAsync();
-        public Task<IList<MasterViewModel>> GetAllAsync(PaginationParams @params);
+        public Task<IList<MasterWithSkillsModel>> GetAllAsync(PaginationParams @params);
         public Task<MasterViewModel> GetByIdAsync(long id);
         public Task<bool> UpdateAsync(long id, Master1UpdateDto dto);
         public Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId);
+        public Task<MasterWithSkillsModel> GetMasterWithSkillsAsync(long masterId);
     }
 }

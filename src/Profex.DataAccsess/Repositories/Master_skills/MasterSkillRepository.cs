@@ -159,7 +159,7 @@ namespace Profex.DataAccsess.Repositories.Master_skills
             }
         }
 
-        public async Task<IList<Master_skill>> GetMasterAllSkill(long masterId)
+        public async Task<IList<Master_skill>> GetMasterAllSkillAsync(long masterId)
         {
             try
             {
