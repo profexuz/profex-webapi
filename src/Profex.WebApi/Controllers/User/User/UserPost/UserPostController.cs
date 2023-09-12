@@ -22,6 +22,7 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
 
         
         [HttpPost]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)
         {
             var validator = new PostCreateValidator();

@@ -50,7 +50,7 @@ public class MasterSkillService : IMasterSkillService
         ms.MasterId =_identity.UserId;
         ms.SkillId = dto.SkillId;
         var rap = await _master.GetByIdAsync(ms.MasterId);
-        var skills = await _masterSkill.GetMasterAllSkill(_identity.UserId);
+        var skills = await _masterSkill.GetMasterAllSkillAsync(_identity.UserId);
         if (rap == null) throw new MasterNotFoundException();
         ms.SkillId = dto.SkillId;
         var rp = await _skill.GetByIdAsync(ms.SkillId);
@@ -63,10 +63,6 @@ public class MasterSkillService : IMasterSkillService
                 throw new MasterSkillAlreadyExists();
             }
         }
-        
-       
-        
-        
         
         var res = await _repository.CreateAsync(ms);
 
