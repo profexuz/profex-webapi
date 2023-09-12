@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.Posts;
 using Profex.Persistance.Validations.Dtos.Posts;
+using Profex.Service.Interfaces.PostImages;
 using Profex.Service.Interfaces.Posts;
 
 namespace Profex.WebApi.Controllers.Admin.User
@@ -11,10 +12,13 @@ namespace Profex.WebApi.Controllers.Admin.User
     public class AdminUserPostController : ControllerBase
     {
         private readonly IPostService _postService;
+        private readonly IPostImagesService _postImageService;
 
-        public AdminUserPostController(IPostService Postservice)
+        public AdminUserPostController(IPostService Postservice,
+                                        IPostImagesService postImageService)
         {
             _postService = Postservice;
+            _postImageService = postImageService;
         }
 
 
@@ -32,6 +36,10 @@ namespace Profex.WebApi.Controllers.Admin.User
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _postService.DeleteAsync(id));
-
+        
+        [HttpDelete("image/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteImageAsync(long id)
+            => Ok(await _postImageService.DeleteAsync(id));
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Profex.Application.Exceptions.MasterSkills;
 using Profex.Application.Exceptions.PostImages;
 using Profex.Application.Exceptions.Posts;
+using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Post_Images;
@@ -65,17 +66,41 @@ namespace Profex.Service.Services.PostImages
         public async Task<bool> DeleteAsync(long id)
         {
             var rp =await _repository.GetByIdAsync(id);
+            if (rp == null)
+                throw new PostImageNotFoundException();
+            
             var post = await _post.GetByIdAsync(rp.PostId);
+            if (post == null)
+                throw new PostNotFoundException();
+
             var user = await _user.GetByIdAsync(post.UserId);
-            if (_identity.UserId != user.Id)
+            if(user == null)
+                throw new UserNotFoundException();
+
+
+            if (_identity.UserId == user.Id && _identity.IdentityRole == "User")
+            {
+                if (rp == null) throw new PostImageNotFoundException();
+                var dbResult = await _repository.DeleteAsync(id);
+
+                return dbResult > 0;
+            }
+            else if(_identity.IdentityRole == "Admin")
+            {
+                if (rp == null) throw new PostImageNotFoundException();
+                var dbResult = await _repository.DeleteAsync(id);
+
+                return dbResult > 0;
+            }
+            else
             {
                 throw new UnauthorizedAccessException();
+
             }
-            if (rp == null) throw new PostImageNotFoundException();
-            var dbResult = await _repository.DeleteAsync(id);
+            //if (rp == null) throw new PostImageNotFoundException();
+            //var dbResult = await _repository.DeleteAsync(id);
 
-            return dbResult > 0;
-
+            //return dbResult > 0;
         }
 
         public async Task<IList<Post_image>> GetAllAsync(PaginationParams @params)
