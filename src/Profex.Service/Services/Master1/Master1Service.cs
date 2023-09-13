@@ -9,13 +9,10 @@ using Profex.DataAccsess.Interfaces.Skills;
 using Profex.DataAccsess.ViewModels.Masters;
 using Profex.DataAccsess.ViewModels.Skills;
 using Profex.Domain.Entities.master_skills;
-using Profex.Domain.Entities.masters;
-using Profex.Domain.Entities.skills;
 using Profex.Persistance.Dtos.Master1;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Identity;
 using Profex.Service.Interfaces.Master1;
-using System.Diagnostics.Metrics;
 
 namespace Profex.Service.Services.Master1
 {
@@ -28,7 +25,7 @@ namespace Profex.Service.Services.Master1
         private readonly IIdentityService _identity;
         private readonly IMasterSkillRepository _skillrepo;
 
-        public Master1Service(IMaster1Repository master1Repository, IPaginator paginator, 
+        public Master1Service(IMaster1Repository master1Repository, IPaginator paginator,
                                 IFileService fileService, IIdentityService identity,
                                 IMasterSkillRepository skillrepo,
                                 ISkillRepository skillRepository)
@@ -48,7 +45,7 @@ namespace Profex.Service.Services.Master1
             if (natjia == null) throw new MasterNotFoundException();
 
             var dbResult = await _repository.DeleteAsync(id);
-            
+
             return dbResult > 0;
         }
 
@@ -66,12 +63,12 @@ namespace Profex.Service.Services.Master1
         {
             var masters1 = await _repository.GetAllAsync(@params);
             List<MasterWithSkillsModel> MasterWithSkillList = new();
-          
-           
+
+
             foreach (var master in masters1)
             {
                 var masterWithSkill = new MasterWithSkillsModel()
-                {   
+                {
                     Id = master.Id,
                     FirstName = master.FirstName,
                     LastName = master.LastName,
@@ -113,17 +110,17 @@ namespace Profex.Service.Services.Master1
                 CreatedAt = master.CreatedAt,
                 UpdatedAt = master.UpdatedAt
             };
-           // masterWithSkill.MasterSkills = new List<Skill>();
+            // masterWithSkill.MasterSkills = new List<Skill>();
             foreach (var id in skills_id)
             {
-                    var skill = await _skillRepository.GetByIdAsync(id.SkillId);
-                if(skill is not null)
+                var skill = await _skillRepository.GetByIdAsync(id.SkillId);
+                if (skill is not null)
                 {
                     masterWithSkill.MasterSkills.Add(skill);
                 }
-                
+
             }
-            
+
 
             return masterWithSkill;
         }
@@ -139,16 +136,16 @@ namespace Profex.Service.Services.Master1
         public async Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId)
         {
             var masters = await _repository.GetMasterSkillById(masterId);
-            if(masters is null) throw new SkillNotFoundException();
+            if (masters is null) throw new SkillNotFoundException();
             return masters;
         }
-            
-        
+
+
 
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {
-            var masters =await _repository.SearchAsync(search, @params);
-            if(masters is null) throw new MasterNotFoundException();
+            var masters = await _repository.SearchAsync(search, @params);
+            if (masters is null) throw new MasterNotFoundException();
             return masters;
         }
 
@@ -173,11 +170,18 @@ namespace Profex.Service.Services.Master1
             master1.LastName = dto.LastName;
             master1.PhoneNumber = dto.PhoneNumber;
             master1.IsFree = dto.IsFree;
-            if (dto.ImagePath is not null)
+            if (dto.ImagePath is not null && master1.ImagePath == "media/avatarmaster/ustaa.jpg")
             {
-                string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
+                string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath!);
                 master1.ImagePath = newImagePath;
             }
+            else if (master1.ImagePath is not null && dto.ImagePath is not null)
+            {
+                await _fileService.DeleteImageAsync(master1.ImagePath);
+                string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath!);
+                master1.ImagePath = newImagePath;
+            }
+            
             master1.UpdatedAt = TimeHelper.GetDateTime();
             var dbRes = await _repository.UpdateAsync(id, master1);
 
