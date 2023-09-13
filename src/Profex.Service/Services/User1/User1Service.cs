@@ -64,9 +64,15 @@ namespace Profex.Service.Services.User1
             user1.PhoneNumber = dto.PhoneNumber;
             user1.PhoneNumberConfirmed = true;
 
-            if (dto.ImagePath is not null )
+            if (dto.ImagePath is not null && user1.ImagePath == "media/avatarmaster/admin.jpg")
             {
                 string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath);
+                user1.ImagePath = newImagePath;
+            }
+            else if (user1.ImagePath is not null && dto.ImagePath is not null)
+            {
+                await _fileService.DeleteImageAsync(user1.ImagePath);
+                string newImagePath = await _fileService.UploadImageAsync(dto.ImagePath!);
                 user1.ImagePath = newImagePath;
             }
             user1.UpdatedAt = TimeHelper.GetDateTime();
