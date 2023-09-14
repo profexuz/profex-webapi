@@ -141,20 +141,13 @@ namespace Profex.DataAccsess.Repositories.Masters1
             {
                 await _connection.OpenAsync();
                 string query = $@"
-            SELECT
-                m.first_name,
-                m.last_name,
-                m.phone_number,
-                m.image_path,
-                m.is_free,
-                m.created_at,
-                m.updated_at,
-                s.title AS skill_title FROM masters AS m JOIN skills AS s ON m.masterId = s.masterId;";
+                SELECT m.first_name, m.last_name, m.phone_number, m.image_path, m.is_free,
+                m.created_at, m.updated_at,
+                s.title AS skill_title FROM masters AS m JOIN skills AS s ON m.masterId = s.masterId ;";
 
                 var result = await _connection.QueryAsync<UserSkillViewModel>(query, new { MasterId = masterId });
                 return result.ToList();
             }
-
             catch
             {
                 //.//return MasterViewModel();

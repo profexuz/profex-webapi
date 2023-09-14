@@ -1,7 +1,10 @@
 ﻿using Profex.Application.Exceptions.Categories;
+using Profex.Application.Exceptions.Posts;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Categories;
+using Profex.DataAccsess.Interfaces.Post_Images;
+using Profex.DataAccsess.ViewModels.Posts;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.posts;
 using Profex.Domain.Entities.skills;
@@ -14,11 +17,15 @@ public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _repository;
     private readonly IPaginator _paginator;
+    private readonly IPostImageRepository _images;
+
     public CategoryService(ICategoryRepository categoryRepository,
-        IPaginator paginator)
+                            IPostImageRepository images,
+                            IPaginator paginator)
     {
         this._repository = categoryRepository;
         this._paginator = paginator;
+        this._images = images;
     }
 
     public async Task<long> CountAsync() => await _repository.CountAsync();
@@ -77,10 +84,15 @@ public class CategoryService : ICategoryService
         return category;
     }
 
-    public async Task<IList<Post>> GetPostsByCategory(long category, PaginationParams @params)
+    public async Task<IList<PostViewModel>> GetPostsByCategory(long category, PaginationParams @params)
     {
         var posts = await _repository.GetPostsByCategory(category, @params);
-        if(posts  is null) throw new CategoryNotFoundException();
+        foreach (var post in posts)
+        {
+            var imagePaths = await _images.GetByPostIdAsync(post.Id);
+            post.Images.AddRange(imagePaths);
+        }
+        if (posts  is null) throw new PostNotFoundException();
         return posts;
 
     }

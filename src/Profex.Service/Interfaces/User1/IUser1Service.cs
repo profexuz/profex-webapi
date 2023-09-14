@@ -12,6 +12,7 @@ public interface IUser1Service
     public Task<IList<UserViewModel>> GetAllAsync(PaginationParams @params);
     public Task<UserViewModel> GetByIdAsync(long id);
     public Task<bool> UpdateAsync(long id, User1UpateDto dto);
+    public Task<IList<UserViewModel>> SearchUserAsync(string search, PaginationParams @params);
 
 
 }

@@ -177,5 +177,45 @@ namespace Profex.DataAccsess.Repositories.Master_skills
                 await _connection.CloseAsync();
             }
         }
+
+        public async Task<Master_skill> GetMasterSkillIdAsync(long masterId, long skillId)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"SELECT * FROM master_skills where master_id = {masterId} and skill_id = {skillId}";
+                var result = await _connection.QuerySingleAsync<Master_skill>(query);
+
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
+
+        public async Task<int> DeleteMasterSkillIdAsync(long masterId, long skillId)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $"DELETE FROM master_skills WHERE master_id = {masterId} and skill_id = {skillId}";
+                var result = await _connection.ExecuteAsync(query);
+
+                return result;
+            }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
     }
 }

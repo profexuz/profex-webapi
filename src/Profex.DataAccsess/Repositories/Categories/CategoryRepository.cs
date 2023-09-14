@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.Categories;
+using Profex.DataAccsess.ViewModels.Posts;
 using Profex.Domain.Entities.Categories;
 using Profex.Domain.Entities.posts;
 using Profex.Domain.Entities.skills;
@@ -112,7 +113,7 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
         finally { await _connection.CloseAsync(); }
     }
 
-    public async Task<IList<Post>> GetPostsByCategory(long category, PaginationParams @params)
+    public async Task<IList<PostViewModel>> GetPostsByCategory(long category, PaginationParams @params)
     {
         try
         {
@@ -121,11 +122,11 @@ public class CategoryRepository : BaseRepository, ICategoryRepository
 
             var parameters = new { Category = category };
 
-            var posts = await _connection.QueryAsync<Post>(query, parameters);
+            var posts = await _connection.QueryAsync<PostViewModel>(query, parameters);
 
             return posts.ToList();
         }
-        catch { return new List<Post>(); }
+        catch { return new List<PostViewModel>(); }
         finally { await _connection.CloseAsync(); }
     }
 
