@@ -22,7 +22,7 @@ namespace Profex.WebApi.Controllers.Common.User
         }
  
 
-        [HttpGet("get-all")]
+        [HttpGet("getAll")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
@@ -37,13 +37,19 @@ namespace Profex.WebApi.Controllers.Common.User
         public async Task<IActionResult> GetByIdAsync(long userId)
             => Ok(await _service.GetByIdAsync(userId));
 
-        [HttpGet("getSkillsById")]
+        [HttpGet("search/{user}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetMasterSkillById(long masterId)
-            => Ok(await _msService.GetMasterSkillById(masterId));
-        
+        public async Task<IActionResult> SearchUserAsync(string user, int page = 1)
+            => Ok(await _service.SearchUserAsync(user, new PaginationParams(page, maxPageSize)));
 
 
-      
+        //[HttpGet("getSkillsById")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GetMasterSkillById(long masterId)
+        //    => Ok(await _msService.GetMasterSkillById(masterId));
+
+
+
+
     }
 }

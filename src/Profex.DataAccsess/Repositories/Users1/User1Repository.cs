@@ -140,14 +140,20 @@ namespace Profex.DataAccsess.Repositories.Users1
             }
         }
 
-        public async Task<IList<UserViewModel>> SearchAsync(string search, PaginationParams @params)
+        public async Task<IList<UserViewModel>> SearchUserAsync(string search, PaginationParams @params)
         {
             try
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.users WHERE first_name ILIKE '%{search}%' " +
-                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+                string query = $"SELECT * FROM public.users WHERE first_name ILIKE '%{search}%' OR last_name ILIKE '%{search}%' " + 
+                  $"  ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+
+
+             //   query =     $"SELECT * FROM public.masters WHERE first_name ILIKE '%{search}%' " +
+               //    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+
+
 
                 var user = await _connection.QueryAsync<UserViewModel>(query);
 

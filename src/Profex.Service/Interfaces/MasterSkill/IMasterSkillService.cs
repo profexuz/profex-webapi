@@ -11,4 +11,5 @@ public interface IMasterSkillService
     public Task<IList<Master_skill>> GetAllAsync(PaginationParams @params);
     public Task<Master_skill> GetByIdAsync(long id);
     public Task<bool> UpdateAsync(long id, MasterSkillUpdateDto dto);
+   
 }

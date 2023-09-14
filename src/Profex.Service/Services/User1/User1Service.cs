@@ -55,6 +55,15 @@ namespace Profex.Service.Services.User1
             return users1;
         }
 
+        public async Task<IList<UserViewModel>> SearchUserAsync(string search, PaginationParams @params)
+        {
+            var SearchedUsers = await _repository.SearchUserAsync(search, @params);
+            var count = await _repository.CountAsync();
+            _paginator.Paginate(count, @params);
+
+            return SearchedUsers;
+        }
+
         public async Task<bool> UpdateAsync(long id, User1UpateDto dto)
         {
             var user1 = await _repository.GetByIdAsync(id);

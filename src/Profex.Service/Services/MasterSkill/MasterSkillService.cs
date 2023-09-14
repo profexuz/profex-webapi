@@ -71,9 +71,9 @@ public class MasterSkillService : IMasterSkillService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var natija = await _repository.GetByIdAsync(id);
+        var natija = await _repository.GetMasterSkillIdAsync(_identity.UserId, id);
         if (natija == null) throw new MasterSkilNotFoundException();
-        var dbResult = await _repository.DeleteAsync(id);
+        var dbResult = await _repository.DeleteMasterSkillIdAsync(_identity.UserId, id);
 
         return dbResult > 0;
     }
@@ -94,6 +94,7 @@ public class MasterSkillService : IMasterSkillService
 
         return ms;
     }
+
 
     public async Task<bool> UpdateAsync(long id, MasterSkillUpdateDto dto)
     {

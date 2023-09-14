@@ -40,8 +40,10 @@ namespace Profex.Service.Services.PostImages
         public async Task<bool> CreateAsync(PostImageCreateDto dto)
         {
             var countImages = await _repository.CountPostImagesAsync(dto.PostId);
+       
+
             if (countImages < 5)
-            {
+            {   
                 string imagepath = await _fileService.UploadImageAsync(dto.ImagePath);
                 Post_image ps = new Post_image()
                 {
@@ -52,7 +54,8 @@ namespace Profex.Service.Services.PostImages
                 };
                 ps.PostId = dto.PostId;
                 var natija = await _post.GetByIdAsync(ps.PostId);
-                if (natija == null) throw new PostNotFoundException();
+                if (natija is null) throw new PostNotFoundException();
+                if(_identity.UserId != natija.UserId) throw new UnauthorizedAccessException();
                 var res = await _repository.CreateAsync(ps);
                 return res > 0;
             }
