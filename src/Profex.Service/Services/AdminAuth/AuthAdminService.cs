@@ -2,7 +2,9 @@
 using Profex.Application.Exceptions.Auth;
 using Profex.Application.Exceptions.Users;
 using Profex.DataAccsess.Common.Helpers;
+using Profex.DataAccsess.Interfaces.Admins;
 using Profex.DataAccsess.Interfaces.Users;
+using Profex.Domain.Entities.admins;
 using Profex.Domain.Entities.users;
 using Profex.Persistance.Dtos.AdminAuth;
 using Profex.Persistance.Dtos.Notifications;
@@ -20,6 +22,7 @@ namespace Profex.Service.Services.AdminAuth
         private readonly IUserRepository _userRepository;
         private readonly ISmsSender _smsSender;
         private readonly ITokenAdminService _tokenService;
+        private readonly IAdminsRepository _adminRepository;
         private const int CACHED_MINUTES_FOR_REGISTER = 60;
         private const int CACHED_MINUTES_FOR_VERIFICATION = 50;
         private const string REGISTER_CACHE_KEY = "register_";
@@ -28,13 +31,14 @@ namespace Profex.Service.Services.AdminAuth
 
         public AuthAdminService(IMemoryCache memoryCache,
             IUserRepository userRepository,
-            ISmsSender smsSender,
+            ISmsSender smsSender, IAdminsRepository adminsRepository,
             ITokenAdminService tokenAdminService)
         {
             this._memoryCache= memoryCache;
             this._userRepository= userRepository;
             this._smsSender= smsSender;
             this._tokenService= tokenAdminService;
+            this._adminRepository = adminsRepository;
         }
 
         public async Task<(bool Result, string Token)> LoginAsync(AdminDto loginDto)
@@ -51,7 +55,7 @@ namespace Profex.Service.Services.AdminAuth
 
         public async Task<(bool Result, int CachedMinutes)> RegisterAsync(RegisterAdminDto dto)
         {
-            var user = await _userRepository.GetByPhoneAsync(dto.PhoneNumber);
+            var user = await _adminRepository.GetByPhoneAsync(dto.PhoneNumber);
             if (user is not null) throw new UserAlreadyExistException(dto.PhoneNumber);
 
             if (_memoryCache.TryGetValue(REGISTER_CACHE_KEY + dto.PhoneNumber, out RegisterAdminDto cachedRegisterDto))
@@ -134,17 +138,16 @@ namespace Profex.Service.Services.AdminAuth
 
         private async Task<bool> RegisterToDatabaseAsync(RegisterAdminDto? registerDto)
         {
-            var user = new User();
+            var user = new Admin();
             user.FirstName = registerDto.FirstName;
-            //user.LastName = registerDto.LastName;
+            user.LastName = registerDto.LastName;
             user.PhoneNumber = registerDto.PhoneNumber;
-            user.PhoneNumberConfirmed = true;
-            user.ImagePath = "media/avatarmaster/admin.jpg";
+         
             var haserResult = PasswordHasher.Hash(registerDto.Password);
             user.PasswordHash = haserResult.Hash;
             user.Salt = haserResult.Salt;
             user.CreatedAt = user.UpdatedAt = TimeHelper.GetDateTime();
-            var dbResult = await _userRepository.CreateAsync(user);
+            var dbResult = await _adminRepository.CreateAsync(user);
 
             return dbResult > 0;
         }

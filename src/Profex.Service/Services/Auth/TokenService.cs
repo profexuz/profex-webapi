@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Profex.DataAccsess.Common.Helpers;
+using Profex.Domain.Entities.admins;
 using Profex.Domain.Entities.masters;
 using Profex.Domain.Entities.users;
 using Profex.Service.Interfaces.Auth;
+using System.Diagnostics.Metrics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -53,6 +55,30 @@ public class TokenService : ITokenService
             new Claim(ClaimTypes.MobilePhone, master.PhoneNumber),
             new Claim(ClaimTypes.Role, "Master")
         };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));
+        var keyCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        int expiresHours = int.Parse(_config["Lifetime"]!);
+        var token = new JwtSecurityToken(
+            issuer: _config["Issuer"],
+            audience: _config["Audience"],
+            claims: identityClaims,
+            expires: TimeHelper.GetDateTime().AddHours(expiresHours),
+            signingCredentials: keyCredentials);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public string GenerateToken(Admin admin)
+    {
+        var identityClaims = new Claim[]
+       {
+            new Claim("Id", admin.Id.ToString()),
+            new Claim("FirstName", admin.FirstName),
+            new Claim("LastName", admin.LastName),
+            new Claim(ClaimTypes.MobilePhone, admin.PhoneNumber),
+            new Claim(ClaimTypes.Role, "Admin")
+       };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));
         var keyCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

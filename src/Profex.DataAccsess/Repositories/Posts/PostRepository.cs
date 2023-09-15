@@ -170,6 +170,8 @@ namespace Profex.DataAccsess.Repositories.Posts
                                 $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id LEFT JOIN     " +
                                     $"users u ON p.user_id = u.id LEFT JOIN     categories c ON p.category_id = c.id LEFT JOIN    " +
                                         $" skills s ON p.category_id = s.category_id  WHERE    p.id = @Id AND (pi.image_path IS NULL OR pi.image_path != '') group by p.id, u.id, c.id, s.id ;";
+
+                query = $"SELECT * FROM posts WHERE id = @Id";
                 var result = await _connection.QuerySingleAsync<PostViewModel>(query, new { Id = id });
 
                 return result;
