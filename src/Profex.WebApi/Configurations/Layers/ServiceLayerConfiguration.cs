@@ -52,6 +52,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<IAuthAdminService, AuthAdminService>();
             builder.Services.AddScoped<ITokenAdminService, TokenAdminService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
+           
         }
     }
 }
