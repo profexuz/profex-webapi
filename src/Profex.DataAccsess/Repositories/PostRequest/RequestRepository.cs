@@ -1,11 +1,14 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.PostRequests;
+
 using Profex.Domain.Entities.postRequests;
 
 namespace Profex.DataAccsess.Repositories.PostRequest;
 
+
 public class RequestRepository : BaseRepository, IRequestRepository
+
 {
     public Task<long> CountAsync()
     {

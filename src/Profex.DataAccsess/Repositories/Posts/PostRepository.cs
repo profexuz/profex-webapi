@@ -163,6 +163,7 @@ namespace Profex.DataAccsess.Repositories.Posts
             try
             {
                 await _connection.OpenAsync();
+
                 string query = $@"WITH aggregated_data AS (SELECT p.id,  p.category_id,   p.user_id,  p.title,
                                                            p.price,   p.description,  p.region,   p.district, 
                                                            p.longitude,  p.latitude,  p.phone_number,   p.created_at, p.updated_at,
@@ -180,6 +181,7 @@ namespace Profex.DataAccsess.Repositories.Posts
                                                         WHERE id = @Id";
 
                // query = $"SELECT * FROM posts WHERE id = @Id";
+
                 var result = await _connection.QuerySingleAsync<PostViewModel>(query, new { Id = id });
 
                 return result;

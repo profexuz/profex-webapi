@@ -39,6 +39,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<IPostImageRepository, PostImageRepository>();
             builder.Services.AddScoped<IAdminsRepository, AdminsRepository>();
             builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+
         }
     }
 }

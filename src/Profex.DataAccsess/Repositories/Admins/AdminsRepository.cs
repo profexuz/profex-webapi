@@ -112,14 +112,16 @@ public class AdminsRepository : BaseRepository, IAdminsRepository
         }
     }
 
+
     public async Task<Admin> GetByPhoneAsync(string phone)
+
     {
         try
         {
             await _connection.OpenAsync();
             string query = $"SELECT * FROM public.admins WHERE phone_number = '{phone}' ";
             var result = await _connection.QuerySingleAsync<Admin>(query);
-
+            
             return result;
         }
         catch
