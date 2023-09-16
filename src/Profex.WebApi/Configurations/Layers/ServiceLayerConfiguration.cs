@@ -9,6 +9,7 @@ using Profex.Service.Interfaces.MasterAuth;
 using Profex.Service.Interfaces.MasterSkill;
 using Profex.Service.Interfaces.Notifactions;
 using Profex.Service.Interfaces.PostImages;
+using Profex.Service.Interfaces.PostRequests;
 using Profex.Service.Interfaces.Posts;
 using Profex.Service.Interfaces.Skills;
 using Profex.Service.Interfaces.User1;
@@ -24,6 +25,7 @@ using Profex.Service.Services.MasterAuth;
 using Profex.Service.Services.MasterSkill;
 using Profex.Service.Services.Notifications;
 using Profex.Service.Services.PostImages;
+using Profex.Service.Services.PostRequests;
 using Profex.Service.Services.Posts;
 using Profex.Service.Services.Skills;
 using Profex.Service.Services.User1;
@@ -52,6 +54,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<IAuthAdminService, AuthAdminService>();
             builder.Services.AddScoped<ITokenAdminService, TokenAdminService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
+            builder.Services.AddScoped<IPostRequestService, PostRequestService>();
            
         }
     }

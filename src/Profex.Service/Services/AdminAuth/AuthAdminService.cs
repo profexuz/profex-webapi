@@ -19,7 +19,7 @@ namespace Profex.Service.Services.AdminAuth
     public class AuthAdminService : IAuthAdminService
     {
         private readonly IMemoryCache _memoryCache;
-        private readonly IUserRepository _userRepository;
+
         private readonly ISmsSender _smsSender;
         private readonly ITokenAdminService _tokenService;
         private readonly IAdminsRepository _adminRepository;
@@ -30,12 +30,12 @@ namespace Profex.Service.Services.AdminAuth
         private const int VERIFICATION_MAXIMUM_ATTEMPTS = 3;
 
         public AuthAdminService(IMemoryCache memoryCache,
-            IUserRepository userRepository,
+         
             ISmsSender smsSender, IAdminsRepository adminsRepository,
             ITokenAdminService tokenAdminService)
         {
             this._memoryCache= memoryCache;
-            this._userRepository= userRepository;
+          
             this._smsSender= smsSender;
             this._tokenService= tokenAdminService;
             this._adminRepository = adminsRepository;
@@ -43,13 +43,13 @@ namespace Profex.Service.Services.AdminAuth
 
         public async Task<(bool Result, string Token)> LoginAsync(AdminDto loginDto)
         {
-            var user = await _userRepository.GetByPhoneAsync(loginDto.PhoneNumber);
-            if (user is null) throw new UserNotFoundException();
+            var admin = await _adminRepository.GetByPhoneAsync(loginDto.PhoneNumber);
+            if (admin is null) throw new UserNotFoundException();
 
-            var hasherResult = PasswordHasher.Verify(loginDto.Password, user.PasswordHash, user.Salt);
+            var hasherResult = PasswordHasher.Verify(loginDto.Password, admin.PasswordHash, admin.Salt);
             if (hasherResult == false) throw new PasswordNotMatchException();
 
-            string token = _tokenService.GenerateToken(user);
+            string token = _tokenService.GenerateToken(admin);
             return (Result: true, Token: token);
         }
 
@@ -116,7 +116,7 @@ namespace Profex.Service.Services.AdminAuth
                         var dbResult = await RegisterToDatabaseAsync(registerDto);
                         if (dbResult is true)
                         {
-                            var user = await _userRepository.GetByPhoneAsync(phone);
+                            var user = await _adminRepository.GetByPhoneAsync(phone);
                             string token = _tokenService.GenerateToken(user);
                             return (Result: true, Token: token);
                         }

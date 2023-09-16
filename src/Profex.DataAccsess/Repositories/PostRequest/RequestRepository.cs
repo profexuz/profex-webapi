@@ -7,7 +7,7 @@ using Profex.Domain.Entities.postRequests;
 
 namespace Profex.DataAccsess.Repositories.PostRequest;
 
-internal class RequestRepository : BaseRepository, IRequestRepository
+public class RequestRepository : BaseRepository, IRequestRepository
 {
     public Task<long> CountAsync()
     {
