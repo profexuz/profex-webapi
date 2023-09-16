@@ -163,15 +163,23 @@ namespace Profex.DataAccsess.Repositories.Posts
             try
             {
                 await _connection.OpenAsync();
-                string query = $"SELECT    p.id,    p.category_id,    p.user_id,    p.title,    p.price,    " +
-                    $"p.description,    p.region,    p.district,    p.longitude,    p.latitude,    p.phone_number,   " +
-                        $"p.created_at,    p.updated_at,    Array_agg(pi.image_path) as image_path,    u.first_name,    u.last_name,   " +
-                            $"c.name AS category_name,    Array_agg(s.title) AS skill_title " +
-                                $"FROM    posts p LEFT JOIN    post_images pi ON p.id = pi.post_id LEFT JOIN     " +
-                                    $"users u ON p.user_id = u.id LEFT JOIN     categories c ON p.category_id = c.id LEFT JOIN    " +
-                                        $" skills s ON p.category_id = s.category_id  WHERE    p.id = @Id AND (pi.image_path IS NULL OR pi.image_path != '') group by p.id, u.id, c.id, s.id ;";
+                string query = $@"WITH aggregated_data AS (SELECT p.id,  p.category_id,   p.user_id,  p.title,
+                                                           p.price,   p.description,  p.region,   p.district, 
+                                                           p.longitude,  p.latitude,  p.phone_number,   p.created_at, p.updated_at,
+                                 ARRAY_AGG(DISTINCT pi.image_path) AS image_path,         u.first_name,     u.last_name,                          
+                                c.name AS category_name FROM  posts p   LEFT JOIN
+                                                                        post_images pi ON p.id = pi.post_id
+                                                                        LEFT JOIN
+                                                                        users u ON p.user_id = u.id
+                                                                        LEFT JOIN
+                                                                        categories c ON p.category_id = c.id
+                                                            WHERE      
+                                                                pi.image_path IS NULL OR pi.image_path != ''
+                                                            GROUP BY  p.id, u.id, c.id  )
+                                                        SELECT *  FROM aggregated_data
+                                                        WHERE id = @Id";
 
-                query = $"SELECT * FROM posts WHERE id = @Id";
+               // query = $"SELECT * FROM posts WHERE id = @Id";
                 var result = await _connection.QuerySingleAsync<PostViewModel>(query, new { Id = id });
 
                 return result;

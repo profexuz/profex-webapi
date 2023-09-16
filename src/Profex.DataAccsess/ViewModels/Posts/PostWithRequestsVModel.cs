@@ -20,5 +20,5 @@ public class PostWithRequestsVModel : Auditable
     public string LastName { get; set; } = string.Empty;
     public string CategoryName { get; set; } = string.Empty;
     public List<Post_image> Images { get; set; } = new List<Post_image>();
-    public List<Request?> Request {  get; set; } = new List<Request>();
+    public List<Request> Request {  get; set; } = new List<Request>();
 }

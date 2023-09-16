@@ -6,5 +6,5 @@ namespace Profex.DataAccsess.Interfaces.Admins;
 
 public interface IAdminsRepository : IRepository<Admin, AdminstratorsViewModel>, IGetAll<AdminstratorsViewModel>
 {
-    public Task<AdminstratorsViewModel?> GetByPhoneAsync(string phone);
+    public Task<Admin> GetByPhoneAsync(string phone);
 }
