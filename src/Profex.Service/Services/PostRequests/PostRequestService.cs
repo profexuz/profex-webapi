@@ -39,6 +39,13 @@ public class PostRequestService : IPostRequestService
         _posts = posts;
 
     }
+
+    public async Task<bool> AcceptRequest(long userId, RequestAcceptDto requestAccpetDto)
+    {
+        // var request = await _requestRepository.AcceptRequest(userId,);
+        return false;
+    }
+
     public async Task<IList<PostWithRequestsVModel>> GetUserAllPostWithRequestAsync(long userId, PaginationParams @params)
     {
         //var requests  = await _requestRepository.GetUserAllPostWithRequestAsync(userId, @params);

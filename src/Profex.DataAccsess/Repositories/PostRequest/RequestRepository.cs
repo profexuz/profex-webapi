@@ -11,6 +11,28 @@ namespace Profex.DataAccsess.Repositories.PostRequest;
 
 public class RequestRepository : BaseRepository, IRequestRepository
 {
+    public async Task<bool> AcceptRequest(long masterId, long postId, long userId)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = $@"UPDATE public.requests
+	                    SET  is_accepted = true, updated_at = now()
+	                    WHERE master_id={masterId} and post_id={postId} and user_id={userId} ";
+            var result = await _connection.ExecuteAsync(query);
+            
+            return result > 0;
+        }
+        catch
+        {
+            return false;
+        }
+        finally 
+        { 
+            _connection.Close(); 
+        }
+    }
+
     public async Task<int> CheckPostExixts(long postId, long userId)
     {
         try

@@ -109,16 +109,17 @@ namespace Profex.Service.Services.Posts
 
 
 
-        public async Task<PostViewModel> GetByIdJoin(long id)
+        public async Task<IList<PostViewModel>> GetByIdJoin(long id)
         {
+            List<PostViewModel> ozodbekUchun = new();
             var post = await _postRepository.GetByIdJoin(id);
             if (post is null) throw new PostNotFoundException();
    
            
             var imagePaths = await _images.GetByPostIdAsync(post.Id);
             post.Images.AddRange(imagePaths);
-
-            return post; // Return a single PostViewModel, not a list
+            ozodbekUchun.Add(post);
+            return ozodbekUchun;
         }
 
         public async Task<IList<PostViewModel>> GetUserAllPostAsync(long id, PaginationParams @params)

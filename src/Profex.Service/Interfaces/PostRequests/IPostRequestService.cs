@@ -10,4 +10,5 @@ public interface IPostRequestService
     public Task<PostWithRequestsVModel> GetUserPostWithRequestAsync(long  userId, long postId);
 
     public Task<bool> RequestToPost(long masterId, RequestDto requestDto);
+    public Task<bool> AcceptRequest(long userId, RequestAcceptDto requestAccpetDto);
 }
