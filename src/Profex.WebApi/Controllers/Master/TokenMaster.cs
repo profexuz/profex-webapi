@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.Master1;
 using Profex.Persistance.Dtos.MasterSkill;
+using Profex.Persistance.Dtos.PostRequest;
 using Profex.Persistance.Validations.Dtos.Masters;
 using Profex.Persistance.Validations.Dtos.MasterSkill;
 using Profex.Service.Interfaces.Identity;
 using Profex.Service.Interfaces.Master1;
 using Profex.Service.Interfaces.MasterSkill;
+using Profex.Service.Interfaces.PostRequests;
 using Profex.Service.Services.Identity;
 using Profex.WebApi.Configurations;
 
@@ -20,12 +22,16 @@ namespace Profex.WebApi.Controllers.Master
         private readonly IMaster1Service _masterService;
         private readonly IIdentityService _identity;
         private readonly IMasterSkillService _masterSkill;
+        private readonly IPostRequestService _requestService;
+
         public TokenMaster(IMaster1Service masterService, 
-                IIdentityService identity, IMasterSkillService masterSkill)
+                IIdentityService identity, IMasterSkillService masterSkill,
+                IPostRequestService requestService)
         {
             this._masterService = masterService;
             this._identity = identity;
             this._masterSkill = masterSkill;
+            _requestService = requestService;
         }
 
 
@@ -62,5 +68,15 @@ namespace Profex.WebApi.Controllers.Master
         [Authorize(Roles = "Master")]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _masterSkill.DeleteAsync(id));
+
+        
+        [HttpPost("request/post")]
+        [Authorize(Roles = "Master")]
+        public async Task<IActionResult> CreateAsync([FromForm] RequestDto dto)
+        {
+            long masterId = _identity.UserId;
+
+            return Ok(await _requestService.RequestToPost(masterId, dto));
+        }
     }
 }

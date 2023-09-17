@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Profex.DataAccsess\Profex.DataAccsess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos\PostRequest\NewFolder\" />
+  </ItemGroup>
+
 </Project>

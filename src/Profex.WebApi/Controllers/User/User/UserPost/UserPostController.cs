@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Persistance.Dtos.Posts;
 using Profex.Persistance.Validations.Dtos.Posts;
+using Profex.Service.Interfaces.Identity;
+using Profex.Service.Interfaces.PostRequests;
 using Profex.Service.Interfaces.Posts;
+using System.Security.Principal;
 
 namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
 {
@@ -11,16 +14,31 @@ namespace Profex.WebApi.Controllers.User.UserCommon.UserCommonPost
     [ApiController]
     public class UserPostController : ControllerBase
     {
-        private readonly int maxPageSize = 30;
+        private readonly int maxPageSize = 10;
         private readonly IPostService _service;
-
-
-        public UserPostController(IPostService Postservice)
+        private readonly IIdentityService _identity;
+        private readonly IPostRequestService _requestService;
+     
+        public UserPostController(IPostService Postservice,
+            IIdentityService identity,
+            IPostRequestService requestService)
         {
             _service = Postservice;
+            _identity = identity;
+            _requestService = requestService;
         }
-
         
+        [HttpGet("all/withrequest")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetUserAllPostWithRequestAsync([FromQuery] int page = 1)
+        => Ok(await _requestService.GetUserAllPostWithRequestAsync(_identity.UserId, new PaginationParams(page, maxPageSize)));
+
+        [HttpGet("one/withRequest/{postId}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetUserPostWithRequestAsync(long postId)
+            =>Ok(await _requestService.GetUserPostWithRequestAsync(_identity.UserId, postId));
+
+
         [HttpPost]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> CreateAsync([FromForm] PostCreateDto dto)

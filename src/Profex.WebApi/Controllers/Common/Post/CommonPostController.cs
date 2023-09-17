@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Service.Interfaces.Posts;
+using System.Security.Principal;
 
 namespace Profex.WebApi.Controllers.Common.Post
 {
@@ -11,10 +12,12 @@ namespace Profex.WebApi.Controllers.Common.Post
     {
         private readonly int maxPageSize = 6;
         private readonly IPostService _service;
+        private readonly IIdentity _identity;
 
         public CommonPostController(IPostService Postservice)
         {
             _service = Postservice;
+           
         }
 
         [HttpGet]

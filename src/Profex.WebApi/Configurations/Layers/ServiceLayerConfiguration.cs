@@ -14,6 +14,7 @@ using Profex.Service.Interfaces.Posts;
 using Profex.Service.Interfaces.Skills;
 using Profex.Service.Interfaces.User1;
 using Profex.Service.Interfaces.Users;
+using Profex.Service.Mappers;
 using Profex.Service.Services.AdminAuth;
 using Profex.Service.Services.Auth;
 using Profex.Service.Services.Categories;
@@ -55,7 +56,7 @@ namespace Profex.WebApi.Configurations.Layers
             builder.Services.AddScoped<ITokenAdminService, TokenAdminService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<IPostRequestService, PostRequestService>();
-           
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
         }
     }
 }
