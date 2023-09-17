@@ -16,6 +16,7 @@ public class PostWithRequestsVModel : Auditable
     public double Longitude { get; set; }
     public double Latidute { get; set; }
     public string PhoneNumber { get; set; } = string.Empty;
+    public string[] ImagePath { get; set; } = { };
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string CategoryName { get; set; } = string.Empty;
