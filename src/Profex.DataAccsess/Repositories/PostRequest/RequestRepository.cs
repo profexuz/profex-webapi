@@ -2,34 +2,32 @@
 using Profex.Application.Utils;
 using Profex.DataAccsess.Interfaces.PostRequests;
 using Profex.DataAccsess.ViewModels;
-using Profex.DataAccsess.ViewModels.Posts;
-using Profex.Domain.Entities.masters;
-using Profex.Domain.Entities.post_images;
 using Profex.Domain.Entities.postRequests;
+using Profex.Domain.Entities.users;
 
 namespace Profex.DataAccsess.Repositories.PostRequest;
 
 public class RequestRepository : BaseRepository, IRequestRepository
 {
-    public async Task<bool> AcceptRequest(long masterId, long postId, long userId)
+    public async Task<bool> AcceptRequest(long userId,long masterId, long postId )
     {
         try
         {
             await _connection.OpenAsync();
             string query = $@"UPDATE public.requests
-	                    SET  is_accepted = true, updated_at = now()
+	                    SET  is_accepted = true
 	                    WHERE master_id={masterId} and post_id={postId} and user_id={userId} ";
             var result = await _connection.ExecuteAsync(query);
-            
+
             return result > 0;
         }
         catch
         {
             return false;
         }
-        finally 
-        { 
-            _connection.Close(); 
+        finally
+        {
+            _connection.Close();
         }
     }
 
@@ -65,7 +63,7 @@ public class RequestRepository : BaseRepository, IRequestRepository
                             WHERE master_id = {masterId} AND post_id = {postId} AND user_id = {userId} ;";
 
             var result = await _connection.QuerySingleAsync<int>(query);
-            
+
             return result;
         }
         catch
@@ -83,9 +81,50 @@ public class RequestRepository : BaseRepository, IRequestRepository
         throw new NotImplementedException();
     }
 
-    
+    public async Task<long> DeleteRequestAsync(long masterId, long postId, long user_id)
+    {
+        try
+        { 
+            await _connection.OpenAsync();
+            string query = $"DELETE FROM public.requests WHERE master_id = {masterId} and post_id = {postId} and user_id = {user_id}";
+            
+            var result = await _connection.ExecuteAsync(query);
+            
+            return (long)result;
+        }
+        catch
+        {
+            return 0;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
 
-    public async Task<IList<RequestViewModel>> GetUserAllPostWithRequestAsync(long userId, PaginationParams @params)
+    public async Task<IList<Request>> GetMasterRequestedAllPostsAsync(long masterId, PaginationParams @params)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = $" SELECT * FROM public.requests WHERE master_id = {masterId} " +
+                $" ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
+
+            var result = (await _connection.QueryAsync<Request>(query)).ToList();
+
+            return result;
+        }
+        catch
+        {
+            return new List<Request>();
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
+
+    public async Task<IList<Request>> GetUserAllPostWithRequestAsync(long userId, PaginationParams @params)
     {
         try
         {
@@ -93,19 +132,13 @@ public class RequestRepository : BaseRepository, IRequestRepository
             string query = $"SELECT * FROM public.requests WHERE user_id = {userId} " +
                 $" ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
 
-            query = $@" SELECT post_id,  user_id, 
-                        ARRAY_AGG(master_id) AS masters_id 
-                        FROM requests WHERE  user_id = {userId} 
-                        GROUP BY   post_id, user_id ";
-                             
-
-            var result = (await _connection.QueryAsync<RequestViewModel>(query)).ToList();
+            var result = (await _connection.QueryAsync<Request>(query)).ToList();
 
             return result;
         }
         catch
         {
-            return new List<RequestViewModel>();
+            return new List<Request>();
         }
         finally
         {
@@ -150,11 +183,11 @@ public class RequestRepository : BaseRepository, IRequestRepository
         {
             return 0;
         }
-        finally 
-        { 
-            await _connection.CloseAsync(); 
+        finally
+        {
+            await _connection.CloseAsync();
         }
     }
 
- 
+
 }
