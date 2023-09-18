@@ -7,8 +7,14 @@ namespace Profex.Service.Interfaces.PostRequests;
 public interface IPostRequestService
 {
     public Task<IList<PostWithRequestsVModel>> GetUserAllPostWithRequestAsync(long userId, PaginationParams @params);
+   
+    public Task<IList<PostWithRequestsVModel>> GetMasterRequestedAllPostsAsync(long masterId, PaginationParams @params);
+   
     public Task<PostWithRequestsVModel> GetUserPostWithRequestAsync(long  userId, long postId);
+    
+    public Task<bool> RequestToPostAsync(long masterId, RequestDto requestDto);
+   
+    public Task<bool> AcceptRequestAsync(long userId, RequestAcceptDto requestAccpetDto);
 
-    public Task<bool> RequestToPost(long masterId, RequestDto requestDto);
-    public Task<bool> AcceptRequest(long userId, RequestAcceptDto requestAccpetDto);
+    public Task<bool> DeleteRequestAsync(long masterId, long postId, long userId);
 }

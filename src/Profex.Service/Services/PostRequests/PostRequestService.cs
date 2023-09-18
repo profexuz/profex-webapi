@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Profex.Application.Exceptions;
 using Profex.Application.Exceptions.Posts;
 using Profex.Application.Exceptions.Requests;
 using Profex.Application.Utils;
@@ -13,8 +11,6 @@ using Profex.Domain.Entities.postRequests;
 using Profex.Persistance.Dtos.PostRequest;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.PostRequests;
-using System.Security.Principal;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Profex.Service.Services.PostRequests;
 
@@ -40,29 +36,68 @@ public class PostRequestService : IPostRequestService
 
     }
 
-    public async Task<bool> AcceptRequest(long userId, RequestAcceptDto requestAccpetDto)
+    public async Task<bool> AcceptRequestAsync(long userId, RequestAcceptDto dto)
     {
-        // var request = await _requestRepository.AcceptRequest(userId,);
-        return false;
+        var request = await _requestRepository.AcceptRequest(userId, dto.masterId, dto.postId);
+        return request;
+    }
+
+    public async Task<bool> DeleteRequestAsync(long masterId, long postId, long userId)
+    {
+        var check = await _requestRepository.CountPostRequestMasterCheck(masterId, postId, userId);
+        if (check == 0) throw new RequestNotFoundException();
+
+        var delete = await _requestRepository.DeleteRequestAsync(masterId, postId, userId);
+        return delete > 0;
+    }
+
+    public async Task<IList<PostWithRequestsVModel>> GetMasterRequestedAllPostsAsync(long masterId, PaginationParams @params)
+    {
+        var requests = await _requestRepository.GetMasterRequestedAllPostsAsync(masterId, @params);
+        List<PostWithRequestsVModel> posts = new List<PostWithRequestsVModel>();
+
+        foreach (var request in requests)
+        {
+            if (posts.Select(x => x.Id).Contains(request.PostId))
+            {
+                var exsistPost = posts.FirstOrDefault(x => x.Id == request.PostId);
+                exsistPost.Request.Add(request);
+            }
+            else
+            {
+                var post = await _posts.GetByIdJoin(request.PostId);
+                var postWithRequest = _mapper.Map<PostWithRequestsVModel>(post);
+                postWithRequest.Request.Add(request);
+                posts.Add(postWithRequest);
+            }
+        }
+       
+        return posts;
     }
 
     public async Task<IList<PostWithRequestsVModel>> GetUserAllPostWithRequestAsync(long userId, PaginationParams @params)
     {
-        //var requests  = await _requestRepository.GetUserAllPostWithRequestAsync(userId, @params);
-        
-        //List<PostWithRequestsVModel> posts = new List<PostWithRequestsVModel>();
-               
-        //foreach (var request in requests)
-        //{
-        //    var post = await _posts.GetByIdJoin(request.PostId);
-        //    var postWithRequest = _mapper.Map<PostWithRequestsVModel>(post);
-        //    postWithRequest.Request.Add(request);
-        //    posts.Add(postWithRequest);
-            
-        //}
+        var requests = await _requestRepository.GetUserAllPostWithRequestAsync(userId, @params);
 
-        //return posts;
-        return new List<PostWithRequestsVModel>();
+        List<PostWithRequestsVModel> posts = new List<PostWithRequestsVModel>();
+
+        foreach (var request in requests)
+        {
+            if (posts.Select(x => x.Id).Contains(request.PostId))
+            {
+                var exsistPost = posts.FirstOrDefault(x => x.Id == request.PostId);
+                exsistPost.Request.Add(request);
+            }
+            else
+            {
+                var post = await _posts.GetByIdJoin(request.PostId);
+                var postWithRequest = _mapper.Map<PostWithRequestsVModel>(post);
+                postWithRequest.Request.Add(request);
+                posts.Add(postWithRequest);
+            }
+        }
+       
+        return posts;
     }
 
     public async Task<PostWithRequestsVModel> GetUserPostWithRequestAsync(long userId, long postId)
@@ -72,19 +107,19 @@ public class PostRequestService : IPostRequestService
         PostWithRequestsVModel postModel = new PostWithRequestsVModel();
 
         postModel = _mapper.Map<PostWithRequestsVModel>(post);
-       
+
         postModel.Request.AddRange(requests);
 
         return postModel;
     }
 
-    public async Task<bool> RequestToPost(long masterId, RequestDto dto)
-    {   
-        var checkPost = await _requestRepository.CheckPostExixts(dto.PostId, dto.UserId);
-        if (checkPost == 0) throw new PostNotFoundException();
+    public async Task<bool> RequestToPostAsync(long masterId, RequestDto dto)
+    {
+        var checkPost = await _posts.GetByIdAsync(dto.PostId);
+        if (checkPost is null) throw new PostNotFoundException();
 
         var check = await _requestRepository.CountPostRequestMasterCheck(masterId, dto.PostId, dto.UserId);
-        if(check > 0) throw new RequestAlreadyExists();
+        if (check > 0) throw new RequestAlreadyExists();
 
         Request request = new Request();
         request.MasterId = masterId;
@@ -92,9 +127,9 @@ public class PostRequestService : IPostRequestService
         request.UserId = dto.UserId;
         request.IsAccepted = true;
         request.UpdatedAt = request.CreatedAt = TimeHelper.GetDateTime();
-            
+
         var result = await _requestRepository.RequestToPost(request);
-      
+
         return result > 0;
     }
 }
