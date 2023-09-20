@@ -28,5 +28,10 @@ namespace Profex.WebApi.Controllers.Common.Skill
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long id)
             => Ok(await _service.GetByIdAsync(id));
+
+        [HttpGet("count")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CountAsync()
+            => Ok(await _service.CountAsync());
     }
 }
