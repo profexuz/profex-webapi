@@ -3,6 +3,7 @@ using Profex.Application.Exceptions.Posts;
 using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
+using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.DataAccsess.Interfaces.Post_Images;
 using Profex.DataAccsess.Interfaces.Posts;
@@ -171,6 +172,12 @@ namespace Profex.Service.Services.Posts
             var dbRes = await _postRepository.UpdateAsync(id, posts);
 
             return dbRes > 0;
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var count = await _postRepository.CountAsync();
+            return (int)count;
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Profex.Service.Services.Skills
             this._repository = skillRepository;
             this._category = categoryRepository;
         }
+        
         public async Task<bool> CreateAsync(SkillCreateDto dto)
         {
             Skill skill = new Skill()
@@ -79,6 +80,12 @@ namespace Profex.Service.Services.Skills
             var dbRes = await _repository.UpdateAsync(id, skills);
 
             return dbRes > 0;
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var count = await _repository.CountAsync();
+            return (int)count;
         }
     }
 }

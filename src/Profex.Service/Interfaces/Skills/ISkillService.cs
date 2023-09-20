@@ -11,5 +11,6 @@ namespace Profex.Service.Interfaces.Skills
         public Task<IList<Skill>> GetAllAsync(PaginationParams @params);
         public Task<Skill> GetByIdAsync(long id);
         public Task<bool> UpdateAsync(long id, SkillUpdateDto dto);
+        public Task<int> CountAsync();
     }
 }

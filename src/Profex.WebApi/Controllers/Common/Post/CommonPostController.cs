@@ -17,7 +17,6 @@ namespace Profex.WebApi.Controllers.Common.Post
         public CommonPostController(IPostService Postservice)
         {
             _service = Postservice;
-           
         }
 
         [HttpGet]
@@ -41,6 +40,9 @@ namespace Profex.WebApi.Controllers.Common.Post
         public async Task<IActionResult> GetUserAllPostAsync( long id, int page = 1 )
             => Ok(await _service.GetUserAllPostAsync(id, new PaginationParams(page, maxPageSize)));
 
-       
+        [HttpGet("count")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CountAsync()
+             => Ok(await _service.CountAsync());
     }
 }
