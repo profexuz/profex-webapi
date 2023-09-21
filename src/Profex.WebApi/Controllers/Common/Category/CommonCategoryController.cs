@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.Service.Interfaces.Categories;
-using Profex.Service.Interfaces.Posts;
 
 namespace Profex.WebApi.Controllers.Common.Category
 {
@@ -11,12 +10,12 @@ namespace Profex.WebApi.Controllers.Common.Category
     public class CommonCategoryController : ControllerBase
     {
         private readonly ICategoryService _service;
-    
+
         private readonly int maxPageSize = 30;
         public CommonCategoryController(ICategoryService Categoryservice)
         {
             _service = Categoryservice;
-          
+
         }
 
         [HttpGet]
@@ -36,7 +35,7 @@ namespace Profex.WebApi.Controllers.Common.Category
         public async Task<IActionResult> GetPostsByCategory(long categoryId, int page = 1)
         {
             var ps = await _service.GetPostsByCategory(categoryId, new PaginationParams(page, maxPageSize));
-            
+
             return Ok(ps);
         }
 
@@ -46,7 +45,7 @@ namespace Profex.WebApi.Controllers.Common.Category
         public async Task<IActionResult> GetAllSkillByCategoryId(long categoryId, int page = 1)
         {
             var ps = await _service.GetAllSkillByCategoryId(categoryId, new PaginationParams(page, maxPageSize));
-            
+
             return Ok(ps);
         }
     }

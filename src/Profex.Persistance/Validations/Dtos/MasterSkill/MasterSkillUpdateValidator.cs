@@ -7,9 +7,13 @@ namespace Profex.Persistance.Validations.Dtos.MasterSkill
     {
         public MasterSkillUpdateValidator()
         {
-            RuleFor(dto => dto.MasterId).NotEmpty().WithMessage("MasterId is required!");
+            RuleFor(dto => dto.MasterId)
+                .NotEmpty().WithMessage("MasterId is required!")
+                .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
 
-            RuleFor(dto => dto.SkillId).NotEmpty().WithMessage("SkillId is required!");
+            RuleFor(dto => dto.SkillId)
+                .NotEmpty().WithMessage("SkillId is required!")
+                .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
         }
     }
 }

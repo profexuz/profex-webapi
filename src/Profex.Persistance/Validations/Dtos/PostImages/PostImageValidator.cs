@@ -8,7 +8,10 @@ public class PostImageValidator : AbstractValidator<PostImageCreateDto>
 {
     public PostImageValidator()
     {
-        RuleFor(dto=>dto.PostId).NotEmpty().WithMessage("Post id is required!");
+        RuleFor(dto=>dto.PostId)
+            .NotEmpty().NotNull().WithMessage("Post id is required!")
+            .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
+
 
         int maxImageSizeMB = 3;
         RuleFor(dto => dto.ImagePath).NotEmpty().NotNull().WithMessage("Image field is required");
@@ -19,6 +22,6 @@ public class PostImageValidator : AbstractValidator<PostImageCreateDto>
 
             return MediaHelper.GetImageExtensions().Contains(fileInfo.Extension);
         }).WithMessage("This file type is not image file");
-
+       
     }
 }

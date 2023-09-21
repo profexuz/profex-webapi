@@ -7,7 +7,9 @@ namespace Profex.Persistance.Validations.Dtos.Skills
     {
         public SkillUpdateValidator()
         {
-            RuleFor(dto => dto.CategoryId).NotEmpty().WithMessage("Category id is required!");
+            RuleFor(dto => dto.CategoryId)
+                .NotEmpty().NotNull().WithMessage("Category id is required!")
+                .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
 
             RuleFor(dto => dto.Description).NotEmpty().NotNull().WithMessage("Description is required!")
             .MaximumLength(20).WithMessage("Description is less be than 20 characters")
