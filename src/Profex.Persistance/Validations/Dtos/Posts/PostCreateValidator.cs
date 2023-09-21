@@ -7,10 +7,9 @@ public class PostCreateValidator : AbstractValidator<PostCreateDto>
 {
     public PostCreateValidator()
     {
-        RuleFor(dto => dto.CategoryId).NotEmpty().WithMessage("Category id is required!");
-
-    
-
+        RuleFor(dto => dto.CategoryId)
+            .NotEmpty().NotNull().WithMessage("Category id is required!")
+            .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
 
         RuleFor(dto => dto.Title).NotEmpty().NotNull().WithMessage("Title is required!")
             .MaximumLength(20).WithMessage("Title length lass be than 20 characters")

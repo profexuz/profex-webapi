@@ -31,5 +31,6 @@ public class MasterCreateValidator : AbstractValidator<MasterCreateDto>
 
         RuleFor(dto => dto.PasswordHash).NotNull().NotEmpty().WithMessage("Password is requuired")
             .Must(password => PasswordValidator.IsStrongPassword(password).IsValid).WithMessage("Password is not strong password!");
+    
     }
 }

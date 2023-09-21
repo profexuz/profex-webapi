@@ -44,13 +44,13 @@ namespace Profex.Service.Services.AdminAuth
         public string GenerateToken(Admin admin)
         {
             var identityClaims = new Claim[]
-  {
-            new Claim("Id", admin.Id.ToString()),
-            new Claim("FirstName", admin.FirstName),
-            new Claim("LastName", admin.LastName),
-            new Claim(ClaimTypes.MobilePhone, admin.PhoneNumber),
-            new Claim(ClaimTypes.Role, "Admin")
-  };
+            {
+                new Claim("Id", admin.Id.ToString()),
+                new Claim("FirstName", admin.FirstName),
+                new Claim("LastName", admin.LastName),
+                new Claim(ClaimTypes.MobilePhone, admin.PhoneNumber),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]!));
             var keyCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
