@@ -1,38 +1,38 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Profex.Persistance.Dtos.User1;
+using Profex.Persistance.Dtos.Users;
 using Profex.Persistance.Validations.Dtos.Users;
-using Profex.Service.Interfaces.User1;
+using Profex.Service.Interfaces.Users;
 
 namespace Profex.WebApi.Controllers.Admin.User
 {
-    [Route("api/admin/user")]
+    [Route("api/admin/users")]
     [ApiController]
     public class AdminUserController : ControllerBase
     {
-        private readonly IUser1Service _service;
+        private readonly IUserService _service;
 
 
-        public AdminUserController(IUser1Service service)
+        public AdminUserController(IUserService service)
         {
             this._service = service;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{userId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAsync(long id, [FromForm] User1UpateDto dto)
+        public async Task<IActionResult> UpdateAsync(long userId, [FromForm] UserUpdateDto dto)
         {
 
             var updateValidator = new UserUpdateValidator();
             var result = updateValidator.Validate(dto);
-            if (result.IsValid) return Ok(await _service.UpdateAsync(id, dto));
+            if (result.IsValid) return Ok(await _service.UpdateAsync(userId, dto));
             else return BadRequest(result.Errors);
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{userId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteAsync(long id)
-          => Ok(await _service.DeleteAsync(id));
+        public async Task<IActionResult> DeleteAsync(long userId)
+          => Ok(await _service.DeleteAsync(userId));
     }
 }

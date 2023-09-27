@@ -1,46 +1,59 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.User1;
+using Profex.Persistance.Dtos.Users;
 using Profex.Persistance.Validations.Dtos.Users;
-using Profex.Service.Interfaces.Master1;
-using Profex.Service.Interfaces.User1;
+using Profex.Service.Interfaces.Categories;
+using Profex.Service.Interfaces.Masters;
+using Profex.Service.Interfaces.Posts;
+using Profex.Service.Interfaces.Users;
 
 namespace Profex.WebApi.Controllers.Common.User
 {
-    [Route("api/common/user")]
+    [Route("api/common/users")]
     [ApiController]
     public class CommonUserController : ControllerBase
     {
-        private readonly IUser1Service _service;
-        private readonly IMaster1Service _msService;
+        private readonly IUserService _service;
+        private readonly IMasterService _msService;
+        private readonly IPostService _postService;
         private readonly int maxPageSize = 4;
-        public CommonUserController(IUser1Service service, IMaster1Service master1Service)
+        public CommonUserController(IUserService service, 
+                                IMasterService master1Service, IPostService Postservice)
         {
             this._service = service;
             this._msService = master1Service;
+                _postService = Postservice;
         }
  
 
-        [HttpGet("getAll")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+
+        [HttpGet("{userId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByIdAsync(long userId)
+            => Ok(await _service.GetByIdAsync(userId));
+
 
         [HttpGet("count")]
         [AllowAnonymous]
         public async Task<IActionResult> CountAsync()
              => Ok(await _service.CountAsync());
 
-        [HttpGet("getbyId")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long userId)
-            => Ok(await _service.GetByIdAsync(userId));
 
         [HttpGet("search/{user}")]
         [AllowAnonymous]
         public async Task<IActionResult> SearchUserAsync(string user, int page = 1)
             => Ok(await _service.SearchUserAsync(user, new PaginationParams(page, maxPageSize)));
+
+
+        //[HttpGet("posts/{userId}")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GetUserAllPostAsync(long userId, int page = 1)
+        //=> Ok(await _postService.GetUserAllPostAsync(userId, new PaginationParams(page, maxPageSize)));
 
 
         //[HttpGet("getSkillsById")]

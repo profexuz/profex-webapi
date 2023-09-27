@@ -3,7 +3,7 @@ using Profex.Application.Exceptions.Auth;
 using Profex.Application.Exceptions.Masters;
 using Profex.Application.Exceptions.Users;
 using Profex.DataAccsess.Common.Helpers;
-using Profex.DataAccsess.Interfaces.Masters;
+using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.Domain.Entities.masters;
 using Profex.Persistance.Dtos.MasterAuth;
 using Profex.Persistance.Dtos.Notifications;

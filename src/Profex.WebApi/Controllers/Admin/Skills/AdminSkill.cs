@@ -6,7 +6,7 @@ using Profex.Service.Interfaces.Skills;
 
 namespace Profex.WebApi.Controllers.Admin.Skill;
 
-[Route("api/admin/skill")]
+[Route("api/admin/skills")]
 [ApiController]
 public class AdminSkill : ControllerBase
 {
@@ -30,17 +30,17 @@ public class AdminSkill : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
+    [HttpPut("{skillId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long id, [FromForm] SkillUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(long skillId, [FromForm] SkillUpdateDto dto)
     {
-        return Ok(await _skillService.UpdateAsync(id, dto));
+        return Ok(await _skillService.UpdateAsync(skillId, dto));
     }
 
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{skillId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteAsync(long id)
-          => Ok(await _skillService.DeleteAsync(id));
+    public async Task<IActionResult> DeleteAsync(long skillId)
+          => Ok(await _skillService.DeleteAsync(skillId));
 
 }

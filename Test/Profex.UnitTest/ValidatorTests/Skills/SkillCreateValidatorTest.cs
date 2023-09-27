@@ -6,31 +6,23 @@ namespace Profex.UnitTest.ValidatorTests.Skills;
 public class SkillCreateValidatorTest
 {
     [Theory]
-    [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
-    [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
-    [InlineData("!@#QEad123!@#!@#1243123")]
-    [InlineData("A1!@#!#qwesd@#QEsdfsdfsdf")]
-    [InlineData("aAdaE!@qeqWE!@#!@#adsadssa1")]
-    [InlineData("A0as12312da!@#!@#sdsdfsdfsdf")]
-    [InlineData("       dfasdfsdfsdfa12")]
-    [InlineData("       2323411!@#!@aadsfASDA")]
-    [InlineData("  asd     ASD123!@#asdas!@aadsfASDA")]
-    [InlineData("    ads  asd ASD123!asd@#!@aadsfASDA")]
-    [InlineData(" asd      ASD123!@#!@aadsfASDA")]
-    [InlineData("  asd     ASD123!@#!@aadsfASDA")]
-    [InlineData("ASD123!@#!@aadsfASDA      asd ")]
-    [InlineData("ASD123!@#!@aadsfASDsdfsA   assdasdas")]
-    [InlineData("   sdf    ASD123!@#!@aadsfASDA      asda12asdsdasd")]
-    [InlineData("asd  sdf   sdf  Aasd0!@#!@aadsfASDA   sdf    asasdasd ")]
-    [InlineData("electronifsdprodusdfsdfcss, we sfsdell ansdfsd electronic products to our clients, we sell an electronic " +
-        "products to our clients")]
-    public void ShouldReturnInValidValidation(string description)
+    [InlineData("","1234dsfsdfADASD@#!@#!@#adsasdQRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPG",0)]
+    [InlineData(" ","!23aADAdsddsds!@#!@#!@3adsdasdQRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPG",-9)]
+    [InlineData("  ","!",-9)]
+    [InlineData("3aADAdsddsds!@#!@#!@3adsdasdQRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLt ", "A1",-10)]
+    [InlineData("3aADAdsddsds!@#!@#!@3adsdasdQRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLt", "aAd",0)]
+    [InlineData("a","A0as12312da!@#!@#sdsdfsdfsdfQRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPG",-9)]
+    [InlineData(" "," ",0)]
+    [InlineData("   ","  ",-1)]
+
+    
+    public void ShouldReturnInValidValidation(string title,string description,long id)
     {
         SkillCreateDto skillCreateDto = new SkillCreateDto()
         {
-            CategoryId = 1,
+            CategoryId = id,
             Description = description,
-            Title = "Title",
+            Title = title,
         };
         var validator = new SkillCreateValidator();
         var res = validator.Validate(skillCreateDto);

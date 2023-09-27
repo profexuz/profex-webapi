@@ -7,7 +7,7 @@ using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.DataAccsess.Interfaces.Post_Images;
 using Profex.DataAccsess.Interfaces.Posts;
-using Profex.DataAccsess.Interfaces.Users1;
+using Profex.DataAccsess.Interfaces.Users;
 using Profex.DataAccsess.ViewModels.Posts;
 using Profex.Domain.Entities.posts;
 using Profex.Persistance.Dtos.Posts;
@@ -23,7 +23,7 @@ namespace Profex.Service.Services.Posts
         private readonly ICategoryRepository _category;
         private readonly IIdentityService _identity;
         private readonly IPaginator _paginator;
-        private readonly IUser1Repository _user;
+        private readonly IUserRepository _user;
         private readonly IPostImageRepository _images;
 
         public PostService(
@@ -31,7 +31,7 @@ namespace Profex.Service.Services.Posts
             IPostRepository postRepository,
             IPaginator paginator,
             ICategoryRepository category,
-            IUser1Repository user,
+            IUserRepository user,
             IPostImageRepository images)
         {
             this._identity = identity;
@@ -159,7 +159,6 @@ namespace Profex.Service.Services.Posts
             var posts = await _postRepository.GetByIdAsync(id);
             if (posts is null) throw new PostNotFoundException();
             posts.CategoryId = dto.CategoryId;
-            posts.UserId = _identity.UserId;
             posts.Title = dto.Title;
             posts.Price = double.Parse(dto.Price.ToString());
             posts.Description = dto.Description;

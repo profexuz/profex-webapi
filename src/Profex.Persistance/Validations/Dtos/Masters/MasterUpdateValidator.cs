@@ -1,19 +1,19 @@
 ﻿using FluentValidation;
-using Profex.Persistance.Dtos.Master1;
+using Profex.Persistance.Dtos.Masters;
 using Profex.Service.Helpers;
 
 namespace Profex.Persistance.Validations.Dtos.Masters;
 
-public class MasterUpdateValidator : AbstractValidator<Master1UpdateDto>
+public class MasterUpdateValidator : AbstractValidator<MasterUpdateDto>
 {
     public MasterUpdateValidator()
     {
         RuleFor(dto => dto.FirstName).NotEmpty().NotNull().WithMessage("First name is required!")
-        .MaximumLength(20).WithMessage("First name lass be than 20 characters")
+        .MaximumLength(40).WithMessage("First name lass be than 40 characters")
         .MinimumLength(3).WithMessage("First name must be than 3 characters");
 
         RuleFor(dto => dto.LastName).NotEmpty().NotNull().WithMessage("Last name is required!")
-            .MaximumLength(20).WithMessage("Last name lass be than 20 characters")
+            .MaximumLength(40).WithMessage("Last name lass be than 40 characters")
             .MinimumLength(3).WithMessage("Last name must be than 3 characters");
 
         RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))

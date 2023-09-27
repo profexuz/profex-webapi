@@ -12,13 +12,13 @@ namespace Profex.Persistance.Validations.Dtos.Posts
                 .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
 
             RuleFor(dto => dto.Title).NotEmpty().NotNull().WithMessage("Title is required!")
-            .MaximumLength(20).WithMessage("Title length lass be than 20 characters")
+            .MaximumLength(60).WithMessage("Title length lass be than 60 characters")
             .MinimumLength(3).WithMessage("Title lenght must ber than 3 characters");
 
             RuleFor(dto => dto.Price).NotEmpty().WithMessage("Price is required!");
 
             RuleFor(dto => dto.Description).NotEmpty().NotNull().WithMessage("Description is required!")
-                .MaximumLength(20).WithMessage("Description length lass be than 20 characters")
+                .MaximumLength(200).WithMessage("Description length lass be than 200 characters")
                 .MinimumLength(3).WithMessage("Description lenght must ber than 3 characters");
 
             RuleFor(dto => dto.Region).NotEmpty().NotNull().WithMessage("Region is required!")

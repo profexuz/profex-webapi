@@ -1,19 +1,19 @@
 ﻿using FluentValidation;
-using Profex.Persistance.Dtos.User1;
+using Profex.Persistance.Dtos.Users;
 using Profex.Service.Helpers;
 
 namespace Profex.Persistance.Validations.Dtos.Users;
 
-public class UserUpdateValidator : AbstractValidator<User1UpateDto>
+public class UserUpdateValidator : AbstractValidator<UserUpdateDto>
 {
     public UserUpdateValidator()
     {
         RuleFor(dto => dto.FirstName).NotEmpty().NotNull().WithMessage("First name is required!")
-        .MaximumLength(20).WithMessage("First name lass be than 20 characters")
+        .MaximumLength(30).WithMessage("First name lass be than 30 characters")
         .MinimumLength(3).WithMessage("First name must be than 3 characters");
 
         RuleFor(dto => dto.LastName).NotEmpty().NotNull().WithMessage("Last name is required!")
-            .MaximumLength(20).WithMessage("Last name lass be than 20 characters")
+            .MaximumLength(30).WithMessage("Last name lass be than 30 characters")
             .MinimumLength(3).WithMessage("Last name must be than 3 characters");
 
         RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))

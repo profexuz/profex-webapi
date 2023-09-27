@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 
 namespace Profex.Persistance.Dtos.Users;
 
@@ -11,4 +12,5 @@ public class UserCreateDto
     public IFormFile ImagePath { get; set; } = default!;
     public string PasswordHash { get; set; } = string.Empty;
     public string Salt { get; set; } = string.Empty;
+
 }

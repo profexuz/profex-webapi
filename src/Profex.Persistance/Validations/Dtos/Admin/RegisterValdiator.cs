@@ -8,7 +8,8 @@ namespace Profex.Persistance.Validations.Dtos.Admin
         public RegisterValdiator()
         {
             RuleFor(dto => dto.FirstName).NotNull().NotEmpty().WithMessage("Firstname is required!")
-            .MaximumLength(20).WithMessage("Firstname must be less than 30 characters");
+            .MinimumLength(3).WithMessage("Firstname must be more than 3 characters")
+            .MaximumLength(30).WithMessage("Firstname must be less than 30 characters");
             
             RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))
                 .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");

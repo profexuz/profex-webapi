@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
-using Profex.Persistance.Dtos.PostImages;
-using Profex.Persistance.Validations.Dtos.PostImages;
 using Profex.Service.Interfaces.PostImages;
 
 namespace Profex.WebApi.Controllers.Common.Post;
 
-[Route("api/common/post/image")]
+[Route("api/common/images")]
 [ApiController]
 public class CommonPostImageController : ControllerBase
 {
@@ -20,16 +18,16 @@ public class CommonPostImageController : ControllerBase
     }
 
 
-    [HttpGet("getAll")]
+    [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
     => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
 
-    [HttpGet("getById/{id}")]
+    [HttpGet("{imageId}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetByIdAsync(long id)
-    => Ok(await _service.GetByIdAsync(id));
+    public async Task<IActionResult> GetByIdAsync(long imageId)
+    => Ok(await _service.GetByIdAsync(imageId));
 
 }
 

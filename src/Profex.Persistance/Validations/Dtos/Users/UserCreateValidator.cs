@@ -9,11 +9,11 @@ public class UserCreateValidator : AbstractValidator<UserCreateDto>
     public UserCreateValidator()
     {
         RuleFor(dto => dto.FirstName).NotEmpty().NotNull().WithMessage("Firstname is required!")
-            .MaximumLength(20).WithMessage("Firstname lass be than 20 characters")
+            .MaximumLength(30).WithMessage("Firstname lass be than 30 characters")
             .MinimumLength(3).WithMessage("Firstname must be than 3 characters");
 
         RuleFor(dto => dto.LastName).NotEmpty().NotNull().WithMessage("Lastname is required!")
-            .MaximumLength(20).WithMessage("Lastname lass be than 20 characters")
+            .MaximumLength(30).WithMessage("Lastname lass be than 30 characters")
             .MinimumLength(3).WithMessage("Lastname must be than 3 characters");
 
         RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))

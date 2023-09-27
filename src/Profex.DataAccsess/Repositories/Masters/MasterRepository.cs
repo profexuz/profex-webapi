@@ -1,10 +1,13 @@
 ﻿using Dapper;
 using Profex.Application.Utils;
-using Profex.DataAccsess.Interfaces.Masters;
+using Profex.DataAccsess.Interfaces.Masters1;
 using Profex.DataAccsess.ViewModels.Masters;
+using Profex.DataAccsess.ViewModels.Skills;
+using Profex.Domain.Entities.master_skills;
 using Profex.Domain.Entities.masters;
+using static Dapper.SqlMapper;
 
-namespace Profex.DataAccsess.Repositories.Masters
+namespace Profex.DataAccsess.Repositories.Masters1
 {
     public class MasterRepository : BaseRepository, IMasterRepository
     {
@@ -79,12 +82,24 @@ namespace Profex.DataAccsess.Repositories.Masters
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount} " +
+                string query = $"SELECT * FROM public.masters ORDER BY id desc offset {@params.GetSkipCount()} " +
                     $"limit {@params.PageSize}";
 
                 var resMas = (await _connection.QueryAsync<Master>(query)).ToList();
 
-                return (IList<MasterViewModel>)resMas;
+                var masterViewModels = resMas.Select(master => new MasterViewModel
+                {
+                    Id = master.Id,
+                    FirstName = master.FirstName,
+                    LastName = master.LastName,
+                    ImagePath = master.ImagePath,
+                    IsFree = master.IsFree,
+                    PhoneNumber = master.PhoneNumber,
+                    CreatedAt = master.CreatedAt,
+                    UpdatedAt = master.UpdatedAt,
+                }).ToList();
+
+                return masterViewModels;
             }
             catch
             {
@@ -101,7 +116,7 @@ namespace Profex.DataAccsess.Repositories.Masters
             try
             {
                 await _connection.OpenAsync();
-                string qeury = $"SELECT * FROM masters where id=@Id";
+                string qeury = $"SELECT * FROM masters WHERE id = @Id";
                 var result = await _connection.QuerySingleAsync<MasterViewModel>(qeury, new { Id = id });
 
                 return result;
@@ -115,7 +130,6 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.CloseAsync();
             }
         }
-
         public async Task<Master?> GetByPhoneAsync(string phone)
         {
             try
@@ -137,6 +151,30 @@ namespace Profex.DataAccsess.Repositories.Masters
                 await _connection.CloseAsync();
             }
         }
+       
+        public async Task<IList<UserSkillViewModel>> GetMasterSkillById(long masterId)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                string query = $@"
+                SELECT m.first_name, m.last_name, m.phone_number, m.image_path, m.is_free,
+                m.created_at, m.updated_at,
+                s.title AS skill_title FROM masters AS m JOIN skills AS s ON m.masterId = s.masterId ;";
+
+                var result = await _connection.QueryAsync<UserSkillViewModel>(query, new { MasterId = masterId });
+                return result.ToList();
+            }
+            catch
+            {
+                //.//return MasterViewModel();
+                return new List<UserSkillViewModel>();
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
 
         public async Task<IList<MasterViewModel>> SearchAsync(string search, PaginationParams @params)
         {
@@ -144,8 +182,8 @@ namespace Profex.DataAccsess.Repositories.Masters
             {
                 await _connection.OpenAsync();
 
-                string query = $"SELECT * FROM public.masters WHERE name ILIKE '%{search}%' " +
-                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount} LIMIT {@params.PageSize}";
+                string query = $"SELECT * FROM public.masters WHERE first_name ILIKE '%{search}%' " +
+                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize}";
 
                 var master = await _connection.QueryAsync<MasterViewModel>(query);
 
@@ -181,17 +219,26 @@ namespace Profex.DataAccsess.Repositories.Masters
             }
         }
 
-        public async Task<int> UpdateAsync(long id, Master entity)
+        public async Task<IList<Master_skill>> SortBySkillId(long skillId)
+        {
+            string query = "SELECT * FROM master_skills WHERE skill_id = @SkillId";
+            var parameters = new { SkillId = skillId };
+            var posts = await _connection.QueryAsync<Master_skill>(query, parameters);
+            return posts.ToList();
+
+        }
+
+        public async Task<int> UpdateAsync(long id, MasterViewModel entity)
         {
             try
             {
                 await _connection.OpenAsync();
 
-                string query = $"UPDATE public.masters" +
-                    $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
-                        $"phone_number_confirmed=@PhoneNumberConfirmed, image_path=@ImagePath, password_hash=@PasswordHash, " +
-                            $"salt=@Salt, is_free=@IsFree, created_at=@CreatedAt, updated_at=@UpdatedAt" +
-                                $"WHERE id = {id}";
+                string query = $"UPDATE public.masters " +
+                   $"SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, " +
+                       $" image_path=@ImagePath, is_free=@IsFree, updated_at=@UpdatedAt WHERE id = @Id";
+
+
 
                 var res = await _connection.ExecuteAsync(query, entity);
 
@@ -205,6 +252,12 @@ namespace Profex.DataAccsess.Repositories.Masters
             {
                 await _connection.CloseAsync();
             }
+
+        }
+
+        public Task<int> UpdateAsync(long id, Master entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

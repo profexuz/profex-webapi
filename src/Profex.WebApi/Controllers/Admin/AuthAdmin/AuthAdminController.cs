@@ -13,17 +13,16 @@ namespace Profex.WebApi.Controllers.Admin.AuthAdmin
     [ApiController]
     public class AuthAdminController : ControllerBase
     {
-        private readonly int maxPageSize = 30;
-        private readonly IUserService _service;
+        
         private readonly IAuthAdminService _authService;
-        public AuthAdminController(IUserService service, IAuthAdminService authAdminService)
+        public AuthAdminController(IAuthAdminService authAdminService)
         {
             this._authService = authAdminService;
-            this._service = service;
+           
         }
 
         [HttpPost("register")]
-       // [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> RegisterAsync([FromForm] RegisterAdminDto registerDto)
         {
             var validator = new RegisterValdiator();

@@ -17,4 +17,6 @@ public interface IPostRequestService
     public Task<bool> AcceptRequestAsync(long userId, RequestAcceptDto requestAccpetDto);
 
     public Task<bool> DeleteRequestAsync(long masterId, long postId, long userId);
+
+   
 }

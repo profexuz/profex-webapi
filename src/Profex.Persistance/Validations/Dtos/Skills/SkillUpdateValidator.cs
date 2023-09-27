@@ -12,11 +12,11 @@ namespace Profex.Persistance.Validations.Dtos.Skills
                 .GreaterThanOrEqualTo(0).WithMessage("Id should be greater than or equal to zero");
 
             RuleFor(dto => dto.Description).NotEmpty().NotNull().WithMessage("Description is required!")
-            .MaximumLength(20).WithMessage("Description is less be than 20 characters")
+            .MaximumLength(200).WithMessage("Description is less be than 200 characters")
             .MinimumLength(5).WithMessage("Description is must be than 5 characters");
 
             RuleFor(dto => dto.Title).NotEmpty().NotNull().WithMessage("Title is required!")
-                .MaximumLength(20).WithMessage("Title is less be than 20 characters")
+                .MaximumLength(40).WithMessage("Title is less be than 40 characters")
                 .MinimumLength(5).WithMessage("Title is must be than 5 characters");
         }
     }

@@ -7,7 +7,7 @@ using Profex.Service.Interfaces.PostImages;
 
 namespace Profex.WebApi.Controllers.User.User.UserPostImage
 {
-    [Route("api/user/post/image")]
+    [Route("api/user/posts/images")]
     [ApiController]
     public class UserPostImageController : ControllerBase
     {
@@ -18,15 +18,15 @@ namespace Profex.WebApi.Controllers.User.User.UserPostImage
             this._service = service;            
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
+        //     => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        [HttpGet("{id}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetByIdAsync(long id)
-            => Ok(await _service.GetByIdAsync(id));
+        //[HttpGet("{id}")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> GetByIdAsync(long id)
+        //    => Ok(await _service.GetByIdAsync(id));
         
         
         [HttpPost]

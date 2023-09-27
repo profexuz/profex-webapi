@@ -6,7 +6,7 @@ using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
 using Profex.DataAccsess.Interfaces.Post_Images;
 using Profex.DataAccsess.Interfaces.Posts;
-using Profex.DataAccsess.Interfaces.Users1;
+using Profex.DataAccsess.Interfaces.Users;
 using Profex.Domain.Entities.post_images;
 using Profex.Persistance.Dtos.PostImages;
 using Profex.Service.Interfaces.Common;
@@ -21,12 +21,12 @@ namespace Profex.Service.Services.PostImages
         private readonly IPaginator _paginator;
         private readonly IPostRepository _post;
         private readonly IIdentityService _identity;
-        private readonly IUser1Repository _user;
+        private readonly IUserRepository _user;
         private IFileService _fileService;
         public PostImagesService(IPostImageRepository repository,
                                  IPaginator paginator, IFileService fileService, 
                                  IPostRepository post, IIdentityService identity,
-                                 IUser1Repository user)
+                                 IUserRepository user)
                                  
         {
             this._repository = repository;

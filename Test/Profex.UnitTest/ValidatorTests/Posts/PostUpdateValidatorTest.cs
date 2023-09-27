@@ -30,7 +30,7 @@ public class PostUpdateValidatorTest
           
             Title = title,
             Price = 1200,
-            Description = "Assalomu alekum hammga c# dasturlash tili zo'r til",
+            Description = "QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPG",
             Region = "Navoi",
             District = "Nimadir",
             Latidute = 1123.23,
@@ -65,7 +65,7 @@ public class PostUpdateValidatorTest
            
             Title = "C# program language",
             Price = double.Parse(price),
-            Description = "Assalomu alekum hammga c# dasturlash tili zo'r til",
+            Description = "QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPG",
             Region = "Navoi",
             District = "Nimadir",
             Latidute = 2332.123,
@@ -78,21 +78,12 @@ public class PostUpdateValidatorTest
     }
 
     [Theory]
-    [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
-    [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
-    [InlineData("!@#QEad123!@#!@#1243123")]
-    [InlineData("A1!@#!#qwesd@#QEsdfsdfsdf")]
-    [InlineData("aAdaE!@qeqWE!@#!@#adsadssa1")]
-    [InlineData("A0as12312da!@#!@#sdsdfsdfsdf")]
-    [InlineData("       dfasdfsdfsdfa12")]
-    [InlineData("       2323411!@#!@aadsfASDA")]
-    [InlineData("       ASD123!@#!@aadsfASDA")]
-    [InlineData("ASD123!@#!@aadsfASDA      asd ")]
-    [InlineData("ASD123!@#!@aadsfASDsdfsA   assdasdas")]
-    [InlineData("       ASD123!@#!@aadsfASDA      asda12asdsdasd")]
-    [InlineData("asd       Aasd0!@#!@aadsfASDA       asasdasd ")]
-    [InlineData("electronic products, we sell an electronic products to our clients, we sell an electronic " +
-    "products to our clients")]
+    [InlineData("kk0f4J96X7kOPfgpxnPLZwtG7KS0EFNKauzzVQzhbEhe5ZA2aCBuArZ5auXUtuosXDzMNGtXvmQESUJGweej8gTWbTgXwEbeAb1kDUroY0S6J4UpfkhBGpKpl73YRLt86Om1oz5in5w8B5c1rQUJxYysPM2EDdMT6jgnVLfJbFiUUxGcZ6MmhyVWXR4oP9UEePOpFx0gvKnnV")]
+    [InlineData("    0f4J96X7kOPfgpxnPLZwtG7KS0EFNKauzzVQzhbEhe5ZA2aCBuArZ5auXUtuosXDzMNGtXvmQESUJGweej8gTWbTgXwEbeAb1kDUroY0S6J4UpfkhBGpKpl73YRLt86Om1oz5in5w8B5c1rQUJxYysPM2EDdMT6jgnVLfJbFiUUxGcZ6MmhyVWXR4oP9UEePOpFx0gvKnnV")]
+    [InlineData("ytZcidOM3hRrfB0027Vnc2F7qH3SONC3X48mvwmnKMdcNqGVncIS9ZmQtzpjonrxOIyva9iCEfZABT8sjAvdhSrUT8XnuY7c9hSS82QgGkQGtzf3wX32NVuas4jyeYq6UcW6RFNEBVfjnmjHpFPhz2HFO1niLTTkjvV1yV1ltOVvwTvpqsBuKKYwxn3sqilENfUcGOWek")]
+    [InlineData("Ml3PY8mczu2zGtFxGCxodBIJ98eZAltYcuPZpdboDzboZ7gQ5eQiiet4gvAceCzZqLMwRyPi7envneKp78z1s6L6vqUcU3HvKeyp2tDaZv5FnbI33Zex648GiUmo5ygmgvf7xyxavOmtkdSgbBe9PeLYs5iEe4Sbw6qlFUxcK07NRxWtnUHKS3HDVxezFRHbkNkLxhsM42")]
+    [InlineData("sgH4iRW6pIpqyw8RoAnfYytXrjQcsYVjUWOisoBxpi7l6ngLmCGDHyJax4g3CGaJOfgTw4W69NOcTvhl5zpFucfNf1HRaro4TRbfKFkuQNU5BfUjWT9czuc0IHKbUZ3NrEJA0r5qvjhOy5kSu9C4ItfGJiEn1hbJlAa3nzpybQyntnvMeJ1lMgI1CuRgxHX05BwHeNVBeyt")]
+    [InlineData("QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPG")]
     public void Should2ReturnInValidValidation(string description)
     {
         PostCreateDto postCreateDto = new PostCreateDto()
@@ -140,7 +131,7 @@ public class PostUpdateValidatorTest
         
             Title = "C# program language",
             Price = 120.200,
-            Description = "C# program language is best",
+            Description = "QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPGC# program language is best",
             Region = Region,
             District = "Nimadir",
             Latidute = 1231.23,
@@ -177,7 +168,7 @@ public class PostUpdateValidatorTest
          
             Title = "C# program language",
             Price = 1200.210,
-            Description = "C# program language is best",
+            Description = "QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPGC# program language is best",
             Region = "Region",
             District = District,
             Latidute = 234.12,
@@ -212,7 +203,7 @@ public class PostUpdateValidatorTest
          
             Title = "C# program language",
             Price = 233.234,
-            Description = "C# program language is best",
+            Description = "QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPGC# program language is best",
             Region = "Region",
             District = "ADAFDDFDFDF",
             Latidute = Convert.ToDouble(Latidute),
@@ -248,7 +239,7 @@ public class PostUpdateValidatorTest
           
             Title = "C# program language",
             Price = 234.123,
-            Description = "C# program language is best",
+            Description = "QRzJ9jTqHjYaJ9REoI2o1olXleTG8AJmoMQNt9CaN7KISNHuavKXNnTfLttYlea8VgevdHkvqZXKjqxGu4Oszz8KfPSnd656AZGLOmtotnlT8NbrkQn9aSO00wMUYvZIMaDKB6rp2nQSf7yJ2fHGMz3xbDdCoom40CSnQWosp4vGxVKOjfOQ1HcsSGqToyi8TjxGHmub4u0Vc3IwPGC# program language is best",
             Region = "asdsdfsdf",
             District = "adfsdf",
             Latidute = 12.123,

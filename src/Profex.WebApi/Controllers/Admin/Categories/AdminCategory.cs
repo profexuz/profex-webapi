@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Profex.Persistance.Dtos.Categories;
 using Profex.Persistance.Validations.Dtos.Categories;
@@ -7,7 +6,7 @@ using Profex.Service.Interfaces.Categories;
 
 namespace Profex.WebApi.Controllers.Admin.Categories;
 
-[Route("api/admin/category")]
+[Route("api/admin/categories")]
 [ApiController]
 public class AdminCategory : ControllerBase
 {
@@ -16,8 +15,8 @@ public class AdminCategory : ControllerBase
     {
         _service = Categoryservice;
     }
-    
-    
+
+
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
@@ -29,19 +28,19 @@ public class AdminCategory : ControllerBase
 
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{categoryId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateAsync(long id, [FromForm] CategoryUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
     {
         var updateValidator = new CategoryUpdateValidator();
         var result = updateValidator.Validate(dto);
-        if (result.IsValid) return Ok(await _service.UpdateAsync(id, dto));
+        if (result.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
         else return BadRequest(result.Errors);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{categoryId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(await _service.DeleteAsync(id));
+    public async Task<IActionResult> DeleteAsync(long categoryId)
+        => Ok(await _service.DeleteAsync(categoryId));
 
 }

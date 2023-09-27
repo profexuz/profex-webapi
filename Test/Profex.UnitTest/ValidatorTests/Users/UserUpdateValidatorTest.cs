@@ -41,24 +41,14 @@ namespace Profex.UnitTest.ValidatorTests.Users
         }
 
         [Theory]
-        [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
-        [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
-        [InlineData("!@#QEad123!@#!@#1243123")]
-        [InlineData("A1!@#!#qwesd@#QEsdfsdfsdf")]
-        [InlineData("A1!@#!#qwasdaesd@#QEsdfsdfsdf")]
-        [InlineData("A1!@#!asdasd#qwesd@#QEsdfsdfsdf")]
-        [InlineData("aAdaE!@qeqWE!@#!@#adsadssa1")]
-        [InlineData("A0as12312da!@#!@#sdsdfsdfsdf")]
-        [InlineData("       dfasdfsdfsdfa12")]
-        [InlineData("       2323411!@#!@aadsfASDA")]
-        [InlineData("       ASD123!@#!@aadsfASDA")]
-        [InlineData("ASD123!@#!@aadsfASDA      asd ")]
-        [InlineData("ASD123!@#!@aadsfASDsdfsA   assdasdas")]
-        [InlineData("       ASD123!@#!@aadsfASDA      asda12asdsdasd")]
-        [InlineData("asd       Aasd0!@#!@aadsfASDA       asasdasd ")]
-        [InlineData("electronic products, we sell an electronic products to our clients, we sell an electronic " +
-           "products to our clients")]
-        public void ShouldReturnInValidValidation(string name)
+        [InlineData("STeeDAyKDgfDcYlbeTdo5QCBaX5egIxI5R", " ", "+999889997730", "1234567")]
+        [InlineData("", "STeeDAyKDgfDcYlbeTdo5QCBaX5egIxI5R ", "999889997730", "12345678")]
+        [InlineData(" ", "STeeDAyKDgfDcYlbeTdo5QCBaX5egIxI5R ", "999 997730", "123  5678")]
+        [InlineData("zz", "STeeDAyKDgfDcYl      QCBaX5egIxI5R ", "123 45 67", "AABBQQ!!")]
+        [InlineData("STeeDAyKDgfDcYl      QCBaX5egIxI5R aa", "STeeDAyKDgfDcYl      QCBaX5egIxI5R ", "-123 45 67", "AABBQQ!!")]
+        [InlineData("STeeDAyKDgf12321323sasxxxaX5egIxI5R aa", "STeeDAyKDgfDcYl      QCBaX5egIxI5R ", "+123451234567", "AABBQQ!!")]
+
+        public void Should1ReturnInValidValidation(string name, string lastName, string phone, string password)
         {
             byte[] byteImage = Encoding.UTF8.GetBytes("we sell an electronic products to our clients");
             long imageSizeInBytes = (long)(3 * 1024 * 1024);
@@ -66,51 +56,11 @@ namespace Profex.UnitTest.ValidatorTests.Users
             UserCreateDto userCreateDto = new UserCreateDto()
             {
                 FirstName = name,
-                LastName = "Example",
-                PhoneNumber = "+998770079639",
+                LastName = lastName,
+                PhoneNumber = phone,
                 PhoneNumberConfirmed = true,
                 ImagePath = imageFile,
-                PasswordHash = "AAaa11##"
-            };
-            var validator = new UserCreateValidator();
-            var result = validator.Validate(userCreateDto);
-            Assert.False(result.IsValid);
-        }
-
-        [Theory]
-        [InlineData("1234dsfsdfADASD@#!@#!@#adsasd")]
-        [InlineData("1234dsfsdfAsdfsdfasdDASD@#!@#!@#adsasd")]
-        [InlineData("1234dsdfsdfsfsdfADASD@#!@#!@#adsasd")]
-        [InlineData("1234dsdfsasddfsfsdfADASasdasdD@#!@#!@#adsasd")]
-        [InlineData("1234dsdsdasdfsdfsfsdfADASD@#!@#!@#adsasd")]
-        [InlineData("123asda4dsdasdfsdfsfsdfADASD@#!@#!@#adsasd")]
-        [InlineData("!23aADAdsddsds!@#!@#!@3adsdasd")]
-        [InlineData("!@#QEad123!@#!@#1243123")]
-        [InlineData("A1!@#!#qwesd@#QEsdfsdfsdf")]
-        [InlineData("aAdaE!@qeqWE!@#!@#adsadssa1")]
-        [InlineData("A0as12312da!@#!@#sdsdfsdfsdf")]
-        [InlineData("       dfasdfsdfsdfa12")]
-        [InlineData("       2323411!@#!@aadsfASDA")]
-        [InlineData("       ASD123!@#!@aadsfASDA")]
-        [InlineData("ASD123!@#!@aadsfASDA      asd ")]
-        [InlineData("ASD123!@#!@aadsfASDsdfsA   assdasdas")]
-        [InlineData("       ASD123!@#!@aadsfASDA      asda12asdsdasd")]
-        [InlineData("asd       Aasd0!@#!@aadsfASDA       asasdasd ")]
-        [InlineData("electronic products, we sell an electronic products to our clients, we sell an electronic " +
-           "products to our clients")]
-        public void Should1ReturnInValidValidation(string lastname)
-        {
-            byte[] byteImage = Encoding.UTF8.GetBytes("we sell an electronic products to our clients");
-            long imageSizeInBytes = (long)(3 * 1024 * 1024);
-            IFormFile imageFile = new FormFile(new MemoryStream(byteImage), 0, imageSizeInBytes, "data", "file.png");
-            UserCreateDto userCreateDto = new UserCreateDto()
-            {
-                FirstName = "Example",
-                LastName = lastname,
-                PhoneNumber = "+998770079639",
-                PhoneNumberConfirmed = true,
-                ImagePath = imageFile,
-                PasswordHash = "AAaa11##"
+                PasswordHash = password
             };
             var validator = new UserCreateValidator();
             var result = validator.Validate(userCreateDto);
