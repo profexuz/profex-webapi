@@ -13,7 +13,7 @@ namespace Profex.DataAccsess.ViewModels.Posts
         public string Region { get; set; } = string.Empty;
         public string District { get; set; } = string.Empty;
         public double Longitude { get; set; }
-        public double Latidute { get; set; }
+        public double Latitude { get; set; }
         public string PhoneNumber { get; set; } = string.Empty;
         public string[] ImagePath { get; set; } = {};
         public string FirstName { get; set; } = string.Empty;
