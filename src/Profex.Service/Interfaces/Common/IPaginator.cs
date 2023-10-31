@@ -1,9 +1,8 @@
 ﻿using Profex.Application.Utils;
 
-namespace Profex.Service.Interfaces.Common
+namespace Profex.Service.Interfaces.Common;
+
+public interface IPaginator
 {
-    public interface IPaginator
-    {
-        public void Paginate(long itemsCount, PaginationParams @params);
-    }
+    public void Paginate(long itemsCount, PaginationParams @params);
 }
