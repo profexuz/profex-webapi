@@ -3,7 +3,6 @@ using Profex.Application.Exceptions.Posts;
 using Profex.Application.Exceptions.Users;
 using Profex.Application.Utils;
 using Profex.DataAccsess.Common.Helpers;
-using Profex.DataAccsess.Interfaces;
 using Profex.DataAccsess.Interfaces.Categories;
 using Profex.DataAccsess.Interfaces.Post_Images;
 using Profex.DataAccsess.Interfaces.Posts;
@@ -58,6 +57,9 @@ namespace Profex.Service.Services.Posts
                 PhoneNumber = dto.PhoneNumber,
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime(),
+                Status = dto.Status,
+                JobTime = dto.JobTime,
+                Address = dto.Address,
             };
 
             post.CategoryId = dto.CategoryId;
@@ -89,7 +91,7 @@ namespace Profex.Service.Services.Posts
             foreach (var post in posts)
             {
                 var imagePaths = await _images.GetByPostIdAsync(post.Id);
-                post.Images.AddRange(imagePaths);
+                post.Images.AddRange(imagePaths);  
             }
             var count = await _postRepository.CountAsync();
             _paginator.Paginate(count, @params);
@@ -168,6 +170,9 @@ namespace Profex.Service.Services.Posts
             posts.Longitude = double.Parse(dto.Longitude.ToString());
             posts.PhoneNumber = dto.PhoneNumber;
             posts.UpdatedAt = TimeHelper.GetDateTime();
+            posts.Status = dto.Status;
+            posts.JobTime  = dto.JobTime;
+            posts.Address = dto.Address;
             var dbRes = await _postRepository.UpdateAsync(id, posts);
 
             return dbRes > 0;

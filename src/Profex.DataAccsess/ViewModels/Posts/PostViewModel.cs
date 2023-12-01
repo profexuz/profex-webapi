@@ -20,6 +20,11 @@ namespace Profex.DataAccsess.ViewModels.Posts
         public string LastName { get; set; } = string.Empty;
         public string CategoryName { get; set;} = string.Empty;
         public List<Post_image> Images { get; set; } = new List<Post_image>();
+        public bool Status { get; set; }
+
+        public string Address { get; set; } = String.Empty;
+
+        public string JobTime { get; set; } = String.Empty; 
 
     }
 }

@@ -45,6 +45,14 @@ namespace Profex.Persistance.Validations.Dtos.Posts
 
             RuleFor(dto => dto.Longitude).Must(longitude => LatiduteValidator.IsValid(longitude))
                 .WithMessage("you entered a negative number");
+
+            RuleFor(dto => dto.Status).Must(status => StatusValidator.isValid(status))
+            .WithMessage("you have not entered a case status");
+
+
+            RuleFor(dto => dto.JobTime).NotEmpty().NotNull().WithMessage("you have not entered a work time");
+
+            RuleFor(dto => dto.Address).NotNull().NotEmpty().WithMessage("you have not entered a your address");
         }
     }
 }

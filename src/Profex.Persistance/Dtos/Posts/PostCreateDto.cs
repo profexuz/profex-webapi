@@ -12,4 +12,7 @@ public class PostCreateDto
     public double Latidute { get; set; }
     public double Longitude { get; set; }
     public string PhoneNumber { get; set; } = string.Empty;
+    public bool Status { get; set; } = true;
+    public string Address { get; set; } = String.Empty;
+    public string JobTime { get; set; } = String.Empty;
 }

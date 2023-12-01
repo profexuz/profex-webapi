@@ -35,9 +35,9 @@ namespace Profex.DataAccsess.Repositories.Posts
                 await _connection.OpenAsync();
 
                 string query = "INSERT INTO public.posts(category_id, user_id, title, price, description, region, " +
-                    "district, longitude, latitude, phone_number, created_at, updated_at)" +
+                    "district, longitude, latitude, phone_number, created_at, updated_at, status, address, jobtime)" +
                         "VALUES (@CategoryId, @UserId, @Title, @Price, @Description, @Region, @District, @Longitude, " +
-                            "@Latidute, @PhoneNumber, @CreatedAt, @UpdatedAt);";
+                            "@Latidute, @PhoneNumber, @CreatedAt, @UpdatedAt, @Status, @Address, @JobTime);";
 
                 var result = await _connection.ExecuteAsync(query, entity);
 
@@ -84,7 +84,10 @@ namespace Profex.DataAccsess.Repositories.Posts
                                     ARRAY_AGG(DISTINCT pi.image_path) AS image_path,
                                     u.first_name,
                                     u.last_name,
-                                    c.name AS category_name
+                                    c.name AS category_name,
+                                    p.status,
+                                    p.jobtime,
+                                    p.address
                                 FROM
                                     posts p
                                 LEFT JOIN
@@ -98,10 +101,39 @@ namespace Profex.DataAccsess.Repositories.Posts
                                 GROUP BY
                                     p.id, u.id, c.id " +
 
-                    $" OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
+                    $"ORDER BY id DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
 
                 var result = (await _connection.QueryAsync<PostViewModel>(query)).ToList();
 
+
+                /*string query = $@"SELECT p.id, p.category_id, p.user_id, p.title, p.price,
+                             p.description, p.region, p.district, p.longitude,
+                             p.latitude, p.phone_number, p.created_at, p.updated_at,
+                        ARRAY_AGG(DISTINCT pi.image_path) AS image_path,
+                        u.first_name,
+                        u.last_name,
+                        c.name AS category_name,
+                        p.status,
+                        p.jobtime,
+                        p.address
+                    FROM
+                        posts p
+                    LEFT JOIN
+                        post_images pi ON p.id = pi.post_id
+                    LEFT JOIN
+                        users u ON p.user_id = u.id
+                    LEFT JOIN
+                        categories c ON p.category_id = c.id
+                    WHERE
+                        (pi.image_path IS NULL OR pi.image_path != '') AND
+                        p.created_at > (SELECT MIN(created_at) FROM posts)
+                    GROUP BY
+                        p.id, u.id, c.id " +
+
+        $" ORDER BY p.created_at DESC OFFSET {@params.GetSkipCount()} LIMIT {@params.PageSize};";
+
+                var result = (await _connection.QueryAsync<PostViewModel>(query)).ToList();
+*/
                 return result;
 
             }
@@ -167,7 +199,7 @@ namespace Profex.DataAccsess.Repositories.Posts
                                                            p.price,   p.description,  p.region,   p.district, 
                                                            p.longitude,  p.latitude,  p.phone_number,   p.created_at, p.updated_at,
                                  ARRAY_AGG(DISTINCT pi.image_path) AS image_path,         u.first_name,     u.last_name,                          
-                                c.name AS category_name FROM  posts p   LEFT JOIN
+                                c.name AS category_name,  p.status,  p.jobtime, p.address  FROM  posts p   LEFT JOIN
                                                                         post_images pi ON p.id = pi.post_id
                                                                         LEFT JOIN
                                                                         users u ON p.user_id = u.id
@@ -255,7 +287,7 @@ namespace Profex.DataAccsess.Repositories.Posts
                 string query = "UPDATE public.posts SET category_id = @CategoryId, user_id = @UserId, title = @Title, " +
                     "price = @Price, description = @Description, region = @Region, district = @District, " +
                         "longitude = @Longitude, latitude = @Latitude, phone_number = @PhoneNumber, " +
-                            "created_at = @CreatedAt, updated_at = @UpdatedAt WHERE id = @Id;";
+                            "created_at = @CreatedAt, updated_at = @UpdatedAt, status = @Status, jobtime = @JobTime, address = @Address WHERE id = @Id;";
 
                 var res = await _connection.ExecuteAsync(query, entity);
 
