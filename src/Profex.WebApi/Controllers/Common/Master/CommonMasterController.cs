@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Profex.Application.Utils;
 using Profex.DataAccsess.ViewModels.Masters;
-using Profex.Domain.Entities.master_skills;
-using Profex.Persistance.Dtos.Masters;
-using Profex.Persistance.Validations.Dtos.Masters;
 using Profex.Service.Interfaces.Common;
 using Profex.Service.Interfaces.Masters;
 using Profex.Service.Interfaces.MasterSkill;
@@ -18,7 +15,9 @@ namespace Profex.WebApi.Controllers.Common.Master
         private readonly IMasterService _service;
         private readonly IPaginator _paginator;
         private readonly IMasterSkillService _skillService;
-        private readonly int maxPageSize = 4;
+        private readonly int defaultPageSize = 15;
+        private readonly int maxPageSize = 50;
+
         public CommonMasterController(IMasterService service, IPaginator paginator,
                                         IMasterSkillService skillService)
         {
@@ -29,10 +28,22 @@ namespace Profex.WebApi.Controllers.Common.Master
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-        => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1, [FromQuery] int? pageSize = null)
+        {
+            int actualPageSize = pageSize.HasValue ? Math.Min(pageSize.Value, maxPageSize) : defaultPageSize;
 
-        
+            var paginationParams = new PaginationParams(page, actualPageSize);
+            var masters = await _service.GetAllAsync(paginationParams);
+
+            bool hasMore = masters.Count == paginationParams.PageSize;
+
+            return Ok(new
+            {
+                Items = masters,
+                HasMore = hasMore
+            });
+        }
+
         [HttpGet("{masterId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdAsync(long masterId)
