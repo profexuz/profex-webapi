@@ -11,7 +11,9 @@ namespace Profex.WebApi.Controllers.Common.Post
     [ApiController]
     public class CommonPostController : ControllerBase
     {
-        private readonly int maxPageSize = 12;
+        private readonly int defaultPageSize = 15;
+        private readonly int maxPageSize = 50;
+
         private readonly IPostService _service;
         private readonly IIdentity _identity;
         private readonly ICategoryService _categoryService;
@@ -24,10 +26,22 @@ namespace Profex.WebApi.Controllers.Common.Post
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-            => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1, [FromQuery] int? pageSize = null)
+        {
+            int actualPageSize = pageSize.HasValue ? Math.Min(pageSize.Value, maxPageSize) : defaultPageSize;
 
-        
+            var paginationParams = new PaginationParams(page, actualPageSize);
+            var posts = await _service.GetAllAsync(paginationParams);
+
+            bool hasMore = posts.Count == paginationParams.PageSize;
+
+            return Ok(new
+            {
+                Items = posts,
+                HasMore = hasMore
+            });
+        }
+
         [HttpGet("{postId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetByIdJoin(long postId)
