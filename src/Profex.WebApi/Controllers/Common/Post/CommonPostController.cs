@@ -35,11 +35,12 @@ namespace Profex.WebApi.Controllers.Common.Post
 
             bool hasMore = posts.Count == paginationParams.PageSize;
 
-            return Ok(new
+            return Ok(posts);
+            /*return Ok(new
             {
                 Items = posts,
                 HasMore = hasMore
-            });
+            });*/
         }
 
         [HttpGet("{postId}")]

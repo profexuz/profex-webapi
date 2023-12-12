@@ -37,11 +37,12 @@ namespace Profex.WebApi.Controllers.Common.Master
 
             bool hasMore = masters.Count == paginationParams.PageSize;
 
-            return Ok(new
+            return Ok(masters);
+            /*return Ok(new
             {
                 Items = masters,
                 HasMore = hasMore
-            });
+            });*/
         }
 
         [HttpGet("{masterId}")]
